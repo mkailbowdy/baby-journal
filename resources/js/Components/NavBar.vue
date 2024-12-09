@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import NavLink from '@/Components/NavLink.vue';
 import { ref } from 'vue';
+import DropdownLink from "@/Components/DropdownLink.vue";
 
 // defineProps<{
 //     canLogin?: boolean;
@@ -91,6 +92,13 @@ function toggleMenu(): void {
                         Journals
                     </NavLink>
                 </div>
+                <DropdownLink
+                    :href="route('logout')"
+                    method="post"
+                    as="button"
+                >
+                    Log Out
+                </DropdownLink>
             </nav>
         </div>
     </Transition>

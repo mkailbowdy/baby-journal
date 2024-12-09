@@ -13,6 +13,6 @@ defineProps<{
 <template>
     <Head title="Welcome" />
     <header>
-        <NavBar :canLogin="canLogin" :canRegister="canRegister" />
+        <NavBar />
     </header>
 </template>

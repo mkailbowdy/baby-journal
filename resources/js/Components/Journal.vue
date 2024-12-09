@@ -108,7 +108,18 @@ const editing = ref(false);
                     </button>
                 </div>
             </form>
-            <p v-else class="mt-4 text-lg text-gray-900">{{ journal.entry }}</p>
+            <div v-else>
+                <div>
+                    <small class="mt-4 text-lg text-gray-900"
+                        >Height: {{ journal.height }}cm</small
+                    ><br />
+                    <small class="mt-4 text-lg text-gray-900"
+                        >Weight: {{ journal.weight }}g</small
+                    >
+                </div>
+
+                <p class="mt-4 text-lg text-gray-900">{{ journal.entry }}</p>
+            </div>
         </div>
     </div>
 </template>

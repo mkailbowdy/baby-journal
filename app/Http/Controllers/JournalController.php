@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreJournalRequest;
 use App\Models\Journal;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,14 +31,9 @@ class JournalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreJournalRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'entry' => 'required|string',
-            'date' => 'required|date',
-            'height' => 'required|integer|min:0',
-            'weight' => 'required|integer|min:0',
-        ]);
+        $validated = $request->validated();
 
         $request->user()->journals()->create($validated);
 
@@ -63,15 +59,10 @@ class JournalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Journal $journal): RedirectResponse
+    public function update(StoreJournalRequest $request, Journal $journal): RedirectResponse
     {
         Gate::authorize('update', $journal);
-        $validated = $request->validate([
-            'entry' => 'required|string',
-            'date' => 'required|date',
-            'height' => 'required|integer|min:0',
-            'weight' => 'required|integer|min:0',
-        ]);
+        $validated = $request->validated();
 
         $journal->update($validated);
 

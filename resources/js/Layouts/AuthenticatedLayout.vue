@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import NavBar from '@/Components/NavBar.vue';
-import { ref } from 'vue';
 
 // const showingNavigationDropdown = ref(false);
 </script>

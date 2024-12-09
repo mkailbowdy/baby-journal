@@ -13,7 +13,6 @@ const form = useForm({
 </script>
 <template>
     <Head title="Journals" />
-
     <AuthenticatedLayout>
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
             <form

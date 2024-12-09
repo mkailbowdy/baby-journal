@@ -1,8 +1,11 @@
 <script setup>
 import InputError from '@/Components/InputError.vue';
+import Journal from '@/Components/Journal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+
+defineProps(['journals']);
 
 const form = useForm({
     date: '',
@@ -43,6 +46,10 @@ const form = useForm({
                 <InputError :message="form.errors.entry" class="mt-2" />
                 <PrimaryButton class="mt-4 bg-teal-500">Submit</PrimaryButton>
             </form>
+
+            <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
+                <Journal v-for="journal in journals" :key="journal.id" :journal="journal" />
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>

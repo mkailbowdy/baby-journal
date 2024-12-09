@@ -45,7 +45,8 @@ class JournalPolicy
      */
     public function delete(User $user, Journal $journal): bool
     {
-        return false;
+        // Rather than repeating the logic from the update method, we can define the same logic by calling the update method from our delete method.
+        return $this->update($user, $journal);
     }
 
     /**

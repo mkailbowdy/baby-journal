@@ -72,8 +72,10 @@ class JournalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Journal $journal)
+    public function destroy(Journal $journal): RedirectResponse
     {
-        //
+        Gate::authorize('delete', $journal);
+        $journal->delete();
+        return redirect(route('journals.index'));
     }
 }

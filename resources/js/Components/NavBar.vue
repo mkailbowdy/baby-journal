@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import { ref } from 'vue';
-import DropdownLink from "@/Components/DropdownLink.vue";
 
 // defineProps<{
 //     canLogin?: boolean;
@@ -79,26 +79,30 @@ function toggleMenu(): void {
             <div @click="toggleMenu" class="fixed inset-0"></div>
             <nav class="fixed right-0 z-40 h-screen w-48 bg-indigo-500">
                 <div class="z-30 mt-16">
-                    <NavLink
-                        :href="route('dashboard')"
-                        :active="route().current('dashboard')"
-                    >
-                        Dashboard
-                    </NavLink>
-                    <NavLink
-                        :href="route('journals.index')"
-                        :active="route().current('journals.index')"
-                    >
-                        Journals
-                    </NavLink>
+                    <div class="mb-3 flex flex-col">
+                        <NavLink
+                            :href="route('dashboard')"
+                            :active="route().current('dashboard')"
+                        >
+                            Dashboard
+                        </NavLink>
+                        <NavLink
+                            :href="route('journals.index')"
+                            :active="route().current('journals.index')"
+                        >
+                            Journals
+                        </NavLink>
+                        <DropdownLink
+                            class="text-white"
+                            v-show="$page.props.auth.user.name"
+                            :href="route('logout')"
+                            method="post"
+                            as="button"
+                        >
+                            Log Out
+                        </DropdownLink>
+                    </div>
                 </div>
-                <DropdownLink
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-                >
-                    Log Out
-                </DropdownLink>
             </nav>
         </div>
     </Transition>

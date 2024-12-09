@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Journal;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -62,9 +63,19 @@ class JournalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Journal $journal)
+    public function update(Request $request, Journal $journal): RedirectResponse
     {
-        //
+        Gate::authorize('update', $journal);
+        $validated = $request->validate([
+            'entry' => 'required|string',
+            'date' => 'required|date',
+            'height' => 'required|integer|min:0',
+            'weight' => 'required|integer|min:0',
+        ]);
+
+        $journal->update($validated);
+
+        return redirect(route('journals.index'));
     }
 
     /**

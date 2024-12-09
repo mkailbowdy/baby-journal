@@ -7,6 +7,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 
 defineProps(['journals']);
 
+// useForm( initializes a reactive object)
 const form = useForm({
     date: '',
     height: 0,
@@ -48,7 +49,11 @@ const form = useForm({
             </form>
 
             <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
-                <Journal v-for="journal in journals" :key="journal.id" :journal="journal" />
+                <Journal
+                    v-for="journal in journals"
+                    :key="journal.id"
+                    :journal="journal"
+                />
             </div>
         </div>
     </AuthenticatedLayout>

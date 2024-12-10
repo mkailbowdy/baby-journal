@@ -17,11 +17,12 @@ const localJournals = computed(() => {
 });
 
 const performSearch = debounce(() => {
+    // the user must type more than 2 characters into the search bar
     if (searchQuery.value.length < 2) {
         searchResults.value = [];
         return;
     }
-    // Option 1: Client-side filtering
+    // Client-side filtering
     searchResults.value = localJournals.value.filter((item: Journal) =>
         item.entry.toLowerCase().includes(searchQuery.value.toLowerCase()),
     );
@@ -35,28 +36,28 @@ const selectResult = (result: Journal) => {
 </script>
 
 <template>
-    <div class="w-full">
-        <input
-            v-model="searchQuery"
-            type="search"
-            placeholder="keyword"
-            class="w-full"
-            @input="performSearch"
-        />
-        <div>
-            <p>{{ searchQuery }}</p>
-        </div>
-        <div
-            v-if="searchResults.length"
-            class="absolute z-10 mt-1 w-full rounded border bg-white shadow-lg"
-        >
+    <div class="flex w-full flex-col">
+        <div class="relative w-full">
+            <input
+                v-model="searchQuery"
+                type="search"
+                placeholder="keyword"
+                class="w-full"
+                @input="performSearch"
+            />
             <div
-                v-for="result in searchResults"
-                :key="result.id"
-                class="cursor-pointer p-2 hover:bg-gray-100"
-                @click="selectResult(result)"
+                id="results"
+                v-if="searchResults.length"
+                class="absolute z-10 mt-1 w-full rounded border bg-white shadow-lg"
             >
-                {{ result.entry }}
+                <div
+                    v-for="result in searchResults"
+                    :key="result.id"
+                    class="cursor-pointer truncate p-2 hover:bg-gray-100"
+                    @click="selectResult(result)"
+                >
+                    {{ result.entry }}
+                </div>
             </div>
         </div>
     </div>

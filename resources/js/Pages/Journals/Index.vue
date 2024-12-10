@@ -4,6 +4,7 @@ import Journal from '@/Components/Journal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps(['journals']);
 
@@ -14,18 +15,36 @@ const form = useForm({
     weight: 0,
     entry: '',
 });
+
+const message = ref(false);
+
+function flashMessage() {
+    message.value = true;
+    setTimeout(() => {
+        message.value = false;
+    }, 3000);
+}
+
+function saveToDatabase() {
+    form.post(route('journals.store'), {
+        onSuccess: () => {
+            form.reset();
+            flashMessage();
+        },
+    });
+}
 </script>
 <template>
     <Head title="Journals" />
     <AuthenticatedLayout>
+        <Transition>
+            <div v-if="message">
+                <p class="bg-green-500">Journal added!</p>
+            </div>
+        </Transition>
+
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
-            <form
-                @submit.prevent="
-                    form.post(route('journals.store'), {
-                        onSuccess: () => form.reset(),
-                    })
-                "
-            >
+            <form @submit.prevent="saveToDatabase()">
                 <input v-model="form.date" type="date" name="date" id="date" />
                 <input
                     v-model="form.height"
@@ -58,3 +77,16 @@ const form = useForm({
         </div>
     </AuthenticatedLayout>
 </template>
+<style>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+    transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+    transform: translateY(-20%);
+}
+</style>

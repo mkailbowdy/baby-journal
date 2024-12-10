@@ -9,6 +9,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 defineProps(['journals']);
+
 // useForm( initializes a reactive object)
 const form = useForm({
     date: '',
@@ -17,7 +18,14 @@ const form = useForm({
     entry: '',
 });
 
+// The useFlashMessage() function returns an object, and the destructuring syntax
+// extracts the message, messageType, and showMessage properties into local variables with the same names.
 const { message, messageType, showMessage } = useFlashMessage();
+//Without destructuring, you'd need to write:
+// const flashMessage = useFlashMessage();
+// const message = flashMessage.message;
+// const messageType = flashMessage.messageType;
+// const showMessage = flashMessage.showMessage;
 
 const messageClass = computed(() => {
     switch (messageType.value) {
@@ -34,10 +42,10 @@ function saveToDatabase() {
     form.post(route('journals.store'), {
         onSuccess: () => {
             form.reset();
-            showMessage(MessageType.SUCCESS);
+            showMessage(MessageType.SUCCESS); // same as saying showMessage('success')
         },
         onError: () => {
-            showMessage(MessageType.ERROR);
+            showMessage(MessageType.ERROR); // same as saying showMessage('error')
         },
     });
 }
@@ -46,7 +54,7 @@ function saveToDatabase() {
     <Head title="Journals" />
     <AuthenticatedLayout>
         <Transition>
-            <div v-if="message">
+            <div v-if="message" class="absolute block w-full">
                 <p :class="messageClass">
                     {{
                         messageType === MessageType.SUCCESS

@@ -1,8 +1,6 @@
+import { MessageType } from '@/Enums/MessageType';
 import { ref } from 'vue';
-enum MessageType {
-    SUCCESS = 'success',
-    ERROR = 'error',
-}
+
 export function useFlashMessage() {
     const message = ref(false);
     const messageType = ref<MessageType | null>(null);

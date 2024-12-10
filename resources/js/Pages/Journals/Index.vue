@@ -3,16 +3,12 @@ import InputError from '@/Components/InputError.vue';
 import Journal from '@/Components/Journal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
+import { MessageType } from '@/Enums/MessageType';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 defineProps(['journals']);
-enum MessageType {
-    SUCCESS = 'success',
-    ERROR = 'error',
-}
-
 // useForm( initializes a reactive object)
 const form = useForm({
     date: '',

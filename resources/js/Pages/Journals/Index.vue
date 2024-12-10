@@ -24,4 +24,3 @@ defineProps(['journals']);
         </div>
     </AuthenticatedLayout>
 </template>
-

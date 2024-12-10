@@ -2,11 +2,16 @@
 import InputError from '@/Components/InputError.vue';
 import Journal from '@/Components/Journal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { useFlashMessage } from '@/Composables/useFlashMessage';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { reactive, ref } from 'vue';
+import { computed } from 'vue';
 
 defineProps(['journals']);
+enum MessageType {
+    SUCCESS = 'success',
+    ERROR = 'error',
+}
 
 // useForm( initializes a reactive object)
 const form = useForm({
@@ -16,35 +21,27 @@ const form = useForm({
     entry: '',
 });
 
-const message = ref(false);
-const success = ref(false);
-const error = ref(false);
-const status = reactive({
-    'bg-green-500': success,
-    'bg-red-500': error,
-});
-function flashMessage(result: string) {
-    message.value = true;
-    if (result === 'success') {
-        success.value = true;
-    } else if (result === 'error') {
-        error.value = true;
+const { message, messageType, showMessage } = useFlashMessage();
+
+const messageClass = computed(() => {
+    switch (messageType.value) {
+        case MessageType.SUCCESS:
+            return 'bg-green-500';
+        case MessageType.ERROR:
+            return 'bg-red-500';
+        default:
+            return '';
     }
-    setTimeout(() => {
-        message.value = false;
-        success.value = false;
-        error.value = false;
-    }, 3000);
-}
+});
 
 function saveToDatabase() {
     form.post(route('journals.store'), {
         onSuccess: () => {
             form.reset();
-            flashMessage('success');
+            showMessage(MessageType.SUCCESS);
         },
         onError: () => {
-            flashMessage('error');
+            showMessage(MessageType.ERROR);
         },
     });
 }
@@ -54,7 +51,13 @@ function saveToDatabase() {
     <AuthenticatedLayout>
         <Transition>
             <div v-if="message">
-                <p :class="status">Journal added!</p>
+                <p :class="messageClass">
+                    {{
+                        messageType === MessageType.SUCCESS
+                            ? 'Journal added!'
+                            : 'An error occurred'
+                    }}
+                </p>
             </div>
         </Transition>
 

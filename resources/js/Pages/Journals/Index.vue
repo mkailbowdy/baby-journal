@@ -11,9 +11,9 @@ const open = ref(false);
 <template>
     <Head title="Journals" />
     <AuthenticatedLayout>
-        <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
+        <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8" >
             <div v-if="!open" class="flex flex-row items-center gap-4">
-                <button class="">
+                <button class="" @click="open = !open">
                     <svg
                         fill="#000000"
                         height="24px"
@@ -65,7 +65,7 @@ const open = ref(false);
                 <input type="search" placeholder="keyword" />
             </div>
             <div v-else>
-                <JournalForm />
+                <JournalForm @cancelled="open = !open" />
             </div>
 
             <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">

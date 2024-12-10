@@ -2,6 +2,7 @@
 // useForm( initializes a reactive object)
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
 import { MessageType } from '@/Enums/MessageType';
 import { useForm } from '@inertiajs/vue3';
@@ -95,10 +96,11 @@ function saveToDatabase() {
         </div>
 
         <InputError :message="form.errors.entry" class="mt-2" />
-        <PrimaryButton class="mb-4 mt-4 bg-teal-500">Submit </PrimaryButton>
+        <PrimaryButton class="mb-4 mt-4 bg-teal-500">Submit</PrimaryButton>
+        <SecondaryButton @click="$emit('cancelled')" class="mb-4 ml-4 mt-4">Cancel</SecondaryButton>
     </form>
     <Transition>
-        <div v-if="message" class="" :class="messageClass">
+        <div v-if="message" :class="messageClass">
             {{
                 messageType === MessageType.SUCCESS
                     ? 'Journal added!'

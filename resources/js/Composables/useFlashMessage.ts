@@ -19,5 +19,6 @@ export function useFlashMessage() {
         messageType.value = null;
     }
 
-    return { message, messageType, showMessage, resetMessage };
+    // return the states I want to expose to components
+    return { message, messageType, showMessage };
 }

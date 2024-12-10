@@ -33,6 +33,9 @@ const selectResult = (result: Journal) => {
     searchQuery.value = result.entry;
     searchResults.value = [];
 };
+
+// For every item in the searchResults array, I want to find the searchQuery term and return only the sentence that it is in.
+// I also want the searchQuery term to be highlighted yellow
 </script>
 
 <template>
@@ -46,7 +49,6 @@ const selectResult = (result: Journal) => {
                 @input="performSearch"
             />
             <div
-                id="results"
                 v-if="searchResults.length"
                 class="absolute z-10 mt-1 w-full rounded border bg-white shadow-lg"
             >

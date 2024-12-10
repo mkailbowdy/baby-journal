@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import InputError from '@/Components/InputError.vue';
 import Journal from '@/Components/Journal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 
 defineProps(['journals']);
 
@@ -17,11 +17,23 @@ const form = useForm({
 });
 
 const message = ref(false);
-
-function flashMessage() {
+const success = ref(false);
+const error = ref(false);
+const status = reactive({
+    'bg-green-500': success,
+    'bg-red-500': error,
+});
+function flashMessage(result: string) {
     message.value = true;
+    if (result === 'success') {
+        success.value = true;
+    } else if (result === 'error') {
+        error.value = true;
+    }
     setTimeout(() => {
         message.value = false;
+        success.value = false;
+        error.value = false;
     }, 3000);
 }
 
@@ -29,7 +41,10 @@ function saveToDatabase() {
     form.post(route('journals.store'), {
         onSuccess: () => {
             form.reset();
-            flashMessage();
+            flashMessage('success');
+        },
+        onError: () => {
+            flashMessage('error');
         },
     });
 }
@@ -39,7 +54,7 @@ function saveToDatabase() {
     <AuthenticatedLayout>
         <Transition>
             <div v-if="message">
-                <p class="bg-green-500">Journal added!</p>
+                <p :class="status">Journal added!</p>
             </div>
         </Transition>
 

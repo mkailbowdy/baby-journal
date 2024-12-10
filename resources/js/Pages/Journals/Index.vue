@@ -2,6 +2,7 @@
 import Journal from '@/Components/Journal.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalForm from '@/Pages/Journals/JournalForm.vue';
+import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -11,7 +12,7 @@ const open = ref(false);
 <template>
     <Head title="Journals" />
     <AuthenticatedLayout>
-        <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8" >
+        <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
             <div v-if="!open" class="flex flex-row items-center gap-4">
                 <button class="" @click="open = !open">
                     <svg
@@ -62,7 +63,7 @@ const open = ref(false);
                         </g>
                     </svg>
                 </button>
-                <input type="search" placeholder="keyword" />
+                <JournalSearch :journals="journals" />
             </div>
             <div v-else>
                 <JournalForm @cancelled="open = !open" />

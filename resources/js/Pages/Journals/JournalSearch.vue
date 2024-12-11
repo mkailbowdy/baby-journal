@@ -12,6 +12,9 @@ const props = defineProps(['journals']);
 
 const searchQuery = ref('');
 const searchResults = ref<Journal[]>([]);
+const searchResultsExtracted = computed(() => {
+    return searchResults.value;
+});
 const localJournals = computed(() => {
     return props.journals;
 });
@@ -26,6 +29,7 @@ const performSearch = debounce(() => {
     searchResults.value = localJournals.value.filter((item: Journal) =>
         item.entry.toLowerCase().includes(searchQuery.value.toLowerCase()),
     );
+    extractWithContext(searchQuery.value);
 }, 300);
 
 const selectResult = (result: Journal) => {
@@ -36,6 +40,24 @@ const selectResult = (result: Journal) => {
 
 // For every item in the searchResults array, I want to find the searchQuery term and return only the sentence that it is in.
 // I also want the searchQuery term to be highlighted yellow
+
+function extractWithContext(word: string, contextLength: number = 40) {
+    searchResultsExtracted.value.forEach((journal: Journal) => {
+        const index = journal.entry.indexOf(word);
+        if (index === -1) {
+            return 'The word ' + word + ' does not exist';
+        }
+
+        // Calculate start and end indices for slicing
+        const start = Math.max(0, index - contextLength);
+        const end = Math.min(
+            journal.entry.length,
+            index + word.length + contextLength,
+        );
+
+        journal.entry = journal.entry.slice(start, end);
+    });
+}
 </script>
 
 <template>
@@ -53,7 +75,7 @@ const selectResult = (result: Journal) => {
                 class="absolute z-10 mt-1 w-full rounded border bg-white shadow-lg"
             >
                 <div
-                    v-for="result in searchResults"
+                    v-for="result in searchResultsExtracted"
                     :key="result.id"
                     class="cursor-pointer truncate p-2 hover:bg-gray-100"
                     @click="selectResult(result)"

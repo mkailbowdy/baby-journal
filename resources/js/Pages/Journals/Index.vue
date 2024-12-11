@@ -23,6 +23,7 @@ const updateActiveJournal = (journalId: number): void => {
 <template>
     <Head title="Journals" />
     <AuthenticatedLayout>
+
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
             <div v-if="!open" class="flex flex-row items-center gap-4">
                 <button class="" @click="open = !open">
@@ -79,20 +80,19 @@ const updateActiveJournal = (journalId: number): void => {
             <div v-else>
                 <JournalForm @cancelled="open = !open" />
             </div>
+            <div class="mt-6 divide-y rounded-lg bg-green-500 shadow-sm">
+                <Journal
+                    v-if="activeJournal"
+                    :journal="activeJournal"
+                    :key="activeJournal.id"
+                />
+            </div>
 
             <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
                 <Journal
                     v-for="journal in localJournals"
                     :key="journal.id"
                     :journal="journal"
-                />
-            </div>
-
-            <div class="mt-6 divide-y rounded-lg bg-green-500 shadow-sm">
-                <Journal
-                    v-if="activeJournal"
-                    :journal="activeJournal"
-                    :key="activeJournal.id"
                 />
             </div>
         </div>

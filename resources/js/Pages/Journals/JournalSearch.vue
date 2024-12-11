@@ -1,22 +1,12 @@
 <script setup lang="ts">
+import { JournalInterface } from '@/Enums/JournalInterface';
 import { debounce } from 'lodash';
 import { computed, ref } from 'vue';
-interface Journal {
-    id: number;
-    entry: string;
-    date: string;
-    height: number;
-    weight: number;
-}
 const props = defineProps(['journals']);
 
 const searchQuery = ref('');
-const searchResults = ref<Journal[]>([]);
-// const searchResultsExtracted = computed(() => {
-//     return searchResults.value;
-// });
-
-const searchResultsExtracted = ref<Journal[]>([]);
+const searchResults = ref<JournalInterface[]>([]);
+const searchResultsExtracted = ref<JournalInterface[]>([]);
 
 const localJournals = computed(() => {
     return props.journals;
@@ -29,7 +19,7 @@ const performSearch = debounce(() => {
         return;
     }
     // Client-side filtering
-    searchResults.value = localJournals.value.filter((item: Journal) =>
+    searchResults.value = localJournals.value.filter((item: JournalInterface) =>
         item.entry.toLowerCase().includes(searchQuery.value.toLowerCase()),
     );
 
@@ -43,7 +33,7 @@ const performSearch = debounce(() => {
     extractWithContext(searchQuery.value);
 }, 300);
 
-const selectResult = (result: Journal) => {
+const selectResult = (result: JournalInterface) => {
     // Handle result selection
     searchQuery.value = result.entry;
     searchResults.value = [];
@@ -53,7 +43,7 @@ const selectResult = (result: Journal) => {
 // I also want the searchQuery term to be highlighted yellow
 
 function extractWithContext(word: string, contextLength: number = 40) {
-    searchResultsExtracted.value.forEach((journal: Journal) => {
+    searchResultsExtracted.value.forEach((journal: JournalInterface) => {
         const index = journal.entry.indexOf(word);
         if (index === -1) {
             return 'The word ' + word + ' does not exist';

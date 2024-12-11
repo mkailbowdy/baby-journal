@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import Journal from '@/Components/Journal.vue';
+import { JournalInterface } from '@/Enums/JournalInterface';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
 import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-defineProps(['journals']);
+const props = defineProps(['journals']);
 const open = ref(false);
+const localJournals = computed(() => props.journals);
+const activeJournal = ref<JournalInterface | null>(null);
+
+activeJournal.value = localJournals.value[localJournals.value.length - 1];
 </script>
 <template>
     <Head title="Journals" />
@@ -63,7 +68,7 @@ const open = ref(false);
                         </g>
                     </svg>
                 </button>
-                <JournalSearch :journals="journals" />
+                <JournalSearch :journals="localJournals" />
             </div>
             <div v-else>
                 <JournalForm @cancelled="open = !open" />
@@ -71,9 +76,17 @@ const open = ref(false);
 
             <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
                 <Journal
-                    v-for="journal in journals"
+                    v-for="journal in localJournals"
                     :key="journal.id"
                     :journal="journal"
+                />
+            </div>
+
+            <div class="mt-6 divide-y rounded-lg bg-green-500 shadow-sm">
+                <Journal
+                    v-if="activeJournal"
+                    :journal="activeJournal"
+                    :key="activeJournal.id"
                 />
             </div>
         </div>

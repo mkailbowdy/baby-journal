@@ -2,8 +2,9 @@
 import { JournalInterface } from '@/Enums/JournalInterface';
 import { debounce } from 'lodash';
 import { computed, ref } from 'vue';
-const props = defineProps(['journals']);
 
+const props = defineProps(['journals']);
+const emit = defineEmits(['activeJournal']);
 const searchQuery = ref('');
 const searchResults = ref<JournalInterface[]>([]);
 const searchResultsExtracted = ref<JournalInterface[]>([]);
@@ -11,7 +12,6 @@ const searchResultsExtracted = ref<JournalInterface[]>([]);
 const localJournals = computed(() => {
     return props.journals;
 });
-
 const performSearch = debounce(() => {
     // the user must type more than 2 characters into the search bar
     if (searchQuery.value.length < 2) {
@@ -32,10 +32,10 @@ const performSearch = debounce(() => {
 
     extractWithContext(searchQuery.value);
 }, 300);
-
-const selectResult = (result: JournalInterface) => {
+const selectResult = (resultId: number) => {
     // Handle result selection
-    searchQuery.value = result.entry;
+    emit('activeJournal', resultId);
+    searchQuery.value = '';
     searchResults.value = [];
 };
 
@@ -79,7 +79,7 @@ function extractWithContext(word: string, contextLength: number = 40) {
                     v-for="result in searchResultsExtracted"
                     :key="result.id"
                     class="cursor-pointer truncate p-2 hover:bg-gray-100"
-                    @click="selectResult(result)"
+                    @click="selectResult(result.id)"
                 >
                     {{ result.entry }}
                 </div>

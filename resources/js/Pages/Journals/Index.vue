@@ -13,6 +13,12 @@ const localJournals = computed(() => props.journals);
 const activeJournal = ref<JournalInterface | null>(null);
 
 activeJournal.value = localJournals.value[localJournals.value.length - 1];
+
+const updateActiveJournal = (journalId: number): void => {
+    activeJournal.value = localJournals.value.find(
+        (journal: JournalInterface) => journal.id === journalId,
+    );
+};
 </script>
 <template>
     <Head title="Journals" />
@@ -68,7 +74,7 @@ activeJournal.value = localJournals.value[localJournals.value.length - 1];
                         </g>
                     </svg>
                 </button>
-                <JournalSearch :journals="localJournals" />
+                <JournalSearch :journals="localJournals" @activeJournal="updateActiveJournal" />
             </div>
             <div v-else>
                 <JournalForm @cancelled="open = !open" />

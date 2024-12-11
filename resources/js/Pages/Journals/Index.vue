@@ -10,20 +10,21 @@ import { computed, ref } from 'vue';
 const props = defineProps(['journals']);
 const open = ref(false);
 const localJournals = computed(() => props.journals);
-const activeJournal = ref<JournalInterface | null>(null);
-
-activeJournal.value = localJournals.value[localJournals.value.length - 1];
+const activeJournal = ref<JournalInterface | null>(localJournals.value[0]);
 
 const updateActiveJournal = (journalId: number): void => {
     activeJournal.value = localJournals.value.find(
         (journal: JournalInterface) => journal.id === journalId,
     );
 };
+
+const formSubmittedHandler = () => {
+    activeJournal.value = localJournals.value[0];
+};
 </script>
 <template>
     <Head title="Journals" />
     <AuthenticatedLayout>
-
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
             <div v-if="!open" class="flex flex-row items-center gap-4">
                 <button class="" @click="open = !open">
@@ -75,10 +76,16 @@ const updateActiveJournal = (journalId: number): void => {
                         </g>
                     </svg>
                 </button>
-                <JournalSearch :journals="localJournals" @activeJournal="updateActiveJournal" />
+                <JournalSearch
+                    :journals="localJournals"
+                    @activeJournal="updateActiveJournal"
+                />
             </div>
             <div v-else>
-                <JournalForm @cancelled="open = !open" />
+                <JournalForm
+                    @formSubmitted="formSubmittedHandler"
+                    @cancelled="open = !open"
+                />
             </div>
             <div class="mt-6 divide-y rounded-lg bg-green-500 shadow-sm">
                 <Journal

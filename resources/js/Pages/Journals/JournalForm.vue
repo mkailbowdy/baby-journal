@@ -7,7 +7,7 @@ import { useFlashMessage } from '@/Composables/useFlashMessage';
 import { MessageType } from '@/Enums/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
-
+const emit = defineEmits(['formSubmitted']);
 const form = useForm({
     date: '',
     height: 0,
@@ -38,6 +38,7 @@ function saveToDatabase() {
     form.post(route('journals.store'), {
         onSuccess: () => {
             form.reset();
+            emit('formSubmitted');
             showMessage(MessageType.SUCCESS); // same as saying showMessage('success')
         },
         onError: () => {

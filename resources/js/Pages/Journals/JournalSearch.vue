@@ -7,57 +7,49 @@ const props = defineProps(['journals']);
 const emit = defineEmits(['activeJournal']);
 const searchQuery = ref('');
 const searchResults = ref<JournalInterface[]>([]);
-const searchResultsExtracted = ref<JournalInterface[]>([]);
+const searchResultsExtracted = ref<{ id: number; entry: string }[]>([]);
 
-const localJournals = computed(() => {
-    return props.journals;
-});
+const localJournals = computed(() => props.journals);
+
 const performSearch = debounce(() => {
-    // the user must type more than 2 characters into the search bar
     if (searchQuery.value.length < 2) {
         searchResults.value = [];
+        searchResultsExtracted.value = [];
         return;
     }
-    // Client-side filtering
+
     searchResults.value = localJournals.value.filter((item: JournalInterface) =>
         item.entry.toLowerCase().includes(searchQuery.value.toLowerCase()),
     );
 
-    // Create a shallow copy of searchResults using map() and assign it to searchResultsExtracted
-    // By creating a shallow copy, you avoid directly mutating the objects in searchResults.value when modifying the entry field in extractWithContext.
-
     searchResultsExtracted.value = searchResults.value.map((item) => ({
-        ...item,
+        id: item.id,
+        entry: extractWithContext(item.entry, searchQuery.value),
     }));
-
-    extractWithContext(searchQuery.value);
 }, 300);
+
 const selectResult = (resultId: number) => {
-    // Handle result selection
     emit('activeJournal', resultId);
     searchQuery.value = '';
     searchResults.value = [];
 };
 
-// For every item in the searchResults array, I want to find the searchQuery term and return only the sentence that it is in.
-// I also want the searchQuery term to be highlighted yellow
+function extractWithContext(
+    entry: string,
+    word: string,
+    contextLength: number = 20,
+): string {
+    const index = entry.toLowerCase().indexOf(word.toLowerCase());
+    if (index === -1) return entry;
 
-function extractWithContext(word: string, contextLength: number = 5) {
-    searchResultsExtracted.value.forEach((journal: JournalInterface) => {
-        const index = journal.entry.indexOf(word);
-        if (index === -1) {
-            return 'The word ' + word + ' does not exist';
-        }
+    const start = Math.max(0, index - contextLength);
+    const end = Math.min(entry.length, index + word.length + contextLength);
 
-        // Calculate start and end indices for slicing
-        const start = Math.max(0, index - contextLength);
-        const end = Math.min(
-            journal.entry.length,
-            index + word.length + contextLength,
-        );
+    const before = entry.slice(start, index);
+    const match = entry.slice(index, index + word.length);
+    const after = entry.slice(index + word.length, end);
 
-        journal.entry = journal.entry.slice(start, end);
-    });
+    return `${before}<span class="bg-yellow-500">${match}</span>${after}`;
 }
 </script>
 
@@ -72,16 +64,16 @@ function extractWithContext(word: string, contextLength: number = 5) {
                 @input="performSearch"
             />
             <div
-                v-if="searchResults.length"
+                v-if="searchResultsExtracted.length"
                 class="absolute mt-1 w-full rounded border bg-white shadow-lg"
             >
                 <div
-                    v-for="result in searchResultsExtracted"
-                    :key="result.id"
+                    v-for="journal in searchResultsExtracted"
+                    :key="journal.id"
                     class="cursor-pointer truncate p-2 hover:bg-gray-100"
-                    @click="selectResult(result.id)"
+                    @click="selectResult(journal.id)"
                 >
-                    {{ result.entry }}
+                    <p v-html="journal.entry" class="truncate"></p>
                 </div>
             </div>
         </div>

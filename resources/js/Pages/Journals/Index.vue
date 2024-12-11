@@ -6,6 +6,7 @@ import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
 import { Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import NavBar from "@/Components/NavBar.vue";
 
 const props = defineProps(['journals']);
 const open = ref(false);
@@ -27,7 +28,7 @@ const formSubmittedHandler = () => {
     <AuthenticatedLayout>
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
             <div v-if="!open" class="flex flex-row items-center gap-4">
-                <button class="" @click="open = !open">
+                <button @click="open = !open">
                     <svg
                         fill="#000000"
                         height="24px"
@@ -87,7 +88,7 @@ const formSubmittedHandler = () => {
                     @cancelled="open = !open"
                 />
             </div>
-            <div class="mt-6 divide-y rounded-lg bg-green-500 shadow-sm">
+            <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
                 <Journal
                     v-if="activeJournal"
                     :journal="activeJournal"
@@ -95,13 +96,13 @@ const formSubmittedHandler = () => {
                 />
             </div>
 
-            <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
-                <Journal
-                    v-for="journal in localJournals"
-                    :key="journal.id"
-                    :journal="journal"
-                />
-            </div>
+            <!--            <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">-->
+            <!--                <Journal-->
+            <!--                    v-for="journal in localJournals"-->
+            <!--                    :key="journal.id"-->
+            <!--                    :journal="journal"-->
+            <!--                />-->
+            <!--            </div>-->
         </div>
     </AuthenticatedLayout>
 </template>

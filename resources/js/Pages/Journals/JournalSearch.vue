@@ -73,7 +73,7 @@ function extractWithContext(word: string, contextLength: number = 40) {
             />
             <div
                 v-if="searchResults.length"
-                class="absolute z-10 mt-1 w-full rounded border bg-white shadow-lg"
+                class="absolute mt-1 w-full rounded border bg-white shadow-lg"
             >
                 <div
                     v-for="result in searchResultsExtracted"

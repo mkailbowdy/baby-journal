@@ -12,9 +12,12 @@ const props = defineProps(['journals']);
 
 const searchQuery = ref('');
 const searchResults = ref<Journal[]>([]);
-const searchResultsExtracted = computed(() => {
-    return searchResults.value;
-});
+// const searchResultsExtracted = computed(() => {
+//     return searchResults.value;
+// });
+
+const searchResultsExtracted = ref<Journal[]>([]);
+
 const localJournals = computed(() => {
     return props.journals;
 });
@@ -29,6 +32,14 @@ const performSearch = debounce(() => {
     searchResults.value = localJournals.value.filter((item: Journal) =>
         item.entry.toLowerCase().includes(searchQuery.value.toLowerCase()),
     );
+
+    // Create a shallow copy of searchResults using map() and assign it to searchResultsExtracted
+    // By creating a shallow copy, you avoid directly mutating the objects in searchResults.value when modifying the entry field in extractWithContext.
+
+    searchResultsExtracted.value = searchResults.value.map((item) => ({
+        ...item,
+    }));
+
     extractWithContext(searchQuery.value);
 }, 300);
 

@@ -42,7 +42,7 @@ const selectResult = (resultId: number) => {
 // For every item in the searchResults array, I want to find the searchQuery term and return only the sentence that it is in.
 // I also want the searchQuery term to be highlighted yellow
 
-function extractWithContext(word: string, contextLength: number = 40) {
+function extractWithContext(word: string, contextLength: number = 5) {
     searchResultsExtracted.value.forEach((journal: JournalInterface) => {
         const index = journal.entry.indexOf(word);
         if (index === -1) {

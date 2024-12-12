@@ -20,6 +20,7 @@ class StoreJournalRequest extends FormRequest
             'date' => 'required|date',
             'height' => 'required|integer|min:0',
             'weight' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ];
     }
 }

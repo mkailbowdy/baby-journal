@@ -36,6 +36,13 @@ class JournalController extends Controller
     {
         $validated = $request->validated();
 
+        // Store the file in the storage/app/public/images directory
+        if($request->hasFile('image')){
+            $imagePath = $request->file('image')->store('images', 'public');
+
+            // Add the image path to the validated data
+            $validated['image'] = $imagePath;
+        }
         $request->user()->journals()->create($validated);
 
         return redirect(route('journals.index'));

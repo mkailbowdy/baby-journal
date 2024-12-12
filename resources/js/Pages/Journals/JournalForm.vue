@@ -23,11 +23,18 @@ const localJournal = computed(() => {
 });
 
 const emit = defineEmits(['formSubmitted', 'closeForm']);
-const form = useForm({
+const form = useForm<{
+    date: string;
+    height: number;
+    weight: number;
+    entry: string;
+    image: File | null;
+}>({
     date: new Date().toISOString().split('T')[0],
     height: localJournal.value.height,
     weight: localJournal.value.weight,
     entry: '',
+    image: null,
 });
 const messageClass = computed(() => {
     switch (messageType.value) {
@@ -61,6 +68,14 @@ function saveToDatabase() {
             showMessage(MessageType.ERROR); // same as saying showMessage('error')
         },
     });
+}
+
+function handleFileInput($event: Event): void {
+    const target = $event.target as HTMLInputElement;
+    if (target && target.files) {
+        form.image = target.files[0];
+        console.log(form.image);
+    }
 }
 </script>
 <template>
@@ -109,11 +124,21 @@ function saveToDatabase() {
                     placeholder="What did your child do today?"
                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 ></textarea>
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/png, image/jpeg"
+                    @input="handleFileInput"
+                />
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                    {{ form.progress.percentage }}%
+                </progress>
             </div>
         </div>
 
         <InputError :message="form.errors.entry" class="mt-2" />
-        <PrimaryButton class="mb-4 mt-4 bg-teal-500">Submit</PrimaryButton>
+        <PrimaryButton class="mb-4 mt-4 bg-teal-500" :disabled="form.processing">Submit</PrimaryButton>
         <SecondaryButton @click="emit('closeForm')" class="mb-4 ml-4 mt-4"
             >Cancel
         </SecondaryButton>

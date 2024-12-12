@@ -20,9 +20,6 @@ const updateActiveJournal = (journalId: number): void => {
         (journal: JournalInterface) => journal.id === journalId,
     );
 };
-// const updateRecentJournal = (): void =>{
-//     recentJournal.value = journalId;
-// }
 
 const formSubmittedHandler = () => {
     activeJournal.value = localJournals.value[0];
@@ -99,6 +96,7 @@ const formSubmittedHandler = () => {
                     v-if="activeJournal"
                     :journal="activeJournal"
                     :key="activeJournal.id"
+                    @editFormSubmitted="updateActiveJournal"
                 />
             </div>
 

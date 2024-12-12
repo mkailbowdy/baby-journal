@@ -12,7 +12,7 @@ const props = defineProps(['journal']);
 
 const emit = defineEmits(['formSubmitted', 'closeForm']);
 const form = useForm({
-    date: '',
+    date: new Date().toISOString().split('T')[0],
     height: props.journal.height,
     weight: props.journal.weight,
     entry: '',

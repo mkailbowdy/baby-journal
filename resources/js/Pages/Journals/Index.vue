@@ -10,10 +10,11 @@ import { computed, ref } from 'vue';
 const props = defineProps(['journals']);
 const open = ref(false);
 const localJournals = computed(() => props.journals);
-const activeJournal = ref<JournalInterface | null>(localJournals.value[0]);
 const recentJournal = computed(() => {
     return localJournals.value[0];
 });
+const activeJournal = ref<JournalInterface | null>(recentJournal.value);
+
 const updateActiveJournal = (journalId: number): void => {
     activeJournal.value = localJournals.value.find(
         (journal: JournalInterface) => journal.id === journalId,

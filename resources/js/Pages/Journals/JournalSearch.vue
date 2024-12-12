@@ -32,6 +32,7 @@ const selectResult = (resultId: number) => {
     emit('activeJournal', resultId);
     searchQuery.value = '';
     searchResults.value = [];
+    searchResultsExtracted.value = [];
 };
 
 function extractWithContext(

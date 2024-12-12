@@ -6,7 +6,6 @@ import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
 import { Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
-import NavBar from "@/Components/NavBar.vue";
 
 const props = defineProps(['journals']);
 const open = ref(false);

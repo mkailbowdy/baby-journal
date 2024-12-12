@@ -7,6 +7,7 @@ use App\Models\Journal;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Redirect;
@@ -39,11 +40,15 @@ class JournalController extends Controller
         // Store the file in the storage/app/public/images directory
         if($request->hasFile('image')){
             $imagePath = $request->file('image')->store('images', 'public');
-
             // Add the image path to the validated data
             $validated['image'] = $imagePath;
+
+            Log::info('Image saved to path: ' . $imagePath); // Debugging
         }
-        $request->user()->journals()->create($validated);
+        $journal = $request->user()->journals()->create($validated);
+
+        Log::info('Journal created with data: ', $journal->toArray()); // Debugging
+//        $request->user()->journals()->create($validated);
 
         return redirect(route('journals.index'));
     }

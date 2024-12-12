@@ -13,7 +13,7 @@ class Journal extends Model
         'height',
         'weight',
         'entry',
-        'image_path' // Add this if you want to store image paths
+        'image' // Add this if you want to store image paths
     ];
 
     protected $dispatchesEvents = [

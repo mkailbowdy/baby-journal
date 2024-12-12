@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { JournalInterface } from '@/Enums/JournalInterface';
+import { JournalInterface } from '@/types/JournalInterface';
 import { debounce } from 'lodash';
 import { computed, ref } from 'vue';
 
@@ -22,10 +22,14 @@ const performSearch = debounce(() => {
         item.entry.toLowerCase().includes(searchQuery.value.toLowerCase()),
     );
 
-    searchResultsExtracted.value = searchResults.value.map((item) => ({
-        id: item.id,
-        entry: extractWithContext(item.entry, searchQuery.value),
-    }));
+    searchResultsExtracted.value = searchResults.value.map(
+        (item): { id: number; entry: string } => {
+            return {
+                id: item.id!,
+                entry: extractWithContext(item.entry, searchQuery.value),
+            };
+        },
+    );
 }, 300);
 
 const selectResult = (resultId: number) => {

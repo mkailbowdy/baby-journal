@@ -39,6 +39,7 @@ class JournalController extends Controller
 
         // Store the file in the storage/app/public/images directory
         if($request->hasFile('image')){
+            // store the image into our file disk at storage/app/public/images and set the path as a string to $imagePath
             $imagePath = $request->file('image')->store('images', 'public');
             // Add the image path to the validated data
             $validated['image'] = $imagePath;

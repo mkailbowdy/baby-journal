@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Journal from '@/Components/Journal.vue';
-import { JournalInterface } from '@/Enums/JournalInterface';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
+import { JournalInterface } from '@/types/JournalInterface';
 import { Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 

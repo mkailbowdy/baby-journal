@@ -4,11 +4,14 @@ import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
-import { MessageType } from '@/Enums/MessageType';
+import { JournalInterface } from '@/types/JournalInterface';
+import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+const emit = defineEmits(['formSubmitted', 'closeForm']);
 const props = defineProps(['journal']);
+
 const localJournal = computed(() => {
     if (props.journal) {
         return props.journal;
@@ -22,20 +25,14 @@ const localJournal = computed(() => {
     }
 });
 
-const emit = defineEmits(['formSubmitted', 'closeForm']);
-const form = useForm<{
-    date: string;
-    height: number;
-    weight: number;
-    entry: string;
-    image: File | null;
-}>({
+const form = useForm<JournalInterface>({
     date: new Date().toISOString().split('T')[0],
     height: localJournal.value.height,
     weight: localJournal.value.weight,
     entry: '',
     image: null,
 });
+
 const messageClass = computed(() => {
     switch (messageType.value) {
         case MessageType.SUCCESS:
@@ -131,14 +128,20 @@ function handleFileInput($event: Event): void {
                     accept="image/png, image/jpeg"
                     @input="handleFileInput"
                 />
-                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                <progress
+                    v-if="form.progress"
+                    :value="form.progress.percentage"
+                    max="100"
+                >
                     {{ form.progress.percentage }}%
                 </progress>
             </div>
         </div>
 
         <InputError :message="form.errors.entry" class="mt-2" />
-        <PrimaryButton class="mb-4 mt-4 bg-teal-500" :disabled="form.processing">Submit</PrimaryButton>
+        <PrimaryButton class="mb-4 mt-4 bg-teal-500" :disabled="form.processing"
+            >Submit</PrimaryButton
+        >
         <SecondaryButton @click="emit('closeForm')" class="mb-4 ml-4 mt-4"
             >Cancel
         </SecondaryButton>

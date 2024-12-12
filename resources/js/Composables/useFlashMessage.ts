@@ -1,4 +1,4 @@
-import { MessageType } from '@/Enums/MessageType';
+import { MessageType } from '@/types/MessageType';
 import { ref } from 'vue';
 
 export function useFlashMessage() {

@@ -9,12 +9,24 @@ import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const props = defineProps(['journal']);
+const localJournal = computed(() => {
+    if (props.journal) {
+        return props.journal;
+    } else {
+        return {
+            date: '',
+            height: 0,
+            weight: 0,
+            entry: '',
+        };
+    }
+});
 
 const emit = defineEmits(['formSubmitted', 'closeForm']);
 const form = useForm({
     date: new Date().toISOString().split('T')[0],
-    height: props.journal.height,
-    weight: props.journal.weight,
+    height: localJournal.value.height,
+    weight: localJournal.value.weight,
     entry: '',
 });
 const messageClass = computed(() => {
@@ -103,8 +115,8 @@ function saveToDatabase() {
         <InputError :message="form.errors.entry" class="mt-2" />
         <PrimaryButton class="mb-4 mt-4 bg-teal-500">Submit</PrimaryButton>
         <SecondaryButton @click="emit('closeForm')" class="mb-4 ml-4 mt-4"
-            >Cancel</SecondaryButton
-        >
+            >Cancel
+        </SecondaryButton>
     </form>
     <Transition>
         <div v-if="message" :class="messageClass">

@@ -10,7 +10,7 @@ import { ref } from 'vue';
 
 dayjs.extend(relativeTime);
 const props = defineProps(['journal']);
-
+const emit = defineEmits(['editFormSubmitted']);
 const form = useForm({
     entry: props.journal.entry,
     date: props.journal.date,

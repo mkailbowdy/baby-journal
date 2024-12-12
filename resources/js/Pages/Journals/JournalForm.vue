@@ -7,11 +7,14 @@ import { useFlashMessage } from '@/Composables/useFlashMessage';
 import { MessageType } from '@/Enums/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
-const emit = defineEmits(['formSubmitted', 'cancelled']);
+
+const props = defineProps(['journal']);
+
+const emit = defineEmits(['formSubmitted', 'closeForm']);
 const form = useForm({
     date: '',
-    height: 0,
-    weight: 0,
+    height: props.journal.height,
+    weight: props.journal.weight,
     entry: '',
 });
 const messageClass = computed(() => {
@@ -39,6 +42,7 @@ function saveToDatabase() {
         onSuccess: () => {
             form.reset();
             emit('formSubmitted');
+            emit('closeForm');
             showMessage(MessageType.SUCCESS); // same as saying showMessage('success')
         },
         onError: () => {
@@ -98,7 +102,7 @@ function saveToDatabase() {
 
         <InputError :message="form.errors.entry" class="mt-2" />
         <PrimaryButton class="mb-4 mt-4 bg-teal-500">Submit</PrimaryButton>
-        <SecondaryButton @click="emit('cancelled')" class="mb-4 ml-4 mt-4"
+        <SecondaryButton @click="emit('closeForm')" class="mb-4 ml-4 mt-4"
             >Cancel</SecondaryButton
         >
     </form>

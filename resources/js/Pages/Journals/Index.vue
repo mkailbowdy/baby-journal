@@ -11,12 +11,17 @@ const props = defineProps(['journals']);
 const open = ref(false);
 const localJournals = computed(() => props.journals);
 const activeJournal = ref<JournalInterface | null>(localJournals.value[0]);
-
+const recentJournal = computed(() => {
+    return localJournals.value[0];
+});
 const updateActiveJournal = (journalId: number): void => {
     activeJournal.value = localJournals.value.find(
         (journal: JournalInterface) => journal.id === journalId,
     );
 };
+// const updateRecentJournal = (): void =>{
+//     recentJournal.value = journalId;
+// }
 
 const formSubmittedHandler = () => {
     activeJournal.value = localJournals.value[0];
@@ -84,7 +89,8 @@ const formSubmittedHandler = () => {
             <div v-else>
                 <JournalForm
                     @formSubmitted="formSubmittedHandler"
-                    @cancelled="open = !open"
+                    @close-form="open = !open"
+                    :journal="recentJournal"
                 />
             </div>
             <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">

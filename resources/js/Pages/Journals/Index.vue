@@ -15,16 +15,13 @@ const recentJournal = computed(() => {
 });
 const activeJournal = ref<JournalInterface | null>(recentJournal.value);
 
-const updateActiveJournal = (journalId: number): void => {
+const findActiveJournal = (journalId: number): void => {
     activeJournal.value = localJournals.value.find(
         (journal: JournalInterface) => journal.id === journalId,
     );
 };
-const journalDeleted = () => {
-    activeJournal.value = recentJournal.value;
-};
 
-const formSubmittedHandler = () => {
+const setActiveJournal = () => {
     activeJournal.value = recentJournal.value;
 };
 </script>
@@ -87,12 +84,12 @@ const formSubmittedHandler = () => {
                 </button>
                 <JournalSearch
                     :journals="localJournals"
-                    @activeJournal="updateActiveJournal"
+                    @activeJournal="findActiveJournal"
                 />
             </div>
             <div v-else>
                 <JournalForm
-                    @formSubmitted="formSubmittedHandler"
+                    @formSubmitted="setActiveJournal"
                     @close-form="open = !open"
                     :journal="recentJournal"
                 />
@@ -102,8 +99,8 @@ const formSubmittedHandler = () => {
                     v-if="activeJournal"
                     :journal="activeJournal"
                     :key="activeJournal.id"
-                    @editFormSubmitted="updateActiveJournal"
-                    @journalDeleted="journalDeleted"
+                    @editFormSubmitted="findActiveJournal"
+                    @journalDeleted="setActiveJournal"
                 />
             </div>
         </div>

@@ -55,6 +55,7 @@ const { message, messageType, showMessage } = useFlashMessage();
 // const showMessage = flashMessage.showMessage;
 
 function saveToDatabase() {
+    // Inertia's form helpers refreshes the props
     form.post(route('journals.store'), {
         onSuccess: () => {
             form.reset();

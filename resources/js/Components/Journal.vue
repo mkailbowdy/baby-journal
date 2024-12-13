@@ -21,6 +21,7 @@ const form = useForm({
 const editing = ref(false);
 
 function deleteJournal(journalId: number) {
+    // Inertia's form helpers refreshes the props
     form.delete(route('journals.destroy', journalId), {
         onSuccess: () => {
             form.reset();

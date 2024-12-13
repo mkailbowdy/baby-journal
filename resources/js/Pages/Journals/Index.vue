@@ -20,16 +20,19 @@ const updateActiveJournal = (journalId: number): void => {
         (journal: JournalInterface) => journal.id === journalId,
     );
 };
+const journalDeleted = () => {
+    activeJournal.value = recentJournal.value;
+};
 
 const formSubmittedHandler = () => {
-    activeJournal.value = localJournals.value[0];
+    activeJournal.value = recentJournal.value;
 };
 </script>
 <template>
     <AuthenticatedLayout>
         <template #header>
             <Head title="Journals" />
-            <h1 class="text-3xl font-bold">Tyr's Baby Journals</h1>
+            <h1 class="text-3xl font-bold">Tyr's Journal</h1>
         </template>
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
             <div v-if="!open" class="flex flex-row items-center gap-4">
@@ -100,16 +103,9 @@ const formSubmittedHandler = () => {
                     :journal="activeJournal"
                     :key="activeJournal.id"
                     @editFormSubmitted="updateActiveJournal"
+                    @journalDeleted="journalDeleted"
                 />
             </div>
-
-            <!--            <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">-->
-            <!--                <Journal-->
-            <!--                    v-for="journal in localJournals"-->
-            <!--                    :key="journal.id"-->
-            <!--                    :journal="journal"-->
-            <!--                />-->
-            <!--            </div>-->
         </div>
     </AuthenticatedLayout>
 </template>

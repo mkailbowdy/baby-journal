@@ -49,7 +49,6 @@ class JournalController extends Controller
         $journal = $request->user()->journals()->create($validated);
 
         Log::info('Journal created with data: ', $journal->toArray()); // Debugging
-//        $request->user()->journals()->create($validated);
 
         return redirect(route('journals.index'));
     }

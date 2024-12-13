@@ -10,7 +10,7 @@ import { ref } from 'vue';
 
 dayjs.extend(relativeTime);
 const props = defineProps(['journal']);
-const emit = defineEmits(['editFormSubmitted']);
+const emit = defineEmits(['editFormSubmitted', 'journalDeleted']);
 const form = useForm({
     entry: props.journal.entry,
     date: props.journal.date,
@@ -19,24 +19,19 @@ const form = useForm({
 });
 
 const editing = ref(false);
+
+function deleteJournal(journalId: number) {
+    form.delete(route('journals.destroy', journalId), {
+        onSuccess: () => {
+            form.reset();
+            emit('journalDeleted');
+        },
+    });
+}
 </script>
 
 <template>
     <div class="flex space-x-2 p-6">
-        <!--        <svg-->
-        <!--            xmlns="http://www.w3.org/2000/svg"-->
-        <!--            class="h-6 w-6 -scale-x-100 text-gray-600"-->
-        <!--            fill="none"-->
-        <!--            viewBox="0 0 24 24"-->
-        <!--            stroke="currentColor"-->
-        <!--            stroke-width="2"-->
-        <!--        >-->
-        <!--            <path-->
-        <!--                stroke-linecap="round"-->
-        <!--                stroke-linejoin="round"-->
-        <!--                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"-->
-        <!--            />-->
-        <!--        </svg>-->
         <div class="flex-1">
             <div class="flex items-center justify-between">
                 <div>
@@ -70,7 +65,7 @@ const editing = ref(false);
                     </template>
                     <template #content>
                         <button
-                            class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100"
+                            class="block w-full py-2 text-center text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                             @click="editing = true"
                         >
                             Edit
@@ -78,7 +73,7 @@ const editing = ref(false);
                         <DropdownLink
                             as="button"
                             :href="route('journals.destroy', journal.id)"
-                            method="delete"
+                            @click.prevent="deleteJournal(journal.id)"
                         >
                             Delete
                         </DropdownLink>

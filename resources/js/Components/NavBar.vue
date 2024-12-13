@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import DropdownLink from '@/Components/DropdownLink.vue';
+import { Link } from '@inertiajs/vue3';
+
 import NavLink from '@/Components/NavLink.vue';
 import { ref } from 'vue';
 
@@ -71,10 +72,10 @@ function toggleMenu(): void {
                 <div @click="toggleMenu" class="fixed inset-0"></div>
                 <nav
                     id="navbar"
-                    class="fixed right-0 h-screen w-48 bg-indigo-500"
+                    class="fixed right-0 h-screen w-48 bg-teal-600"
                 >
-                    <div class="mt-16">
-                        <div class="mb-3 flex flex-col">
+                    <div class="mt-16 ml-4">
+                        <div class="mb-3 flex flex-col gap-1">
                             <NavLink
                                 :href="route('dashboard')"
                                 :active="route().current('dashboard')"
@@ -87,16 +88,19 @@ function toggleMenu(): void {
                             >
                                 Journals
                             </NavLink>
-                            <DropdownLink
-                                class="text-white"
-                                v-show="$page.props.auth.user.name"
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Log Out
-                            </DropdownLink>
                         </div>
+
+                    </div>
+                    <div class="mt-8 pr-4 text-center">
+                        <Link
+                            class="px-1 pt-1 text-lg leading-5 text-gray-800 transition duration-150 ease-in-out focus:border-gray-300 focus:text-gray-700 focus:outline-none"
+                            v-show="$page.props.auth.user.name"
+                            :href="route('logout')"
+                            method="post"
+                            as="button"
+                        >
+                            <small>Log Out</small>
+                        </Link>
                     </div>
                 </nav>
             </div>

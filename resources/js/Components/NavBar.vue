@@ -74,7 +74,7 @@ function toggleMenu(): void {
                     id="navbar"
                     class="fixed right-0 h-screen w-48 bg-teal-600"
                 >
-                    <div class="mt-16 ml-4">
+                    <div class="ml-4 mt-16">
                         <div class="mb-3 flex flex-col gap-1">
                             <NavLink
                                 :href="route('dashboard')"
@@ -89,7 +89,6 @@ function toggleMenu(): void {
                                 Journals
                             </NavLink>
                         </div>
-
                     </div>
                     <div class="mt-8 pr-4 text-center">
                         <Link

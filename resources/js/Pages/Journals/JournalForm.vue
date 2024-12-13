@@ -79,9 +79,9 @@ function handleFileInput($event: Event): void {
         reader.onload = (e) => {
             imagePreview.value = e.target?.result as string;
         };
-        reader.readAsDataURL(file);
 
-        console.log(form.image);
+        // when readAsDataUrl(file) is finished reading the file, the reader.onload() above will fire and set the imagePreview.value string
+        reader.readAsDataURL(file);
     }
 }
 </script>

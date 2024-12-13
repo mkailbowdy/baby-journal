@@ -120,6 +120,9 @@ const editing = ref(false);
                 </div>
             </form>
             <div v-else>
+                <div class="mb-8">
+                    <img :src="journal.image" alt="journal image" />
+                </div>
                 <div>
                     <small class="mt-4 text-lg text-gray-900"
                         >Height: {{ journal.height }}cm</small

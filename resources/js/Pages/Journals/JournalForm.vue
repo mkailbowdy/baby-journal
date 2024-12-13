@@ -7,11 +7,12 @@ import { useFlashMessage } from '@/Composables/useFlashMessage';
 import { JournalInterface } from '@/types/JournalInterface';
 import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const emit = defineEmits(['formSubmitted', 'closeForm']);
 const props = defineProps(['journal']);
-
+const imagePreview = ref<string | null>(null);
+const imageError = ref<string | null>(null);
 const localJournal = computed(() => {
     if (props.journal) {
         return props.journal;
@@ -70,7 +71,16 @@ function saveToDatabase() {
 function handleFileInput($event: Event): void {
     const target = $event.target as HTMLInputElement;
     if (target && target.files) {
-        form.image = target.files[0];
+        const file = target.files[0];
+        form.image = file;
+
+        // Create a FileReader to generate a preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreview.value = e.target?.result as string;
+        };
+        reader.readAsDataURL(file);
+
         console.log(form.image);
     }
 }
@@ -127,6 +137,13 @@ function handleFileInput($event: Event): void {
                     name="image"
                     accept="image/png, image/jpeg"
                     @input="handleFileInput"
+                />
+                <p v-if="imageError" class="text-red-500">{{ imageError }}</p>
+                <img
+                    v-if="imagePreview"
+                    :src="imagePreview"
+                    class="mt-4 max-w-xs rounded-lg shadow-md"
+                    alt="journal image"
                 />
                 <progress
                     v-if="form.progress"

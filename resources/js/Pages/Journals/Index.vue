@@ -26,8 +26,11 @@ const formSubmittedHandler = () => {
 };
 </script>
 <template>
-    <Head title="Journals" />
     <AuthenticatedLayout>
+        <template #header>
+            <Head title="Journals" />
+            <h1 class="text-3xl font-bold">Tyr's Baby Journals</h1>
+        </template>
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
             <div v-if="!open" class="flex flex-row items-center gap-4">
                 <button @click="open = !open">

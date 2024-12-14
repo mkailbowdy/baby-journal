@@ -117,7 +117,7 @@ function deleteJournal(journalId: number) {
             </form>
             <div v-else>
                 <div class="mb-8">
-                    <img :src="'public/storage/' + journal.image" alt="journal image" />
+                    <img :src="'storage/' + journal.image" alt="journal image" />
                 </div>
                 <div>
                     <small class="mt-4 text-lg text-gray-900"

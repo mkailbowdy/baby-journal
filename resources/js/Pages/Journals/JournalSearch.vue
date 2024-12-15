@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { JournalInterface } from '@/types/JournalInterface';
+import { Journal } from '@/types/Journal';
 import { debounce } from 'lodash';
 import { computed, ref } from 'vue';
 
 const props = defineProps(['journals']);
 const emit = defineEmits(['activeJournal']);
 const searchQuery = ref('');
-const searchResults = ref<JournalInterface[]>([]);
+const searchResults = ref<Journal[]>([]);
 const searchResultsExtracted = ref<{ id: number; entry: string }[]>([]);
 
 const localJournals = computed(() => props.journals);
@@ -18,7 +18,7 @@ const performSearch = debounce(() => {
         return;
     }
 
-    searchResults.value = localJournals.value.filter((item: JournalInterface) =>
+    searchResults.value = localJournals.value.filter((item: Journal) =>
         item.entry.toLowerCase().includes(searchQuery.value.toLowerCase()),
     );
 

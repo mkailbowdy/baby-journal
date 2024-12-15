@@ -1,24 +1,28 @@
 <script setup lang="ts">
-import Journal from '@/Components/Journal.vue';
+import JournalComponent from '@/Components/Journal.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
-import { JournalInterface } from '@/types/JournalInterface';
+import type { Journal } from '@/types/Journal';
 import { Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
-const props = defineProps(['journals']);
+const props = defineProps<{
+    journals: Journal[];
+}>();
+
 const open = ref(false);
 const localJournals = computed(() => props.journals);
 const recentJournal = computed(() => {
-    return localJournals.value[0];
+    return localJournals.value[0] || null;
 });
-const activeJournal = ref<JournalInterface | null>(recentJournal.value);
+const activeJournal = ref<Journal | null>(recentJournal.value);
 
 const findActiveJournal = (journalId: number): void => {
-    activeJournal.value = localJournals.value.find(
-        (journal: JournalInterface) => journal.id === journalId,
-    );
+    activeJournal.value =
+        localJournals.value.find(
+            (journal: Journal) => journal.id === journalId,
+        ) || null;
 };
 
 const setActiveJournal = () => {
@@ -93,7 +97,7 @@ const setActiveJournal = () => {
                 />
             </div>
             <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
-                <Journal
+                <JournalComponent
                     v-if="activeJournal"
                     :journal="activeJournal"
                     :key="activeJournal.id"

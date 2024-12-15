@@ -4,7 +4,7 @@ import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
-import { JournalInterface } from '@/types/JournalInterface';
+import { Journal } from '@/types/Journal';
 import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
@@ -26,7 +26,7 @@ const localJournal = computed(() => {
     }
 });
 
-const form = useForm<JournalInterface>({
+const form = useForm<Journal>({
     date: new Date().toISOString().split('T')[0],
     height: localJournal.value.height,
     weight: localJournal.value.weight,

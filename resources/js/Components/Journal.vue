@@ -93,13 +93,19 @@ function deleteJournal(journalId: number) {
                     })
                 "
             >
+                <div class="mb-4">
+                    <img
+                        alt="profile picture"
+                        :src="`storage/${journal.image}`"
+                    />
+                </div>
+                <input v-model="form.date" type="date" />
+                <input v-model="form.height" type="number" />
+                <input v-model="form.weight" type="number" />
                 <textarea
                     v-model="form.entry"
                     class="mt-4 w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 ></textarea>
-                <input v-model="form.date" type="date" />
-                <input v-model="form.height" type="number" />
-                <input v-model="form.weight" type="number" />
                 <InputError :message="form.errors.entry" class="mt-2" />
                 <div class="space-x-2">
                     <PrimaryButton class="mt-4">Save</PrimaryButton>

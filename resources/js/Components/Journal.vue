@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
@@ -71,13 +70,6 @@ function deleteJournal(journalId: number) {
                         >
                             Edit
                         </button>
-                        <DropdownLink
-                            as="button"
-                            :href="route('journals.destroy', journal.id)"
-                            @click.prevent="deleteJournal(journal.id)"
-                        >
-                            Delete
-                        </DropdownLink>
                     </template>
                 </Dropdown>
             </div>
@@ -118,6 +110,12 @@ function deleteJournal(journalId: number) {
                         "
                     >
                         Cancel
+                    </button>
+                    <button
+                        class="bg-red-500"
+                        @click.prevent="deleteJournal(journal.id)"
+                    >
+                        Delete
                     </button>
                 </div>
             </form>

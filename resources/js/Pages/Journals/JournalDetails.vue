@@ -103,10 +103,15 @@ function updateJournal(journal: Journal) {
                         class="mt-4 w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     ></textarea>
                     <InputError :message="form.errors.entry" class="mt-2" />
-                    <div class="space-x-2">
-                        <PrimaryButton class="mt-4">Save</PrimaryButton>
-                        <button
-                            class="mt-4"
+                    <div class="mt-4 flex justify-end gap-2">
+                        <PrimaryButton
+                            class="bg-red-500 hover:bg-red-700"
+                            @click.prevent="deleteJournal(journal)"
+                        >
+                            Delete
+                        </PrimaryButton>
+                        <PrimaryButton
+                            class="bg-gray-400 hover:bg-gray-500"
                             @click="
                                 editing = false;
                                 form.reset();
@@ -114,13 +119,10 @@ function updateJournal(journal: Journal) {
                             "
                         >
                             Cancel
-                        </button>
-                        <button
-                            class="bg-red-500"
-                            @click.prevent="deleteJournal(journal)"
+                        </PrimaryButton>
+                        <PrimaryButton class="bg-gray-800 hover:bg-gray-700"
+                            >Save</PrimaryButton
                         >
-                            Delete
-                        </button>
                     </div>
                 </form>
             </div>

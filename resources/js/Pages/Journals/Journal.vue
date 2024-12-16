@@ -2,6 +2,7 @@
 import Dropdown from '@/Components/Dropdown.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { Journal } from '@/types/Journal';
 import { useForm } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -19,12 +20,21 @@ const form = useForm({
 
 const editing = ref(false);
 
-function deleteJournal(journalId: number) {
+function deleteJournal(journal: Journal) {
     // Inertia's form helpers refreshes the props
-    form.delete(route('journals.destroy', journalId), {
+    form.delete(route('journals.destroy', journal.id), {
         onSuccess: () => {
             form.reset();
             emit('journalDeleted');
+        },
+    });
+}
+
+function updateJournal(journal: Journal) {
+    form.put(route('journals.update', journal.id), {
+        onSuccess: () => {
+            editing.value = false;
+            emit('editFormSubmitted', journal.id);
         },
     });
 }
@@ -74,17 +84,7 @@ function deleteJournal(journalId: number) {
                 </Dropdown>
             </div>
 
-            <form
-                v-if="editing"
-                @submit.prevent="
-                    form.put(route('journals.update', journal.id), {
-                        onSuccess: () => {
-                            editing = false;
-                            emit('editFormSubmitted', journal.id);
-                        },
-                    })
-                "
-            >
+            <form v-if="editing" @submit.prevent="updateJournal(props.journal)">
                 <div class="mb-4">
                     <img
                         alt="profile picture"
@@ -113,7 +113,7 @@ function deleteJournal(journalId: number) {
                     </button>
                     <button
                         class="bg-red-500"
-                        @click.prevent="deleteJournal(journal.id)"
+                        @click.prevent="deleteJournal(journal)"
                     >
                         Delete
                     </button>

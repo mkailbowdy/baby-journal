@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import JournalComponent from '@/Components/Journal.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import JournalComponent from '@/Pages/Journals/Journal.vue';
 import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
 import type { Journal } from '@/types/Journal';

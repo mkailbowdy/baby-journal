@@ -10,7 +10,7 @@ import { ref } from 'vue';
 
 dayjs.extend(relativeTime);
 const props = defineProps(['journal']);
-const emit = defineEmits(['editFormSubmitted', 'journalDeleted']);
+const emit = defineEmits(['journalUpdated', 'journalDeleted']);
 const form = useForm({
     entry: props.journal.entry,
     date: props.journal.date,
@@ -34,7 +34,7 @@ function updateJournal(journal: Journal) {
     form.put(route('journals.update', journal.id), {
         onSuccess: () => {
             editing.value = false;
-            emit('editFormSubmitted', journal.id);
+            emit('journalUpdated', journal);
         },
     });
 }
@@ -119,7 +119,7 @@ function updateJournal(journal: Journal) {
                     </button>
                 </div>
             </form>
-            <div v-else>
+            <div>
                 <div class="mb-8">
                     <img
                         :src="`storage/${journal.image}`"

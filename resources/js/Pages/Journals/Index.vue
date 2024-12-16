@@ -18,10 +18,10 @@ const recentJournal = computed(() => {
 });
 const activeJournal = ref<Journal | null>(recentJournal.value);
 
-const findActiveJournal = (journalId: number): void => {
+const findActiveJournal = (journalToFind: Journal): void => {
     activeJournal.value =
         localJournals.value.find(
-            (journal: Journal) => journal.id === journalId,
+            (journal: Journal) => journal.id === journalToFind.id,
         ) || null;
 };
 
@@ -101,8 +101,8 @@ const setActiveJournal = () => {
                     v-if="activeJournal"
                     :journal="activeJournal"
                     :key="activeJournal.id"
-                    @editFormSubmitted="findActiveJournal"
-                    @journalDeleted="setActiveJournal"
+                    @journal-updated="findActiveJournal"
+                    @journal-deleted="setActiveJournal"
                 />
             </div>
         </div>

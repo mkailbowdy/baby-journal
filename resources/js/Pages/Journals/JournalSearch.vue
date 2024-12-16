@@ -7,7 +7,7 @@ const props = defineProps(['journals']);
 const emit = defineEmits(['activeJournal']);
 const searchQuery = ref('');
 const searchResults = ref<Journal[]>([]);
-const searchResultsExtracted = ref<{ id: number; entry: string }[]>([]);
+const searchResultsExtracted = ref<Journal[]>([]);
 
 const localJournals = computed(() => props.journals);
 
@@ -18,22 +18,26 @@ const performSearch = debounce(() => {
         return;
     }
 
-    searchResults.value = localJournals.value.filter((item: Journal) =>
-        item.entry.toLowerCase().includes(searchQuery.value.toLowerCase()),
+    searchResults.value = localJournals.value.filter((journal: Journal) =>
+        journal.entry.toLowerCase().includes(searchQuery.value.toLowerCase()),
     );
 
     searchResultsExtracted.value = searchResults.value.map(
-        (item): { id: number; entry: string } => {
+        (journal): Journal => {
             return {
-                id: item.id!,
-                entry: extractWithContext(item.entry, searchQuery.value),
+                id: journal.id!,
+                entry: extractWithContext(journal.entry, searchQuery.value),
+                date: journal.date,
+                height: journal.height,
+                weight: journal.weight,
+                image: journal.image,
             };
         },
     );
 }, 300);
 
-const selectResult = (resultId: number) => {
-    emit('activeJournal', resultId);
+const selectResult = (journal: Journal) => {
+    emit('activeJournal', journal);
     searchQuery.value = '';
     searchResults.value = [];
     searchResultsExtracted.value = [];
@@ -76,7 +80,7 @@ function extractWithContext(
                     v-for="journal in searchResultsExtracted"
                     :key="journal.id"
                     class="cursor-pointer truncate p-2 hover:bg-gray-100"
-                    @click="selectResult(journal.id)"
+                    @click="selectResult(journal)"
                 >
                     <p v-html="journal.entry" class="truncate"></p>
                 </div>

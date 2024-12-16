@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import JournalComponent from '@/Pages/Journals/Journal.vue';
+import JournalDetails from '@/Pages/Journals/JournalDetails.vue';
 import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
 import type { Journal } from '@/types/Journal';
@@ -97,7 +97,7 @@ const setActiveJournal = () => {
                 />
             </div>
             <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
-                <JournalComponent
+                <JournalDetails
                     v-if="activeJournal"
                     :journal="activeJournal"
                     :key="activeJournal.id"

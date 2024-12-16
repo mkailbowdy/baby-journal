@@ -8,17 +8,16 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { ref } from 'vue';
 
-dayjs.extend(relativeTime);
-const props = defineProps(['journal']);
+const editing = ref(false);
 const emit = defineEmits(['journalUpdated', 'journalDeleted']);
+
+const props = defineProps(['journal']);
 const form = useForm({
     entry: props.journal.entry,
     date: props.journal.date,
     height: props.journal.height,
     weight: props.journal.weight,
 });
-
-const editing = ref(false);
 
 function deleteJournal(journal: Journal) {
     // Inertia's form helpers refreshes the props
@@ -38,6 +37,8 @@ function updateJournal(journal: Journal) {
         },
     });
 }
+
+dayjs.extend(relativeTime);
 </script>
 
 <template>
@@ -83,12 +84,25 @@ function updateJournal(journal: Journal) {
                     </template>
                 </Dropdown>
             </div>
-
-            <div v-if="editing">
-                <form
-                    v-if="editing"
-                    @submit.prevent="updateJournal(props.journal)"
-                >
+            <div v-if="!editing">
+                <div class="mb-8">
+                    <img
+                        :src="`storage/${journal.image}`"
+                        alt="journal image"
+                    />
+                </div>
+                <div>
+                    <small class="mt-4 text-lg text-gray-900"
+                        >Height: {{ journal.height }}cm</small
+                    ><br />
+                    <small class="mt-4 text-lg text-gray-900"
+                        >Weight: {{ journal.weight }}g</small
+                    >
+                </div>
+                <p class="mt-4 text-lg text-gray-900">{{ journal.entry }}</p>
+            </div>
+            <div v-else>
+                <form @submit.prevent="updateJournal(props.journal)">
                     <div class="mb-4">
                         <img
                             alt="profile picture"
@@ -112,7 +126,7 @@ function updateJournal(journal: Journal) {
                         </PrimaryButton>
                         <PrimaryButton
                             class="bg-gray-400 hover:bg-gray-500"
-                            @click="
+                            @click.prevent="
                                 editing = false;
                                 form.reset();
                                 form.clearErrors();
@@ -125,23 +139,6 @@ function updateJournal(journal: Journal) {
                         >
                     </div>
                 </form>
-            </div>
-            <div v-else>
-                <div class="mb-8">
-                    <img
-                        :src="`storage/${journal.image}`"
-                        alt="journal image"
-                    />
-                </div>
-                <div>
-                    <small class="mt-4 text-lg text-gray-900"
-                        >Height: {{ journal.height }}cm</small
-                    ><br />
-                    <small class="mt-4 text-lg text-gray-900"
-                        >Weight: {{ journal.weight }}g</small
-                    >
-                </div>
-                <p class="mt-4 text-lg text-gray-900">{{ journal.entry }}</p>
             </div>
         </div>
     </div>

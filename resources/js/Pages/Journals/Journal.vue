@@ -84,42 +84,47 @@ function updateJournal(journal: Journal) {
                 </Dropdown>
             </div>
 
-            <form v-if="editing" @submit.prevent="updateJournal(props.journal)">
-                <div class="mb-4">
-                    <img
-                        alt="profile picture"
-                        :src="`storage/${journal.image}`"
-                    />
-                </div>
-                <input v-model="form.date" type="date" />
-                <input v-model="form.height" type="number" />
-                <input v-model="form.weight" type="number" />
-                <textarea
-                    v-model="form.entry"
-                    class="mt-4 w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                ></textarea>
-                <InputError :message="form.errors.entry" class="mt-2" />
-                <div class="space-x-2">
-                    <PrimaryButton class="mt-4">Save</PrimaryButton>
-                    <button
-                        class="mt-4"
-                        @click="
-                            editing = false;
-                            form.reset();
-                            form.clearErrors();
-                        "
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        class="bg-red-500"
-                        @click.prevent="deleteJournal(journal)"
-                    >
-                        Delete
-                    </button>
-                </div>
-            </form>
-            <div>
+            <div v-if="editing">
+                <form
+                    v-if="editing"
+                    @submit.prevent="updateJournal(props.journal)"
+                >
+                    <div class="mb-4">
+                        <img
+                            alt="profile picture"
+                            :src="`storage/${journal.image}`"
+                        />
+                    </div>
+                    <input v-model="form.date" type="date" />
+                    <input v-model="form.height" type="number" />
+                    <input v-model="form.weight" type="number" />
+                    <textarea
+                        v-model="form.entry"
+                        class="mt-4 w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    ></textarea>
+                    <InputError :message="form.errors.entry" class="mt-2" />
+                    <div class="space-x-2">
+                        <PrimaryButton class="mt-4">Save</PrimaryButton>
+                        <button
+                            class="mt-4"
+                            @click="
+                                editing = false;
+                                form.reset();
+                                form.clearErrors();
+                            "
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            class="bg-red-500"
+                            @click.prevent="deleteJournal(journal)"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div v-else>
                 <div class="mb-8">
                     <img
                         :src="`storage/${journal.image}`"

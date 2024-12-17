@@ -1,144 +1,76 @@
 <script setup lang="ts">
 import Dropdown from '@/Components/Dropdown.vue';
-import InputError from '@/Components/InputError.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Journal } from '@/types/Journal';
-import { useForm } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { ref } from 'vue';
 
-const editing = ref(false);
-const emit = defineEmits(['journalUpdated', 'journalDeleted']);
-
-const props = defineProps(['journal']);
-const form = useForm({
-    entry: props.journal.entry,
-    date: props.journal.date,
-    height: props.journal.height,
-    weight: props.journal.weight,
-});
-
-function deleteJournal(journal: Journal) {
-    // Inertia's form helpers refreshes the props
-    form.delete(route('journals.destroy', journal.id), {
-        onSuccess: () => {
-            form.reset();
-            emit('journalDeleted');
-        },
-    });
-}
-
-function updateJournal(journal: Journal) {
-    form.put(route('journals.update', journal.id), {
-        onSuccess: () => {
-            editing.value = false;
-            emit('journalUpdated', journal);
-        },
-    });
-}
-
+defineProps<{ journal: Journal }>();
 dayjs.extend(relativeTime);
 </script>
 
 <template>
-    <div class="flex space-x-2 p-6">
-        <div class="flex-1">
-            <div class="flex items-center justify-between">
-                <div>
-                    <span class="text-gray-800">{{ journal.user.name }}</span>
-                    <small class="ml-2 text-sm text-gray-600">{{
-                        new Date(journal.date).toLocaleString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                        })
-                    }}</small>
-                    <small class="ml-2 text-sm text-gray-600">{{
-                        dayjs(journal.date).fromNow()
-                    }}</small>
-                    <!--                    <small v-if="journal.created_at !== journal.updated_at">&middot; edited</small>-->
-                </div>
-                <Dropdown v-if="journal.user.id === $page.props.auth.user.id">
-                    <template #trigger>
-                        <button>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-4 w-4 text-gray-400"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
+    <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
+        <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
+            <div class="flex space-x-2 p-6">
+                <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <small class="ml-2 text-sm text-gray-600">{{
+                                new Date(journal.date).toLocaleString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                })
+                            }}</small>
+                            <small class="ml-2 text-sm text-gray-600">{{
+                                dayjs(journal.date).fromNow()
+                            }}</small>
+                            <!--                    <small v-if="journal.created_at !== journal.updated_at">&middot; edited</small>-->
+                        </div>
+                        <Dropdown>
+                            <template #trigger>
+                                <button>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 text-gray-400"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                    >
+                                        <path
+                                            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+                                        />
+                                    </svg>
+                                </button>
+                            </template>
+                            <template #content>
+                                <button
+                                    class="block w-full py-2 text-center text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                                >
+                                    Edit
+                                </button>
+                            </template>
+                        </Dropdown>
+                    </div>
+                    <div>
+                        <div class="mb-8">
+                            <img
+                                :src="`../../storage/${journal.image}`"
+                                alt="journal image"
+                            />
+                        </div>
+                        <div>
+                            <small class="mt-4 text-lg text-gray-900"
+                                >Height: {{ journal.height }}cm</small
+                            ><br />
+                            <small class="mt-4 text-lg text-gray-900"
+                                >Weight: {{ journal.weight }}g</small
                             >
-                                <path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                                />
-                            </svg>
-                        </button>
-                    </template>
-                    <template #content>
-                        <button
-                            class="block w-full py-2 text-center text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-                            @click="editing = true"
-                        >
-                            Edit
-                        </button>
-                    </template>
-                </Dropdown>
-            </div>
-            <div v-if="!editing">
-                <div class="mb-8">
-                    <img
-                        :src="`storage/${journal.image}`"
-                        alt="journal image"
-                    />
-                </div>
-                <div>
-                    <small class="mt-4 text-lg text-gray-900"
-                        >Height: {{ journal.height }}cm</small
-                    ><br />
-                    <small class="mt-4 text-lg text-gray-900"
-                        >Weight: {{ journal.weight }}g</small
-                    >
-                </div>
-                <p class="mt-4 text-lg text-gray-900">{{ journal.entry }}</p>
-            </div>
-            <div v-else>
-                <form @submit.prevent="updateJournal(props.journal)">
-                    <div class="mb-4">
-                        <img
-                            alt="profile picture"
-                            :src="`storage/${journal.image}`"
-                        />
+                        </div>
+                        <p class="mt-4 text-lg text-gray-900">
+                            {{ journal.entry }}
+                        </p>
                     </div>
-                    <input v-model="form.date" type="date" />
-                    <input v-model="form.height" type="number" />
-                    <input v-model="form.weight" type="number" />
-                    <textarea
-                        v-model="form.entry"
-                        class="mt-4 w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    ></textarea>
-                    <InputError :message="form.errors.entry" class="mt-2" />
-                    <div class="mt-4 flex justify-end gap-2">
-                        <PrimaryButton
-                            class="bg-red-500 hover:bg-red-700"
-                            @click.prevent="deleteJournal(journal)"
-                        >
-                            Delete
-                        </PrimaryButton>
-                        <PrimaryButton
-                            class="bg-gray-400 hover:bg-gray-500"
-                            @click.prevent="
-                                editing = false;
-                                form.reset();
-                                form.clearErrors();
-                            "
-                        >
-                            Cancel
-                        </PrimaryButton>
-                        <PrimaryButton class="bg-gray-800 hover:bg-gray-700"
-                            >Save</PrimaryButton
-                        >
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

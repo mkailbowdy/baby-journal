@@ -26,7 +26,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('journals', JournalController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
+    ->only(['index', 'store', 'update', 'destroy', 'show'])
     ->middleware(['auth', 'verified']);
-
 require __DIR__.'/auth.php';

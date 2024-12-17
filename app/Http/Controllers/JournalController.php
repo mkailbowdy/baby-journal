@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreJournalRequest;
 use App\Models\Journal;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
-use Redirect;
 
 class JournalController extends Controller
 {
@@ -58,7 +56,17 @@ class JournalController extends Controller
      */
     public function show(Journal $journal)
     {
-        //
+        return Inertia::render('Journals/JournalDetails', [
+            'journal' => $journal->only(
+                'id',
+                'date',
+                'height',
+                'weight',
+                'entry',
+                'image',
+            ),
+        ]);
+
     }
 
     /**

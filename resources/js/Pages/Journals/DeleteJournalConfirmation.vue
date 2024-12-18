@@ -14,7 +14,7 @@ const deleteConfirmed = () => {
         <DangerButton @click.prevent="open = true">Delete</DangerButton>
         <div
             v-if="open"
-            class="absolute top-14 w-80 rounded bg-gray-200 p-4 shadow-md"
+            class="absolute top-12 w-80 rounded border-2 border-gray-200 bg-white p-4 shadow-xl"
         >
             <div class="arrow"></div>
             <p>Are you sure you'd like to delete?</p>
@@ -38,13 +38,13 @@ const deleteConfirmed = () => {
 <style scoped>
 .arrow {
     position: absolute;
-    top: -6px; /* Position it just above the popup */
+    top: -12px; /* Position it just above the popup */
     left: 10px; /* Adjust this to align with the button */
     width: 0;
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-bottom: 6px solid #e5e7eb; /* Match popup's background color (gray-200) */
+    border-bottom: 12px solid #e5e7eb; /* Match popup's background color (gray-200) */
     z-index: 1;
 }
 </style>

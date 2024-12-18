@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import DeleteJournalConfirmation from '@/Pages/Journals/DeleteJournalConfirmation.vue';
 import { Journal } from '@/types/Journal';
 import { useForm } from '@inertiajs/vue3';
+
 const emit = defineEmits(['journalUpdated', 'journalDeleted']);
 const props = defineProps(['journal']);
 
@@ -44,12 +46,9 @@ function deleteJournal(journal: Journal) {
         ></textarea>
         <InputError :message="form.errors.entry" class="mt-2" />
         <div class="mt-4 flex justify-end gap-2">
-            <PrimaryButton
-                class="bg-red-500 hover:bg-red-700"
-                @click.prevent="deleteJournal(journal)"
-            >
-                Delete
-            </PrimaryButton>
+            <DeleteJournalConfirmation
+                @journal-deleted="deleteJournal(props.journal)"
+            />
             <PrimaryButton
                 class="bg-gray-400 hover:bg-gray-500"
                 @click.prevent="

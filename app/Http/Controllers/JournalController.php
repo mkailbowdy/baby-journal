@@ -56,7 +56,7 @@ class JournalController extends Controller
      */
     public function show(Journal $journal)
     {
-        return Inertia::render('Journals/JournalDetails', [
+        return Inertia::render('Journals/Show1', [
             'journal' => $journal->only(
                 'id',
                 'date',

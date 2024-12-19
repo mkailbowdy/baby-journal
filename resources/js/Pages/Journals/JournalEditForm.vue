@@ -5,7 +5,11 @@ import DeleteJournalConfirmation from '@/Pages/Journals/DeleteJournalConfirmatio
 import { Journal } from '@/types/Journal';
 import { useForm } from '@inertiajs/vue3';
 
-const emit = defineEmits(['journalUpdated', 'journalDeleted']);
+const emit = defineEmits([
+    'journalUpdated',
+    'journalDeleted',
+    'journalCancelled',
+]);
 const props = defineProps(['journal']);
 
 const form = useForm({
@@ -54,6 +58,7 @@ function deleteJournal(journal: Journal) {
                 @click.prevent="
                     form.reset();
                     form.clearErrors();
+                    emit('journalCancelled');
                 "
             >
                 Cancel

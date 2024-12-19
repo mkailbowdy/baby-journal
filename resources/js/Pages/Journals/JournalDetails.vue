@@ -86,6 +86,7 @@ function deleteJournal() {
                     :journal="props.journal"
                     @journal-updated="updateJournal"
                     @journal-deleted="deleteJournal"
+                    @journal-cancelled="editing = false"
                 />
             </div>
         </div>

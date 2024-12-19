@@ -19,6 +19,7 @@ function deleteJournal() {
     editing.value = false;
     emit('journalDeleted');
 }
+// fake comment delete later
 </script>
 
 <template>

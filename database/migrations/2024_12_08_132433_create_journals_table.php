@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->string('date');
-            $table->unsignedInteger('height')->nullable();
-            $table->unsignedInteger('weight')->nullable();
+            $table->unsignedInteger('height');
+            $table->unsignedInteger('weight');
             $table->text('entry');
         });
     }

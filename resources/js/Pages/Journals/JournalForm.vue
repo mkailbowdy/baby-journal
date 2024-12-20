@@ -111,7 +111,7 @@ function handleFileInput($event: Event): void {
                         min="1"
                         class="block w-32 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
-                    <!--                    <InputError :message="form.errors.height" class="mt-2" />-->
+                    <InputError :message="form.errors.height" class="mt-2" />
                 </div>
 
                 <div class="flex flex-col">

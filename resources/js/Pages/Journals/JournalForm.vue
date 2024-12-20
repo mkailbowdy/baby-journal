@@ -99,6 +99,7 @@ function handleFileInput($event: Event): void {
                         id="date"
                         class="block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
+                    <InputError :message="form.errors.date" class="mt-2" />
                 </div>
                 <div class="flex flex-col">
                     <label for="height">Height <small>cm</small></label>
@@ -107,8 +108,10 @@ function handleFileInput($event: Event): void {
                         type="number"
                         name="height"
                         id="height"
+                        min="1"
                         class="block w-32 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
+                    <!--                    <InputError :message="form.errors.height" class="mt-2" />-->
                 </div>
 
                 <div class="flex flex-col">
@@ -118,6 +121,7 @@ function handleFileInput($event: Event): void {
                         type="number"
                         name="weight"
                         id="weight"
+                        min="1"
                         class="block w-32 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
                 </div>
@@ -132,6 +136,7 @@ function handleFileInput($event: Event): void {
                     placeholder="What did your child do today?"
                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 ></textarea>
+                <InputError :message="form.errors.entry" class="mt-2" />
                 <input
                     type="file"
                     id="image"
@@ -156,7 +161,6 @@ function handleFileInput($event: Event): void {
             </div>
         </div>
 
-        <InputError :message="form.errors.entry" class="mt-2" />
         <PrimaryButton class="mb-4 mt-4 bg-teal-500" :disabled="form.processing"
             >Submit</PrimaryButton
         >

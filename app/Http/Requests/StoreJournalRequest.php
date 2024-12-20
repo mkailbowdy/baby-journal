@@ -16,10 +16,10 @@ class StoreJournalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'entry' => 'required|string',
+            'entry' => 'required|string|min:5',
             'date' => 'required|date',
-            'height' => 'required|integer|min:0',
-            'weight' => 'required|integer|min:0',
+            'height' => 'nullable|integer|min:1',
+            'weight' => 'nullable|integer|min:1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ];
     }

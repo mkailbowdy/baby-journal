@@ -17,7 +17,7 @@ class StoreJournalRequest extends FormRequest
     {
         return [
             'entry' => 'required|string|min:5',
-            'date' => 'required|date',
+            'date' => 'required|date|after:1 January 2000',
             'height' => 'required|integer|min:1',
             'weight' => 'required|integer|min:1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',

@@ -4,6 +4,7 @@ import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
+import BaseInput from '@/Pages/Journals/BaseInput.vue';
 import { Journal } from '@/types/Journal';
 import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
@@ -89,54 +90,67 @@ function handleFileInput($event: Event): void {
 <template>
     <form @submit.prevent="saveToDatabase()">
         <div class="flex flex-col gap-4">
-            <div class="flex flex-row items-center justify-between">
+            <div class="flex flex-col gap-4">
                 <div class="flex flex-col">
-                    <label for="date">Journal Date</label>
-                    <input
+                    <BaseInput
+                        label="Date"
                         v-model="form.date"
                         type="date"
                         name="date"
                         id="date"
-                        class="block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        :class="
+                            form.errors.date
+                                ? 'border-red-500'
+                                : 'border-gray-300'
+                        "
                     />
                     <InputError :message="form.errors.date" class="mt-2" />
                 </div>
                 <div class="flex flex-col">
-                    <label for="height">Height <small>cm</small></label>
-                    <input
+                    <BaseInput
                         v-model="form.height"
+                        label="Height"
                         type="number"
                         name="height"
                         id="height"
                         min="1"
-                        class="block w-32 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        :class="
+                            form.errors.height
+                                ? 'border-red-500'
+                                : 'border-gray-300'
+                        "
                     />
                     <InputError :message="form.errors.height" class="mt-2" />
                 </div>
 
                 <div class="flex flex-col">
-                    <label for="weight">Weight <small>kg</small></label>
-                    <input
+                    <BaseInput
                         v-model="form.weight"
+                        label="Weight"
                         type="number"
                         name="weight"
                         id="weight"
                         min="1"
-                        class="block w-32 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        :class="
+                            form.errors.height
+                                ? 'border-red-500'
+                                : 'border-gray-300'
+                        "
                     />
                 </div>
-            </div>
+                <div>
+                    <label for="entry">Entry</label>
+                    <textarea
+                        name="entry"
+                        id="entry"
+                        rows="5"
+                        v-model="form.entry"
+                        placeholder="What did your child do today?"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    ></textarea>
+                    <InputError :message="form.errors.entry" class="mt-2" />
+                </div>
 
-            <div>
-                <label for="entry">Entry</label>
-                <textarea
-                    name="entry"
-                    id="entry"
-                    v-model="form.entry"
-                    placeholder="What did your child do today?"
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                ></textarea>
-                <InputError :message="form.errors.entry" class="mt-2" />
                 <input
                     type="file"
                     id="image"

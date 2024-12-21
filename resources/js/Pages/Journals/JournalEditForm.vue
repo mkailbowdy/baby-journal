@@ -40,9 +40,11 @@ function deleteJournal(journal: Journal) {
 </script>
 <template>
     <form @submit.prevent="updateJournal(props.journal)">
-        <div class="mb-4">
-            <img alt="profile picture" :src="`storage/${journal.image}`" />
-        </div>
+        <img
+            v-if="journal.image"
+            alt="profile picture"
+            :src="`storage/${journal.image}`"
+        />
         <BaseInput
             label="Date"
             v-model="form.date"

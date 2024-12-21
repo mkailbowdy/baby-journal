@@ -68,6 +68,7 @@ function deleteJournal() {
             <div v-if="!editing">
                 <div class="mb-8">
                     <img
+                        v-if="journal.image"
                         :src="`storage/${journal.image}`"
                         alt="journal image"
                     />
@@ -82,7 +83,7 @@ function deleteJournal() {
                 </div>
                 <p class="mt-4 text-lg text-gray-900">{{ journal.entry }}</p>
             </div>
-            <div v-else>
+            <div v-else class="mt-4">
                 <JournalEditForm
                     :journal="props.journal"
                     @journal-updated="updateJournal"

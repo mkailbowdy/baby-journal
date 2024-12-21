@@ -115,7 +115,7 @@ const setActiveJournal = (flashMessage: MessageType) => {
                     :journal="recentJournal"
                 />
             </div>
-            <div class="mt-6 divide-y rounded-lg bg-white shadow-sm">
+            <div class="mt-6 divide-y rounded-lg bg-white shadow-md">
                 <JournalDetails
                     v-if="activeJournal"
                     :journal="activeJournal"

@@ -27,12 +27,20 @@ function deleteJournal() {
         <div class="flex-1">
             <div class="flex items-center justify-between">
                 <div>
-                    <span class="text-gray-800">{{ journal.user.name }}</span>
-                    <small class="ml-2 text-sm text-gray-600">{{
+                    <span class="text-2xl font-bold">
+                        {{
+                            new Date(journal.date).toLocaleString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric',
+                            })
+                        }}
+                    </span>
+                    <small class="ml-4 text-gray-500">{{
                         dayjs(journal.date).fromNow()
                     }}</small>
-                    <!--                    <small v-if="journal.created_at !== journal.updated_at">&middot; edited</small>-->
                 </div>
+
                 <Dropdown v-if="journal.user.id === $page.props.auth.user.id">
                     <template #trigger>
                         <button>
@@ -50,7 +58,7 @@ function deleteJournal() {
                     </template>
                     <template #content>
                         <button
-                            class="block w-full py-2 text-center text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                            class="block w-full py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                             @click="editing = true"
                         >
                             Edit
@@ -59,23 +67,12 @@ function deleteJournal() {
                 </Dropdown>
             </div>
             <div v-if="!editing">
-                <div class="mb-8">
-                    <img
-                        v-if="journal.image"
-                        :src="`storage/${journal.image}`"
-                        alt="journal image"
-                    />
-                </div>
-                <div>
-                    <div>
-                        {{
-                            new Date(journal.date).toLocaleString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                                year: 'numeric',
-                            })
-                        }}
-                    </div>
+                <img
+                    v-if="journal.image"
+                    :src="`storage/${journal.image}`"
+                    alt="journal image"
+                />
+                <div class="mt-4">
                     <div>Height: {{ journal.height }}cm</div>
                     <div>Weight: {{ journal.weight }}g</div>
                 </div>

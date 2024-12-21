@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { useFlashMessage } from '@/Composables/useFlashMessage';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalDetails from '@/Pages/Journals/JournalDetails.vue';
 import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
 import type { Journal } from '@/types/Journal';
+import { MessageType } from '@/types/MessageType';
 import { Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
@@ -18,6 +20,25 @@ const recentJournal = computed(() => {
 });
 const activeJournal = ref<Journal | null>(recentJournal.value);
 
+// The useFlashMessage() function returns an object, and the destructuring syntax
+// extracts the message, messageType, and showMessage properties into local variables with the same names
+const { message, messageType, showMessage } = useFlashMessage();
+//Without destructuring, you'd need to write:
+// const flashMessage = useFlashMessage();
+// const message = flashMessage.message;
+// const messageType = flashMessage.messageType;
+// const showMessage = flashMessage.showMessage;
+const messageClass = computed(() => {
+    switch (messageType.value) {
+        case MessageType.SUCCESS:
+            return 'bg-green-500';
+        case MessageType.ERROR:
+            return 'bg-red-500';
+        default:
+            return '';
+    }
+});
+
 const findActiveJournal = (journalToFind: Journal): void => {
     activeJournal.value =
         localJournals.value.find(
@@ -26,6 +47,7 @@ const findActiveJournal = (journalToFind: Journal): void => {
 };
 
 const setActiveJournal = () => {
+    showMessage(MessageType.SUCCESS); // same as saying showMessage('success')
     activeJournal.value = recentJournal.value;
 };
 </script>
@@ -35,6 +57,15 @@ const setActiveJournal = () => {
             <Head title="Journals" />
             <h1 class="text-3xl font-bold">Tyr's Journal</h1>
         </template>
+        <Transition>
+            <div v-if="message" :class="messageClass">
+                {{
+                    messageType === MessageType.SUCCESS
+                        ? 'Journal added!'
+                        : 'An error occurred'
+                }}
+            </div>
+        </Transition>
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
             <div v-if="!open" class="flex flex-row items-center gap-4">
                 <button @click="open = !open">
@@ -93,6 +124,7 @@ const setActiveJournal = () => {
                 <JournalForm
                     @formSubmitted="setActiveJournal"
                     @close-form="open = !open"
+                    @form-error="showMessage(MessageType.ERROR)"
                     :journal="recentJournal"
                 />
             </div>
@@ -108,3 +140,17 @@ const setActiveJournal = () => {
         </div>
     </AuthenticatedLayout>
 </template>
+<style>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+    transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+    transform: translateY(-20%);
+}
+</style>
+

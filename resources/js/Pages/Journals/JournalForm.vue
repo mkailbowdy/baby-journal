@@ -1,16 +1,13 @@
 <script setup lang="ts">
-// useForm( initializes a reactive object)
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { useFlashMessage } from '@/Composables/useFlashMessage';
 import { Journal } from '@/types/Journal';
-import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import BaseInput from '../../Pages/Journals/BaseInput.vue';
 
-const emit = defineEmits(['formSubmitted', 'closeForm']);
+const emit = defineEmits(['formSubmitted', 'closeForm', 'formError']);
 const props = defineProps(['journal']);
 const imagePreview = ref<string | null>(null);
 const imageError = ref<string | null>(null);
@@ -35,20 +32,8 @@ const form = useForm<Journal>({
     image: null,
 });
 
-const messageClass = computed(() => {
-    switch (messageType.value) {
-        case MessageType.SUCCESS:
-            return 'bg-green-500';
-        case MessageType.ERROR:
-            return 'bg-red-500';
-        default:
-            return '';
-    }
-});
-
 // The useFlashMessage() function returns an object, and the destructuring syntax
 // extracts the message, messageType, and showMessage properties into local variables with the same names
-const { message, messageType, showMessage } = useFlashMessage();
 //Without destructuring, you'd need to write:
 // const flashMessage = useFlashMessage();
 // const message = flashMessage.message;
@@ -62,10 +47,9 @@ function saveToDatabase() {
             form.reset();
             emit('formSubmitted');
             emit('closeForm');
-            showMessage(MessageType.SUCCESS); // same as saying showMessage('success')
         },
         onError: () => {
-            showMessage(MessageType.ERROR); // same as saying showMessage('error')
+            emit('formError');
         },
     });
 }
@@ -182,27 +166,4 @@ function handleFileInput($event: Event): void {
             >Cancel
         </SecondaryButton>
     </form>
-    <Transition>
-        <div v-if="message" :class="messageClass">
-            {{
-                messageType === MessageType.SUCCESS
-                    ? 'Journal added!'
-                    : 'An error occurred'
-            }}
-        </div>
-    </Transition>
 </template>
-
-<style>
-/* we will explain what these classes do next! */
-.v-enter-active,
-.v-leave-active {
-    transition: all 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
-    transform: translateY(-20%);
-}
-</style>

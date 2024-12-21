@@ -4,11 +4,11 @@ import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
-import BaseInput from '@/Pages/Journals/BaseInput.vue';
 import { Journal } from '@/types/Journal';
 import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import BaseInput from '../../Pages/Journals/BaseInput.vue';
 
 const emit = defineEmits(['formSubmitted', 'closeForm']);
 const props = defineProps(['journal']);
@@ -132,7 +132,7 @@ function handleFileInput($event: Event): void {
                         id="weight"
                         min="1"
                         :class="
-                            form.errors.height
+                            form.errors.weight
                                 ? 'border-red-500'
                                 : 'border-gray-300'
                         "

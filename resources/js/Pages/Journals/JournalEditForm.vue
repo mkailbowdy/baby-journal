@@ -4,6 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import DeleteJournalConfirmation from '@/Pages/Journals/DeleteJournalConfirmation.vue';
 import { Journal } from '@/types/Journal';
 import { useForm } from '@inertiajs/vue3';
+import BaseInput from '../../Pages/Journals/BaseInput.vue';
 
 const emit = defineEmits([
     'journalUpdated',
@@ -18,6 +19,7 @@ const form = useForm({
     height: props.journal.height,
     weight: props.journal.weight,
 });
+
 function updateJournal(journal: Journal) {
     form.put(route('journals.update', journal.id), {
         preserveScroll: true,
@@ -41,9 +43,39 @@ function deleteJournal(journal: Journal) {
         <div class="mb-4">
             <img alt="profile picture" :src="`storage/${journal.image}`" />
         </div>
-        <input v-model="form.date" type="date" />
-        <input v-model="form.height" type="number" />
-        <input v-model="form.weight" type="number" />
+        <BaseInput
+            label="Date"
+            v-model="form.date"
+            type="date"
+            name="height"
+            id="height"
+            min="1"
+            :class="form.errors.date ? 'border-red-500' : 'border-gray-300'"
+        />
+        <InputError :message="form.errors.date" class="mt-2" />
+
+        <BaseInput
+            label="Height"
+            v-model="form.height"
+            type="number"
+            name="height"
+            id="height"
+            min="1"
+            :class="form.errors.height ? 'border-red-500' : 'border-gray-300'"
+        />
+        <InputError :message="form.errors.height" class="mt-2" />
+
+        <BaseInput
+            label="Weight"
+            v-model="form.weight"
+            type="number"
+            name="weight"
+            id="weight"
+            min="1"
+            :class="form.errors.weight ? 'border-red-500' : 'border-gray-300'"
+        />
+        <InputError :message="form.errors.weight" class="mt-2" />
+
         <textarea
             v-model="form.entry"
             class="mt-4 w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"

@@ -2,6 +2,7 @@
 import Dropdown from '@/Components/Dropdown.vue';
 import JournalEditForm from '@/Pages/Journals/JournalEditForm.vue';
 import { Journal } from '@/types/Journal';
+import { MessageType } from '@/types/MessageType';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { ref } from 'vue';
@@ -17,9 +18,8 @@ function updateJournal(journal: Journal) {
 }
 function deleteJournal() {
     editing.value = false;
-    emit('journalDeleted');
+    emit('journalDeleted', MessageType.DELETED);
 }
-// fake comment delete later
 </script>
 
 <template>

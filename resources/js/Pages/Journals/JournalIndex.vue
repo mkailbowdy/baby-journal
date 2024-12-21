@@ -22,22 +22,13 @@ const activeJournal = ref<Journal | null>(recentJournal.value);
 
 // The useFlashMessage() function returns an object, and the destructuring syntax
 // extracts the message, messageType, and showMessage properties into local variables with the same names
-const { message, messageType, showMessage } = useFlashMessage();
+const { message, messageType, showMessage, messageDescription, messageClass } =
+    useFlashMessage();
 //Without destructuring, you'd need to write:
 // const flashMessage = useFlashMessage();
 // const message = flashMessage.message;
 // const messageType = flashMessage.messageType;
 // const showMessage = flashMessage.showMessage;
-const messageClass = computed(() => {
-    switch (messageType.value) {
-        case MessageType.SUCCESS:
-            return 'bg-green-500';
-        case MessageType.ERROR:
-            return 'bg-red-500';
-        default:
-            return '';
-    }
-});
 
 const findActiveJournal = (journalToFind: Journal): void => {
     activeJournal.value =
@@ -46,8 +37,8 @@ const findActiveJournal = (journalToFind: Journal): void => {
         ) || null;
 };
 
-const setActiveJournal = () => {
-    showMessage(MessageType.SUCCESS); // same as saying showMessage('success')
+const setActiveJournal = (flashMessage: MessageType) => {
+    showMessage(flashMessage);
     activeJournal.value = recentJournal.value;
 };
 </script>
@@ -59,11 +50,7 @@ const setActiveJournal = () => {
         </template>
         <Transition>
             <div v-if="message" :class="messageClass">
-                {{
-                    messageType === MessageType.SUCCESS
-                        ? 'Journal added!'
-                        : 'An error occurred'
-                }}
+                {{ messageDescription(messageType as MessageType) }}
             </div>
         </Transition>
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
@@ -153,4 +140,3 @@ const setActiveJournal = () => {
     transform: translateY(-20%);
 }
 </style>
-

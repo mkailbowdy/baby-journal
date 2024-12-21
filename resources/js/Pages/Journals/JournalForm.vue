@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { Journal } from '@/types/Journal';
+import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import BaseInput from '../../Pages/Journals/BaseInput.vue';
@@ -45,7 +46,7 @@ function saveToDatabase() {
     form.post(route('journals.store'), {
         onSuccess: () => {
             form.reset();
-            emit('formSubmitted');
+            emit('formSubmitted', MessageType.SUCCESS);
             emit('closeForm');
         },
         onError: () => {

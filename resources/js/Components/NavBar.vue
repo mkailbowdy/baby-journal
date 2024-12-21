@@ -11,11 +11,11 @@ function toggleMenu(): void {
 </script>
 <template>
     <div class="relative z-50">
-        <div class="flex justify-end bg-emerald-300">
+        <div class="flex justify-end bg-teal-400">
             <button @click.prevent="toggleMenu" class="static z-50">
                 <svg
-                    width="50"
-                    height="50"
+                    width="48"
+                    height="48"
                     viewBox="0 0 120 100"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -109,8 +109,8 @@ function toggleMenu(): void {
 
 <style>
 :root {
-    --indigo-color: #ff69b4;
-    --crimson-color: #ff69b4;
+    --indigo-color: #FFFFFF;
+    --crimson-color: #FFFFFF;
 }
 
 #indigoGroup {

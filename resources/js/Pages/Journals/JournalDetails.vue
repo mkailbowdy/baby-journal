@@ -29,13 +29,6 @@ function deleteJournal() {
                 <div>
                     <span class="text-gray-800">{{ journal.user.name }}</span>
                     <small class="ml-2 text-sm text-gray-600">{{
-                        new Date(journal.date).toLocaleString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                        })
-                    }}</small>
-                    <small class="ml-2 text-sm text-gray-600">{{
                         dayjs(journal.date).fromNow()
                     }}</small>
                     <!--                    <small v-if="journal.created_at !== journal.updated_at">&middot; edited</small>-->
@@ -74,14 +67,19 @@ function deleteJournal() {
                     />
                 </div>
                 <div>
-                    <small class="mt-4 text-lg text-gray-900"
-                        >Height: {{ journal.height }}cm</small
-                    ><br />
-                    <small class="mt-4 text-lg text-gray-900"
-                        >Weight: {{ journal.weight }}g</small
-                    >
+                    <div>
+                        {{
+                            new Date(journal.date).toLocaleString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric',
+                            })
+                        }}
+                    </div>
+                    <div>Height: {{ journal.height }}cm</div>
+                    <div>Weight: {{ journal.weight }}g</div>
                 </div>
-                <p class="mt-4 text-lg text-gray-900">{{ journal.entry }}</p>
+                <p class="mt-4 text-2xl text-gray-900">{{ journal.entry }}</p>
             </div>
             <div v-else class="mt-4">
                 <JournalEditForm

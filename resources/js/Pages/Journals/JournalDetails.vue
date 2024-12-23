@@ -41,9 +41,7 @@ function deleteJournal() {
                     }}</small>
                 </div>
 
-                <Dropdown
-                    v-if="journal.baby.user_id === $page.props.auth.user.id"
-                >
+                <Dropdown v-if="journal.baby_id === $page.props.auth.user.id">
                     <template #trigger>
                         <button>
                             <svg

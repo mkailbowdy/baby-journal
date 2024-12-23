@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJournalRequest;
+use App\Models\Baby;
 use App\Models\Journal;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -12,11 +13,15 @@ use Inertia\Response;
 
 class JournalController extends Controller
 {
-    public function index(): Response
+    public function index(Baby $baby): Response
     {
+
+        // Fetch journals for the specific baby
+        $journals = $baby->journals()->latest()->get();
+
         // Here we've used Eloquent's with method to eager-load every Journal's associated user's ID and name. We've also used the latest scope to return the records in reverse-chronological order.
         return Inertia::render('Journals/JournalIndex', [
-            'journals' => Journal::with('baby:id,first_name')->latest()->get(),
+            'journals' => $journals,
         ]);
     }
 
@@ -31,7 +36,7 @@ class JournalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreJournalRequest $request): RedirectResponse
+    public function store(StoreJournalRequest $request, Baby $baby): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -44,7 +49,8 @@ class JournalController extends Controller
 
             Log::info('Image saved to path: ' . $imagePath); // Debugging
         }
-        $journal = $request->user()->babies()->first()->journals()->create($validated);
+        $journal = $baby->journals()->create($validated);
+//        $journal = $request->user()->babies()->first()->journals()->create($validated);
 
         Log::info('Journal created with data: ', $journal->toArray()); // Debugging
 

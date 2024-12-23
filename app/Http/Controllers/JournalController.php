@@ -15,11 +15,9 @@ class JournalController extends Controller
 {
     public function index(Baby $baby): Response
     {
+        // Eager load the journals relationship with any nested relationships (e.g., 'journals.baby')
+        $journals = $baby->journals()->latest()->with('baby')->get();
 
-        // Fetch journals for the specific baby
-        $journals = $baby->journals()->latest()->get();
-
-        // Here we've used Eloquent's with method to eager-load every Journal's associated user's ID and name. We've also used the latest scope to return the records in reverse-chronological order.
         return Inertia::render('Journals/JournalIndex', [
             'journals' => $journals,
         ]);
@@ -50,7 +48,6 @@ class JournalController extends Controller
             Log::info('Image saved to path: ' . $imagePath); // Debugging
         }
         $journal = $baby->journals()->create($validated);
-//        $journal = $request->user()->babies()->first()->journals()->create($validated);
 
         Log::info('Journal created with data: ', $journal->toArray()); // Debugging
 

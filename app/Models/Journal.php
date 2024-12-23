@@ -20,8 +20,8 @@ class Journal extends Model
         'created' => JournalCreated::class,
     ];
 
-    public function user(): BelongsTo
+    public function baby(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Baby::class);
     }
 }

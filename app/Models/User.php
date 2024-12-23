@@ -46,8 +46,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function journals(): HasMany
+    public function babies(): HasMany
     {
-        return $this->hasMany(Journal::class);
+        return $this->hasMany(Baby::class);
     }
 }

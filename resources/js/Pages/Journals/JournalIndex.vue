@@ -12,6 +12,7 @@ import { computed, ref } from 'vue';
 const props = defineProps<{
     journals: Journal[];
 }>();
+const currentBaby = route().params.baby;
 
 const open = ref(false);
 const localJournals = computed(() => props.journals);
@@ -113,6 +114,7 @@ const setActiveJournal = (flashMessage: MessageType) => {
                     @close-form="open = !open"
                     @form-error="showMessage(MessageType.ERROR)"
                     :journal="recentJournal"
+                    :baby-id="currentBaby"
                 />
             </div>
             <div class="mt-6 divide-y rounded-lg bg-white shadow-md">

@@ -9,7 +9,7 @@ import { computed, ref } from 'vue';
 import BaseInput from '../../Pages/Journals/BaseInput.vue';
 
 const emit = defineEmits(['formSubmitted', 'closeForm', 'formError']);
-const props = defineProps(['journal']);
+const props = defineProps(['journal', 'babyId']);
 const imagePreview = ref<string | null>(null);
 const imageError = ref<string | null>(null);
 const localJournal = computed(() => {
@@ -43,7 +43,8 @@ const form = useForm<Journal>({
 
 function saveToDatabase() {
     // Inertia's form helpers refreshes the props
-    form.post(route('babies.journals.store', 1), {
+    console.log(props.babyId);
+    form.post(route('babies.journals.store', props.babyId), {
         onSuccess: () => {
             form.reset();
             emit('formSubmitted', MessageType.SUCCESS);
@@ -172,7 +173,9 @@ function handleFileInput($event: Event): void {
                             class="mt-4 max-w-xs rounded-lg shadow-md"
                             alt="journal image"
                         />
-                        <p v-if="imageError" class="text-red-500">{{ imageError }}</p>
+                        <p v-if="imageError" class="text-red-500">
+                            {{ imageError }}
+                        </p>
                         <progress
                             v-if="form.progress"
                             :value="form.progress.percentage"
@@ -186,7 +189,7 @@ function handleFileInput($event: Event): void {
         </div>
         <div class="text-right">
             <SecondaryButton @click="emit('closeForm')" class="mb-4 ml-4 mt-4"
-            >Cancel
+                >Cancel
             </SecondaryButton>
             <PrimaryButton
                 class="mb-4 mt-4 bg-teal-500"

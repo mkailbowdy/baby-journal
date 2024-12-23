@@ -32,7 +32,7 @@ const form = useForm({
         </form>
         <div v-if="babies">
             <div v-for="baby in babies" :key="baby.id">
-                {{ baby.firstName }}
+                {{ baby.first_name }}
             </div>
         </div>
     </AuthenticatedLayout>

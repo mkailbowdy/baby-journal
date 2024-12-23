@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Baby extends Model
 {
     protected $fillable = [
-        'first_name'
+        'first_name',
+        'user_id'
     ];
 
     public function journals(): HasMany

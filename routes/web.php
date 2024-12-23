@@ -30,7 +30,7 @@ Route::resource('babies', BabyController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('journals', JournalController::class)
+Route::resource('babies.journals', JournalController::class)
     ->only(['index', 'store', 'update', 'destroy', 'show'])
     ->middleware(['auth', 'verified']);
 require __DIR__.'/auth.php';

@@ -43,7 +43,7 @@ const form = useForm<Journal>({
 
 function saveToDatabase() {
     // Inertia's form helpers refreshes the props
-    form.post(route('journals.store'), {
+    form.post(route('babies.journals.store', 1), {
         onSuccess: () => {
             form.reset();
             emit('formSubmitted', MessageType.SUCCESS);

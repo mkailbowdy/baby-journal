@@ -5,4 +5,5 @@ export interface Journal {
     height: number;
     weight: number;
     image?: File | null;
+
 }

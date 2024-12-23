@@ -16,7 +16,7 @@ class JournalController extends Controller
     {
         // Here we've used Eloquent's with method to eager-load every Journal's associated user's ID and name. We've also used the latest scope to return the records in reverse-chronological order.
         return Inertia::render('Journals/JournalIndex', [
-            'journals' => Journal::with('user:id,name')->latest()->get(),
+            'journals' => Journal::with('baby:id,first_name')->latest()->get(),
         ]);
     }
 
@@ -44,11 +44,11 @@ class JournalController extends Controller
 
             Log::info('Image saved to path: ' . $imagePath); // Debugging
         }
-        $journal = $request->user()->journals()->create($validated);
+        $journal = $request->user()->babies()->first()->journals()->create($validated);
 
         Log::info('Journal created with data: ', $journal->toArray()); // Debugging
 
-        return redirect(route('journals.index'));
+        return redirect(route('babies.journals.index', $journal->baby->id));
     }
 
     /**

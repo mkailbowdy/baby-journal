@@ -24,4 +24,5 @@ class Journal extends Model
     {
         return $this->belongsTo(Baby::class);
     }
+
 }

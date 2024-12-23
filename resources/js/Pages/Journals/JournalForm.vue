@@ -73,7 +73,11 @@ function handleFileInput($event: Event): void {
 }
 </script>
 <template>
-    <form @submit.prevent="saveToDatabase()">
+    <!--    <h1 class="bg-green-500">asfkjasdf</h1>-->
+    <form
+        @submit.prevent="saveToDatabase()"
+        class="rounded border border-teal-200 bg-white p-4"
+    >
         <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col">
@@ -135,36 +139,60 @@ function handleFileInput($event: Event): void {
                     ></textarea>
                     <InputError :message="form.errors.entry" class="mt-2" />
                 </div>
-
-                <input
-                    type="file"
-                    id="image"
-                    name="image"
-                    accept="image/png, image/jpeg"
-                    @input="handleFileInput"
-                />
-                <p v-if="imageError" class="text-red-500">{{ imageError }}</p>
-                <img
-                    v-if="imagePreview"
-                    :src="imagePreview"
-                    class="mt-4 max-w-xs rounded-lg shadow-md"
-                    alt="journal image"
-                />
-                <progress
-                    v-if="form.progress"
-                    :value="form.progress.percentage"
-                    max="100"
-                >
-                    {{ form.progress.percentage }}%
-                </progress>
+                <div class="col-span-full">
+                    <label
+                        for="cover-photo"
+                        class="block text-sm/6 font-medium text-gray-900"
+                        >Cover photo</label
+                    >
+                    <div
+                        class="mt-2 flex flex-col items-center gap-1 rounded-lg border border-dashed border-gray-900/25 px-2 py-2"
+                    >
+                        <div class="mt-2 flex text-sm/6 text-gray-600">
+                            <label
+                                for="file-upload"
+                                class="block cursor-pointer rounded-md border border-teal-200 bg-white px-4 py-2 font-semibold text-teal-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                            >
+                                <span>Upload a file</span>
+                                <input
+                                    id="file-upload"
+                                    name="file-upload"
+                                    type="file"
+                                    class="sr-only"
+                                    @input="handleFileInput"
+                                />
+                            </label>
+                        </div>
+                        <p class="text-xs/5 text-gray-600">
+                            PNG, JPG, GIF up to 10MB
+                        </p>
+                        <img
+                            v-if="imagePreview"
+                            :src="imagePreview"
+                            class="mt-4 max-w-xs rounded-lg shadow-md"
+                            alt="journal image"
+                        />
+                        <p v-if="imageError" class="text-red-500">{{ imageError }}</p>
+                        <progress
+                            v-if="form.progress"
+                            :value="form.progress.percentage"
+                            max="100"
+                        >
+                            {{ form.progress.percentage }}%
+                        </progress>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <PrimaryButton class="mb-4 mt-4 bg-teal-500" :disabled="form.processing"
-            >Submit</PrimaryButton
-        >
-        <SecondaryButton @click="emit('closeForm')" class="mb-4 ml-4 mt-4"
+        <div class="text-right">
+            <SecondaryButton @click="emit('closeForm')" class="mb-4 ml-4 mt-4"
             >Cancel
-        </SecondaryButton>
+            </SecondaryButton>
+            <PrimaryButton
+                class="mb-4 mt-4 bg-teal-500"
+                :disabled="form.processing"
+                >Submit</PrimaryButton
+            >
+        </div>
     </form>
 </template>

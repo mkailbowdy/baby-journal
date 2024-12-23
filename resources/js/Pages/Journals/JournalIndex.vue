@@ -46,12 +46,10 @@ const setActiveJournal = (flashMessage: MessageType) => {
     <AuthenticatedLayout>
         <template #header>
             <Head title="Journals" />
-            <div class="text-center text-3xl font-bold text-teal-400">
-                <div class="inline-block bg-teal-400 py-2 px-4 rounded-t-2xl shadow-sm rounded-b text-white">Tyr's Journal</div>
-            </div>
+            <h1 class="text-center text-4xl font-bold">Tyr's Journal</h1>
         </template>
         <Transition>
-            <div v-if="message" :class="messageClass">
+            <div v-if="message" class="text-center" :class="messageClass">
                 {{ messageDescription(messageType as MessageType) }}
             </div>
         </Transition>

@@ -7,6 +7,6 @@ const model = defineModel();
     <input
         v-model="model"
         v-bind="$attrs"
-        class="block rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        class="block rounded-md shadow-sm focus:border-teal-200 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
     />
 </template>

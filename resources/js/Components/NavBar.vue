@@ -109,8 +109,8 @@ function toggleMenu(): void {
 
 <style>
 :root {
-    --indigo-color: #FFFFFF;
-    --crimson-color: #FFFFFF;
+    --indigo-color: #ffffff;
+    --crimson-color: #ffffff;
 }
 
 #indigoGroup {

@@ -2,6 +2,7 @@
 import { Journal } from '@/types/Journal';
 import { debounce } from 'lodash';
 import { computed, ref } from 'vue';
+import BaseInput from "@/Pages/Journals/BaseInput.vue";
 
 const props = defineProps(['journals']);
 const emit = defineEmits(['activeJournal']);
@@ -65,11 +66,11 @@ function extractWithContext(
 <template>
     <div class="flex w-full flex-col">
         <div class="relative w-full">
-            <input
+            <BaseInput
                 v-model="searchQuery"
                 type="search"
                 placeholder="keyword"
-                class="w-full"
+                class="w-full rounded focus:border-teal-200 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
                 @input="performSearch"
             />
             <div

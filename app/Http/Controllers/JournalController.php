@@ -44,13 +44,9 @@ class JournalController extends Controller
             $imagePath = $request->file('image')->store('images', 'public');
             // Add the image path to the validated data
             $validated['image'] = $imagePath;
-
             Log::info('Image saved to path: ' . $imagePath); // Debugging
         }
         $journal = $baby->journals()->create($validated);
-
-        Log::info('Journal created with data: ', $journal->toArray()); // Debugging
-
         return redirect(route('babies.journals.index', $journal->baby->id));
     }
 
@@ -83,23 +79,27 @@ class JournalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreJournalRequest $request, Journal $journal): RedirectResponse
+    public function update(StoreJournalRequest $request, Baby $baby, Journal $journal): RedirectResponse
     {
+        // Ensure the journal belongs to the baby
+        if ($journal->baby_id !== $baby->id) {
+            abort(404); // Or throw a custom authorization/validation exception
+        }
         Gate::authorize('update', $journal);
         $validated = $request->validated();
 
         $journal->update($validated);
 
-        return redirect(route('journals.index'));
+        return redirect(route('babies.journals.index', $baby->id));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Journal $journal): RedirectResponse
+    public function destroy(Baby $baby, Journal $journal): RedirectResponse
     {
         Gate::authorize('delete', $journal);
         $journal->delete();
-        return redirect(route('journals.index'));
+        return redirect(route('babies.journals.index', $baby->id));
     }
 }

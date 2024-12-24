@@ -37,7 +37,9 @@ class JournalPolicy
      */
     public function update(User $user, Journal $journal): bool
     {
-        return $journal->user()->is($user);
+        if ($journal->baby->user_id === $user->id) {
+            return true;
+        }
     }
 
     /**

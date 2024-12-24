@@ -12,30 +12,43 @@ const emit = defineEmits([
     'journalCancelled',
 ]);
 const props = defineProps(['journal']);
-
+console.log(props.journal.id);
 const form = useForm({
     entry: props.journal.entry,
     date: props.journal.date,
     height: props.journal.height,
     weight: props.journal.weight,
 });
+const currentBaby = route().params.baby;
 
 function updateJournal(journal: Journal) {
-    form.put(route('journals.update', journal.id), {
-        preserveScroll: true,
-        onSuccess: () => {
-            emit('journalUpdated', journal);
+    form.put(
+        route('babies.journals.update', {
+            journal: journal.id,
+            baby: currentBaby,
+        }),
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                emit('journalUpdated', journal);
+            },
         },
-    });
+    );
 }
 function deleteJournal(journal: Journal) {
     // Inertia's form helpers refreshes the props
-    form.delete(route('journals.destroy', journal.id), {
-        onSuccess: () => {
-            form.reset();
-            emit('journalDeleted');
+    form.delete(
+        route('babies.journals.destroy', {
+            journal: journal.id,
+            baby: currentBaby,
+        }),
+        {
+            onSuccess: () => {
+                form.reset();
+                emit('journalDeleted');
+            },
         },
-    });
+    );
 }
 </script>
 <template>

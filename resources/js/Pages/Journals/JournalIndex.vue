@@ -12,6 +12,7 @@ import { computed, ref } from 'vue';
 const props = defineProps<{
     journals: Journal[];
 }>();
+// console.log(props.journals);
 const currentBaby = route().params.baby;
 
 const open = ref(false);

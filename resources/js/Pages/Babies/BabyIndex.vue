@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BaseInput from '@/Pages/Journals/BaseInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 defineProps(['babies']);
 function saveToDatabase() {
@@ -55,12 +55,6 @@ const form = useForm({
                                         scope="col"
                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                     >
-                                        Allergies
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                    >
                                         Journal
                                     </th>
                                     <th
@@ -82,11 +76,6 @@ const form = useForm({
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     >
                                         sdafsdf
-                                    </td>
-                                    <td
-                                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                                    >
-                                        dsfadsfsaf
                                     </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
@@ -152,7 +141,9 @@ const form = useForm({
                     <div v-if="form.errors.first_name" class="error">
                         {{ form.errors.first_name }}
                     </div>
-                    <PrimaryButton class="mt-4 bg-emerald-700">Submit</PrimaryButton>
+                    <PrimaryButton class="mt-4 bg-emerald-700"
+                        >Submit</PrimaryButton
+                    >
                 </form>
             </div>
         </div>

@@ -56,7 +56,7 @@ function deleteJournal(journal: Journal) {
         <img
             v-if="journal.image"
             alt="profile picture"
-            :src="`storage/${journal.image}`"
+            :src="`../../storage/${journal.image}`"
         />
         <BaseInput
             label="Date"

@@ -74,7 +74,6 @@ function handleFileInput($event: Event): void {
 }
 </script>
 <template>
-    <!--    <h1 class="bg-green-500">asfkjasdf</h1>-->
     <form
         @submit.prevent="saveToDatabase()"
         class="rounded border border-teal-200 bg-white p-4"

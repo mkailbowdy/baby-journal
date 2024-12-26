@@ -24,7 +24,7 @@ const currentBaby = route().params.baby;
 function updateJournal(journal: Journal) {
     form.put(
         route('babies.journals.update', {
-            journal: journal.id,
+            journal: journal,
             baby: currentBaby,
         }),
         {
@@ -39,7 +39,7 @@ function deleteJournal(journal: Journal) {
     // Inertia's form helpers refreshes the props
     form.delete(
         route('babies.journals.destroy', {
-            journal: journal.id,
+            journal: journal,
             baby: currentBaby,
         }),
         {

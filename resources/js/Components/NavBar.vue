@@ -83,8 +83,8 @@ function toggleMenu(): void {
                                 Dashboard
                             </NavLink>
                             <NavLink
-                                :href="route('journals.index')"
-                                :active="route().current('journals.index')"
+                                :href="route('babies.index')"
+                                :active="route().current('babies.index')"
                             >
                                 Journals
                             </NavLink>

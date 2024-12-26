@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import NavLink from '@/Components/NavLink.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 
@@ -22,7 +23,6 @@ const form = useForm({
 </script>
 <template>
     <AuthenticatedLayout>
-        <h1>hello</h1>
         <form @submit.prevent="saveToDatabase()">
             <input type="text" v-model="form.first_name" />
             <div v-if="form.errors.first_name" class="error">
@@ -32,7 +32,10 @@ const form = useForm({
         </form>
         <div v-if="babies">
             <div v-for="baby in babies" :key="baby.id">
-                {{ baby.first_name }}
+                <NavLink
+                    :href="route('babies.journals.index', { baby: baby })"
+                    >{{ baby.first_name }}</NavLink
+                >
             </div>
         </div>
     </AuthenticatedLayout>

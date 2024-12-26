@@ -8,12 +8,17 @@ import type { Journal } from '@/types/Journal';
 import { MessageType } from '@/types/MessageType';
 import { Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import { route } from '../../../../vendor/tightenco/ziggy';
 
-const props = defineProps<{
-    journals: Journal[];
-}>();
+// const props = defineProps<{
+//     journals: Journal[];
+// }>();
+const props = defineProps(['journals', 'baby']);
 // console.log(props.journals);
 const currentBaby = route().params.baby;
+const babyName = computed(() => {
+    return props.baby.first_name;
+});
 
 const open = ref(false);
 const localJournals = computed(() => props.journals);
@@ -48,7 +53,9 @@ const setActiveJournal = (flashMessage: MessageType) => {
     <AuthenticatedLayout>
         <template #header>
             <Head title="Journals" />
-            <h1 class="text-center text-4xl font-bold">Tyr's Journal</h1>
+            <h1 class="text-center text-4xl font-bold">
+                {{ babyName }}'s Journal
+            </h1>
         </template>
         <Transition>
             <div v-if="message" class="text-center" :class="messageClass">

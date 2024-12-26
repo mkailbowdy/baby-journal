@@ -20,6 +20,7 @@ class JournalController extends Controller
 
         return Inertia::render('Journals/JournalIndex', [
             'journals' => $journals,
+            'baby' => $baby,
         ]);
     }
 
@@ -47,7 +48,7 @@ class JournalController extends Controller
             Log::info('Image saved to path: ' . $imagePath); // Debugging
         }
         $journal = $baby->journals()->create($validated);
-        return redirect(route('babies.journals.index', $journal->baby->id));
+        return redirect(route('babies.journals.index', $baby));
     }
 
     /**
@@ -87,10 +88,8 @@ class JournalController extends Controller
         }
         Gate::authorize('update', $journal);
         $validated = $request->validated();
-
         $journal->update($validated);
-
-        return redirect(route('babies.journals.index', $baby->id));
+        return redirect(route('babies.journals.index', $baby));
     }
 
     /**
@@ -100,6 +99,6 @@ class JournalController extends Controller
     {
         Gate::authorize('delete', $journal);
         $journal->delete();
-        return redirect(route('babies.journals.index', $baby->id));
+        return redirect(route('babies.journals.index', $baby));
     }
 }

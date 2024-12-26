@@ -88,6 +88,11 @@ function toggleMenu(): void {
                             >
                                 Journals
                             </NavLink>
+                            <NavLink
+                                :href="route('profile.edit')"
+                                :active="route().current('profile.edit')"
+                                >Settings</NavLink
+                            >
                         </div>
                     </div>
                     <div class="mt-8 pr-4 text-center">

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { useForm } from '@inertiajs/vue3';
+import BaseInput from '@/Pages/Journals/BaseInput.vue';
+import { Head, useForm } from '@inertiajs/vue3';
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 defineProps(['babies']);
 function saveToDatabase() {
@@ -22,25 +24,14 @@ const form = useForm({
 </script>
 <template>
     <AuthenticatedLayout>
-        <div class="px-4 sm:px-6 lg:px-8">
-            <div class="sm:flex sm:items-center">
-                <div class="sm:flex-auto">
-                    <h1 class="text-base font-semibold text-gray-900">Users</h1>
-                    <p class="mt-2 text-sm text-gray-700">
-                        A list of all the users in your account including their
-                        name, title, email and role.
-                    </p>
-                </div>
-                <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <button
-                        type="button"
-                        class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        Add user
-                    </button>
-                </div>
-            </div>
-            <div class="mt-8 flow-root">
+        <template #header>
+            <Head title="Babies" />
+            <h1 class="text-xl font-semibold leading-tight text-gray-800">
+                Baby Journals
+            </h1>
+        </template>
+        <div class="bg-white px-4 sm:px-6 lg:px-8">
+            <div class="flow-root">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div
                         class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8"
@@ -109,7 +100,7 @@ const form = useForm({
                                             "
                                         >
                                             <svg
-                                                fill="#000000"
+                                                fill="rgb(45, 212, 191)"
                                                 height="16px"
                                                 width="16px"
                                                 version="1.1"
@@ -149,12 +140,23 @@ const form = useForm({
                 </div>
             </div>
         </div>
-        <!--        <template #header>-->
-        <!--            <Head title="Babies" />-->
-        <!--            <h1 class="text-xl font-semibold leading-tight text-gray-800">-->
-        <!--                Whose journal would you like to open?-->
-        <!--            </h1>-->
-        <!--        </template>-->
+        <div class="sm:flex sm:items-center">
+            <div class="p-4">
+                <h2 class="text-2xl text-emerald-600">Add Another Child!</h2>
+                <form @submit.prevent="saveToDatabase()">
+                    <BaseInput
+                        label="First Name"
+                        type="text"
+                        v-model="form.first_name"
+                    />
+                    <div v-if="form.errors.first_name" class="error">
+                        {{ form.errors.first_name }}
+                    </div>
+                    <PrimaryButton class="mt-4 bg-emerald-700">Submit</PrimaryButton>
+                </form>
+            </div>
+        </div>
+
         <!--        <div v-if="babies" class="flex w-full flex-col">-->
         <!--            <div v-for="baby in babies" :key="baby.id" class="bg-emerald-300">-->
         <!--                <NavLink-->
@@ -163,19 +165,6 @@ const form = useForm({
         <!--                    ><p class="text-4xl">{{ baby.first_name }}</p></NavLink-->
         <!--                >-->
         <!--            </div>-->
-        <!--        </div>-->
-        <!--        <div>-->
-        <!--            <form @submit.prevent="saveToDatabase()">-->
-        <!--                <BaseInput-->
-        <!--                    label="Add another child?"-->
-        <!--                    type="text"-->
-        <!--                    v-model="form.first_name"-->
-        <!--                />-->
-        <!--                <div v-if="form.errors.first_name" class="error">-->
-        <!--                    {{ form.errors.first_name }}-->
-        <!--                </div>-->
-        <!--                <button>Submit</button>-->
-        <!--            </form>-->
         <!--        </div>-->
     </AuthenticatedLayout>
 </template>

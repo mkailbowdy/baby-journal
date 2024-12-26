@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('first_name');
+            $table->string('birthday');
+            $table->text('vaccinations')->nullable();
+            $table->text('allergies')->nullable();
+            $table->text('likes')->nullable();
+            $table->text('dislikes')->nullable();
             $table->timestamps();
 
         });

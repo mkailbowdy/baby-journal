@@ -16,6 +16,8 @@ class StoreBabyRequest extends FormRequest
     {
         return [
             'first_name' => 'required|string',
+            'birthday' => 'required|date|after:1 January 2000',
+
         ];
     }
 }

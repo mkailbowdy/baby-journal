@@ -20,6 +20,7 @@ function saveToDatabase() {
 }
 const form = useForm({
     first_name: '',
+    birthday: new Date().toISOString().split('T')[0],
 });
 </script>
 <template>
@@ -131,6 +132,18 @@ const form = useForm({
             <div class="p-4">
                 <h2 class="text-2xl text-emerald-600">Add Another Child!</h2>
                 <form @submit.prevent="saveToDatabase()">
+                    <BaseInput
+                        label="Birthday"
+                        v-model="form.birthday"
+                        type="date"
+                        name="birthdate"
+                        id="birthdate"
+                        :class="
+                            form.errors.birthday
+                                ? 'border-red-500'
+                                : 'border-gray-300'
+                        "
+                    />
                     <BaseInput
                         label="First Name"
                         type="text"

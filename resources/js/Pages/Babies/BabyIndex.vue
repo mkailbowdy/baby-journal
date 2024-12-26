@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NavLink from '@/Components/NavLink.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm } from "@inertiajs/vue3";
 
 defineProps(['babies']);
 function saveToDatabase() {
@@ -23,6 +23,9 @@ const form = useForm({
 </script>
 <template>
     <AuthenticatedLayout>
+        <template #header>
+            <Head title="Babies" />
+        </template>
         <form @submit.prevent="saveToDatabase()">
             <input type="text" v-model="form.first_name" />
             <div v-if="form.errors.first_name" class="error">

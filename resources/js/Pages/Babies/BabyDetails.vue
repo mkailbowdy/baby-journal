@@ -2,6 +2,7 @@
 import { useFlashMessage } from '@/Composables/useFlashMessage';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
+import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 const props = defineProps(['baby']);
@@ -17,10 +18,20 @@ const form = useForm({
 
 const { message, messageType, showMessage, messageDescription, messageClass } =
     useFlashMessage();
+
+const editFormSubmitted = () => {
+    editing.value = !editing.value;
+    showMessage(MessageType.SUCCESS);
+};
 </script>
 
 <template>
     <AuthenticatedLayout>
+        <Transition>
+            <div v-if="message" class="text-center" :class="messageClass">
+                {{ messageDescription(messageType as MessageType) }}
+            </div>
+        </Transition>
         <div v-if="!editing">
             <div class="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
                 <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
@@ -125,10 +136,22 @@ const { message, messageType, showMessage, messageDescription, messageClass } =
             <BabyEdit
                 :baby="baby"
                 :form="form"
-                :editing="editing"
                 @cancelled="editing = !editing"
-                @submitted="editing = !editing"
+                @submitted="editFormSubmitted"
             />
         </div>
     </AuthenticatedLayout>
 </template>
+<style>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+    transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+    transform: translateY(-20%);
+}
+</style>

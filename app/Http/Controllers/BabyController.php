@@ -34,6 +34,10 @@ class BabyController extends Controller
                 'user_id',
                 'first_name',
                 'birthday',
+                'allergies',
+                'vaccinations',
+                'likes',
+                'dislikes',
             ),
         ]);
     }

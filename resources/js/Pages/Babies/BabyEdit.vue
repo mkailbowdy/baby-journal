@@ -3,6 +3,8 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
 import { MessageType } from '@/types/MessageType';
+import DeleteJournalConfirmation from "@/Pages/Journals/DeleteJournalConfirmation.vue";
+import DangerButton from "@/Components/DangerButton.vue";
 const props = defineProps(['baby', 'form']);
 const emit = defineEmits(['submitted', 'cancelled', 'deleted']);
 
@@ -116,10 +118,9 @@ function editFormSubmitted() {
                     <SecondaryButton @click.prevent="emit('cancelled')"
                         >Cancel</SecondaryButton
                     >
-                    <PrimaryButton
-                        class="bg-red-500"
+                    <DangerButton
                         @click.prevent="emit('deleted')"
-                        >Delete</PrimaryButton
+                        >Delete</DangerButton
                     >
                 </div>
             </form>

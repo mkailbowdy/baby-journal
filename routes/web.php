@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('babies', BabyController::class)
-    ->only(['index', 'store', 'show'])
+    ->only(['index', 'store', 'show', 'edit', 'update'])
     ->middleware(['auth', 'verified']);
 
 Route::resource('babies.journals', JournalController::class)

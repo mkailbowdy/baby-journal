@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBabyRequest;
 use App\Models\Baby;
 use App\Models\Journal;
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -43,5 +45,26 @@ class BabyController extends Controller
         Log::info('Baby created with data: ', $baby->toArray()); // Debugging
 
         return redirect(route('babies.index'));
+    }
+    /**
+     * Display the user's profile form.
+     */
+    public function edit(Request $request, Baby $baby): Response
+    {
+        return Inertia::render('Babies/BabyEdit', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
+            'baby' => $baby,
+        ]);
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(StoreBabyRequest $request, Baby $baby): RedirectResponse
+    {
+        Gate::authorize('update', $baby);
+        $validated = $request->validated();
+        $baby->update($validated);
+        return redirect(route('babies.edit', $baby));
     }
 }

@@ -5,6 +5,7 @@ import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
 import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { Journal } from "@/types/Journal";
 const props = defineProps(['baby']);
 const editing = ref(false);
 const form = useForm({
@@ -23,6 +24,19 @@ const editFormSubmitted = () => {
     editing.value = !editing.value;
     showMessage(MessageType.SUCCESS);
 };
+function deleteBaby(localBaby) {
+    // Inertia's form helpers refreshes the props
+    form.delete(
+        route('babies.destroy', {
+            baby: localBaby,
+        }),
+        {
+            onSuccess: () => {
+                route('babies.index');
+            },
+        },
+    );
+}
 </script>
 
 <template>
@@ -138,6 +152,7 @@ const editFormSubmitted = () => {
                 :form="form"
                 @cancelled="editing = !editing"
                 @submitted="editFormSubmitted"
+                @deleted="deleteBaby(props.baby)"
             />
         </div>
     </AuthenticatedLayout>

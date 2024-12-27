@@ -4,7 +4,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
 import { MessageType } from '@/types/MessageType';
 const props = defineProps(['baby', 'form']);
-const emit = defineEmits(['submitted', 'cancelled']);
+const emit = defineEmits(['submitted', 'cancelled', 'deleted']);
 
 const localForm = props.form;
 
@@ -113,8 +113,13 @@ function editFormSubmitted() {
                     >
                         <span class="text-lg">Submit</span>
                     </PrimaryButton>
-                    <SecondaryButton @click="emit('cancelled')"
+                    <SecondaryButton @click.prevent="emit('cancelled')"
                         >Cancel</SecondaryButton
+                    >
+                    <PrimaryButton
+                        class="bg-red-500"
+                        @click.prevent="emit('deleted')"
+                        >Delete</PrimaryButton
                     >
                 </div>
             </form>

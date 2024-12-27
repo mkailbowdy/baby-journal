@@ -67,4 +67,13 @@ class BabyController extends Controller
         $baby->update($validated);
         return redirect(route('babies.show', $baby));
     }
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Baby $baby): RedirectResponse
+    {
+        Gate::authorize('delete', $baby);
+        $baby->delete();
+        return redirect(route('babies.index'));
+    }
 }

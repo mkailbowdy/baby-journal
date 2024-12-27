@@ -48,7 +48,7 @@ class BabyPolicy
      */
     public function delete(User $user, Baby $baby): bool
     {
-        return false;
+        return $this->update($user, $baby);
     }
 
     /**

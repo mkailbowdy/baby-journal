@@ -40,6 +40,7 @@ class BabyPolicy
         if ($baby->user_id === $user->id) {
             return true;
         }
+        return false;
     }
 
     /**

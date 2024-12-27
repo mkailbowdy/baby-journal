@@ -49,13 +49,9 @@ class BabyController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request, Baby $baby): Response
+    public function edit(Request $request, Baby $baby)
     {
-        return Inertia::render('Babies/BabyEdit', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
-            'baby' => $baby,
-        ]);
+
     }
     /**
      * Update the specified resource in storage.
@@ -65,6 +61,6 @@ class BabyController extends Controller
         Gate::authorize('update', $baby);
         $validated = $request->validated();
         $baby->update($validated);
-        return redirect(route('babies.edit', $baby));
+        return redirect(route('babies.show', $baby));
     }
 }

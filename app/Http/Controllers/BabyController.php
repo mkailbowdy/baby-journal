@@ -20,6 +20,21 @@ class BabyController extends Controller
             'babies' => Baby::with('user:id,name')->latest()->get(),
         ]);
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Baby $baby)
+    {
+        return Inertia::render('Babies/BabyDetails', [
+            'baby' => $baby->only(
+                'id',
+                'user_id',
+                'first_name',
+                'birthday',
+            ),
+        ]);
+    }
     public function store(StoreBabyRequest $request): RedirectResponse
     {
         $validated = $request->validated();

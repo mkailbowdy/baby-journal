@@ -50,7 +50,7 @@ const form = useForm({
                                         scope="col"
                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                     >
-                                        Birthday
+                                        Details
                                     </th>
                                     <th
                                         scope="col"
@@ -71,14 +71,16 @@ const form = useForm({
                                     <td
                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"
                                     >
-                                        <a :href="route('babies.show', baby)">{{
-                                            baby.first_name
-                                        }}</a>
+                                        {{ baby.first_name }}
                                     </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     >
-                                        {{ baby.birthday }}
+                                        <a
+                                            :href="route('babies.show', baby)"
+                                            class="inline-block rounded bg-emerald-500 px-2 py-1 text-white"
+                                            >Open
+                                        </a>
                                     </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
@@ -90,6 +92,7 @@ const form = useForm({
                                                     baby,
                                                 )
                                             "
+                                            class="inline-block"
                                         >
                                             <svg
                                                 fill="rgb(45, 212, 191)"
@@ -154,7 +157,7 @@ const form = useForm({
                     <div v-if="form.errors.first_name" class="error">
                         {{ form.errors.first_name }}
                     </div>
-                    <PrimaryButton class="mt-4 bg-emerald-700"
+                    <PrimaryButton class="mt-4 bg-emerald-500"
                         >Submit</PrimaryButton
                     >
                 </form>

@@ -77,12 +77,6 @@ function toggleMenu(): void {
                     <div class="ml-4 mt-16">
                         <div class="mb-3 flex flex-col gap-1">
                             <NavLink
-                                :href="route('dashboard')"
-                                :active="route().current('dashboard')"
-                            >
-                                Dashboard
-                            </NavLink>
-                            <NavLink
                                 :href="route('babies.index')"
                                 :active="route().current('babies.index')"
                             >

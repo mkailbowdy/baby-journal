@@ -20,7 +20,7 @@ function saveToDatabase() {
 }
 const form = useForm({
     first_name: '',
-    birthday: new Date().toISOString().split('T')[0],
+    birthday: '',
 });
 </script>
 <template>
@@ -71,15 +71,17 @@ const form = useForm({
                                     <td
                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"
                                     >
-                                        {{ baby.first_name }}
+                                        <span class="text-lg">{{
+                                            baby.first_name
+                                        }}</span>
                                     </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     >
                                         <a
                                             :href="route('babies.show', baby)"
-                                            class="inline-block rounded bg-emerald-500 px-2 py-1 text-white"
-                                            >Open
+                                            class="font-semibold text-emerald-500 hover:text-emerald-400"
+                                            >View
                                         </a>
                                     </td>
                                     <td
@@ -92,10 +94,10 @@ const form = useForm({
                                                     baby,
                                                 )
                                             "
-                                            class="inline-block"
+                                            class="inline-block hover:text-emerald-400"
                                         >
                                             <svg
-                                                fill="rgb(45, 212, 191)"
+                                                class="fill-emerald-500 hover:fill-emerald-400"
                                                 height="16px"
                                                 width="16px"
                                                 id="Layer_1"
@@ -135,20 +137,8 @@ const form = useForm({
         </div>
         <div class="sm:flex sm:items-center">
             <div class="p-4">
-                <h2 class="text-2xl text-emerald-600">Add Another Child!</h2>
+                <h2 class="text-2xl text-emerald-600">Add A Child!</h2>
                 <form @submit.prevent="saveToDatabase()">
-                    <BaseInput
-                        label="Birthday"
-                        v-model="form.birthday"
-                        type="date"
-                        name="birthdate"
-                        id="birthdate"
-                        :class="
-                            form.errors.birthday
-                                ? 'border-red-500'
-                                : 'border-gray-300'
-                        "
-                    />
                     <BaseInput
                         label="First Name"
                         type="text"

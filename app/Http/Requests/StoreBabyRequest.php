@@ -16,7 +16,7 @@ class StoreBabyRequest extends FormRequest
     {
         return [
             'first_name' => 'required|string',
-            'birthday' => 'required|date|after:1 January 2000',
+            'birthday' => 'nullable|date|after:1 January 2000',
             'allergies' => 'nullable|string',
             'vaccinations' => 'nullable|string',
             'likes' => 'nullable|string',

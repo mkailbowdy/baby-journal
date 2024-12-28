@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
 import { MessageType } from '@/types/MessageType';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Journal } from "@/types/Journal";
 const props = defineProps(['baby']);
 const editing = ref(false);
 const form = useForm({
@@ -58,12 +58,10 @@ function deleteBaby(localBaby) {
                             <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">
                                 Profile Section
                             </p>
-                            <button
-                                class="rounded bg-gray-500 px-3 py-2 text-white"
-                                @click="editing = !editing"
-                            >
+                            <SecondaryButton @click="editing = !editing">
                                 Edit
-                            </button>
+                            </SecondaryButton>
+
                             <!--                        <NavLink :href="route('babies.edit', baby)" class="hover:border-opacity-0"-->
                             <!--                            ><div class="inline-block px-3 py-2 rounded text-white bg-gray-500 text-md">Edit</div></NavLink-->
                             <!--                        >-->
@@ -154,6 +152,13 @@ function deleteBaby(localBaby) {
                 @submitted="editFormSubmitted"
                 @deleted="deleteBaby(props.baby)"
             />
+        </div>
+        <div class="mt-4 flex justify-around">
+            <a
+                class="inline-block pb-1 text-xl font-bold text-emerald-500 hover:border-b hover:border-b-emerald-400"
+                :href="route('babies.journals.index', baby)"
+                >Go To Journal
+            </a>
         </div>
     </AuthenticatedLayout>
 </template>

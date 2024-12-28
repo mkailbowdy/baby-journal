@@ -6,7 +6,7 @@ import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import JournalSearch from '@/Pages/Journals/JournalSearch.vue';
 import type { Journal } from '@/types/Journal';
 import { MessageType } from '@/types/MessageType';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from "@inertiajs/vue3";
 import { computed, ref } from 'vue';
 import { route } from '../../../../vendor/tightenco/ziggy';
 
@@ -21,7 +21,7 @@ const babyName = computed(() => {
 });
 
 const open = ref(false);
-const localJournals = computed(() => props.journals);
+const localJournals = computed(() => props.journals.data);
 const recentJournal = computed(() => {
     return localJournals.value[0] || null;
 });
@@ -48,6 +48,7 @@ const setActiveJournal = (flashMessage: MessageType) => {
     showMessage(flashMessage);
     activeJournal.value = recentJournal.value;
 };
+
 </script>
 <template>
     <AuthenticatedLayout>
@@ -134,6 +135,25 @@ const setActiveJournal = (flashMessage: MessageType) => {
                     @journal-deleted="setActiveJournal"
                 />
             </div>
+        </div>
+        <div v-if="journals.data.length">
+            <div v-for="journal in localJournals" :key="journal.id">
+                <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
+                    <div class="mt-6 divide-y rounded-lg bg-white shadow-md">
+                        <JournalDetails :journal="journal" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-if="props.journals.links" class="pagination">
+            <button
+                v-for="link in props.journals.links"
+                :key="link.label"
+                :disabled="!link.url"
+                :class="{ active: link.active }"
+                @click.prevent="router.visit(link.url)"
+                v-html="link.label"
+            ></button>
         </div>
     </AuthenticatedLayout>
 </template>

@@ -33,4 +33,6 @@ Route::resource('babies', BabyController::class)
 Route::resource('babies.journals', JournalController::class)
     ->only(['index', 'store', 'update', 'destroy', 'show'])
     ->middleware(['auth', 'verified']);
+
+Route::get('/infinite', \App\Http\Controllers\InfiniteScrolling::class);
 require __DIR__.'/auth.php';

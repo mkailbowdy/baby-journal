@@ -143,16 +143,16 @@ const setActiveJournal = (flashMessage: MessageType) => {
                     </div>
                 </div>
             </div>
-<!--            <div v-if="props.journals.links" class="flex justify-center gap-4">-->
-<!--                <button-->
-<!--                    v-for="link in props.journals.links"-->
-<!--                    :key="link.label"-->
-<!--                    :disabled="!link.url"-->
-<!--                    :class="{ active: link.active }"-->
-<!--                    @click.prevent="router.visit(link.url)"-->
-<!--                    v-html="link.label"-->
-<!--                ></button>-->
-<!--            </div>-->
+            <!--            <div v-if="props.journals.links" class="flex justify-center gap-4">-->
+            <!--                <button-->
+            <!--                    v-for="link in props.journals.links"-->
+            <!--                    :key="link.label"-->
+            <!--                    :disabled="!link.url"-->
+            <!--                    :class="{ active: link.active }"-->
+            <!--                    @click.prevent="router.visit(link.url)"-->
+            <!--                    v-html="link.label"-->
+            <!--                ></button>-->
+            <!--            </div>-->
         </div>
     </AuthenticatedLayout>
 </template>

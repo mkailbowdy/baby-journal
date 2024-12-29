@@ -11,7 +11,7 @@ function toggleMenu(): void {
 </script>
 <template>
     <div class="relative z-50">
-        <div class="flex justify-end bg-teal-400">
+        <div class="flex justify-end bg-emerald-400">
             <button @click.prevent="toggleMenu" class="static z-50">
                 <svg
                     width="48"
@@ -72,7 +72,7 @@ function toggleMenu(): void {
                 <div @click="toggleMenu" class="fixed inset-0"></div>
                 <nav
                     id="navbar"
-                    class="fixed right-0 h-screen w-48 bg-teal-400"
+                    class="fixed right-0 h-screen w-48 bg-emerald-400"
                 >
                     <div class="ml-4 mt-16">
                         <div class="mb-3 flex flex-col gap-1">

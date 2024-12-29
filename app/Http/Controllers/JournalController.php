@@ -13,17 +13,17 @@ use Inertia\Response;
 
 class JournalController extends Controller
 {
-    public function index(Baby $baby): Response
-    {
-        // Eager load the journals relationship with any nested relationships (e.g., 'journals.baby')
-        $journals = $baby->journals()->latest()->with('baby')->get();
-//        $journals = $baby->journals()->latest()->with('baby')->paginate(1);
-
-        return Inertia::render('Journals/JournalIndex', [
-            'journals' => $journals,
-            'baby' => $baby,
-        ]);
-    }
+//    public function index(Baby $baby): Response
+//    {
+//        // Eager load the journals relationship with any nested relationships (e.g., 'journals.baby')
+//        $journals = $baby->journals()->latest()->with('baby')->get();
+////        $journals = $baby->journals()->latest()->with('baby')->paginate(1);
+//
+//        return Inertia::render('Journals/JournalIndex', [
+//            'journals' => $journals,
+//            'baby' => $baby,
+//        ]);
+//    }
 
     /**
      * Show the form for creating a new resource.

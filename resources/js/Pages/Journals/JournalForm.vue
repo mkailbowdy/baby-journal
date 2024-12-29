@@ -79,7 +79,7 @@ onMounted(() => {
 <template>
     <form
         @submit.prevent="saveToDatabase()"
-        class="rounded border border-teal-200 bg-white p-4"
+        class="rounded border border-emerald-200 bg-white p-4"
     >
         <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-4">

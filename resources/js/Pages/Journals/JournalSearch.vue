@@ -70,7 +70,7 @@ function extractWithContext(
                 v-model="searchQuery"
                 type="search"
                 placeholder="keyword"
-                class="w-full rounded focus:border-teal-200 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
+                class="w-full rounded focus:border-emerald-200 focus:ring focus:ring-emerald-500 focus:ring-opacity-50"
                 @input="performSearch"
             />
             <div

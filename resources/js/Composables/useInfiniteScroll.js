@@ -25,6 +25,7 @@ export function useInfiniteScroll(propName, landmark) {
                 preserveState: true,
                 preserveScroll: true,
                 onSuccess: () => {
+                    console.log(initialUrl);
                     window.history.replaceState({}, '', initialUrl);
                     items.value = [...items.value, ...value().data];
                 },

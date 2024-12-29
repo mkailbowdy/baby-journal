@@ -15,7 +15,7 @@ class InfiniteScrolling extends Controller
      */
     public function __invoke(Request $request, Baby $baby)
     {
-        $journals = $baby->journals()->latest()->with('baby')->paginate(3);
+        $journals = $baby->journals()->latest('date')->with('baby')->paginate(3);
 //        $journals = Journal::with('baby')->latest()->paginate(3);
 //        $baby = Baby::all()->first();
 

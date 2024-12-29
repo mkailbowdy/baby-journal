@@ -113,21 +113,20 @@ function deleteJournal(journal: Journal) {
                         class="mt-4 w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     ></textarea>
                     <InputError :message="form.errors.entry" class="mt-2" />
-                    <div class="mt-4 flex justify-end gap-2">
+                    <div class="mt-4 flex justify-around gap-2">
                         <DeleteJournalConfirmation
                             @journal-deleted="deleteJournal(props.journal)"
                         />
-                        <PrimaryButton
-                            class="bg-gray-400 hover:bg-gray-500"
-                            @click.prevent="
-                                form.reset();
-                                form.clearErrors();
-                                emit('journalCancelled');
+                        <a
+                            :href="
+                                route('babies.journals.index', {
+                                    baby: currentBaby,
+                                })
                             "
-                        >
-                            Cancel
-                        </PrimaryButton>
-                        <PrimaryButton class="bg-gray-800 hover:bg-gray-700"
+                            class="inline-flex items-center rounded-md border border-transparent bg-gray-500 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-400"
+                            >Cancel
+                        </a>
+                        <PrimaryButton class="bg-emerald-500 hover:bg-emerald-400"
                             >Save</PrimaryButton
                         >
                     </div>

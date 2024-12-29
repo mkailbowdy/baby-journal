@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Baby;
-use App\Models\Journal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 

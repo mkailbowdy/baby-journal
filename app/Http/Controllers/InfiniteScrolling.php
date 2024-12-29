@@ -15,7 +15,7 @@ class InfiniteScrolling extends Controller
      */
     public function __invoke(Request $request)
     {
-        $journals = Journal::with('baby')->paginate(3);
+        $journals = Journal::with('baby')->latest()->paginate(3);
         $baby = Baby::all()->first();
 
         return Inertia::render('Journals/JournalIndexInfinite', [

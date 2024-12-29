@@ -2,14 +2,9 @@
 import { useInfiniteScroll } from '@/Composables/useInfiniteScroll';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalDetails from '@/Pages/Journals/JournalDetails.vue';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
-// const props = defineProps<{
-//     journals: Journal[];
-// }>();
-// const props = defineProps(['journals', 'baby']);
-
-const props = defineProps({
+defineProps({
     journals: {
         type: Object,
         required: true,
@@ -20,27 +15,9 @@ const props = defineProps({
     },
 });
 
-const { items, loadMoreItems } = useInfiniteScroll('journals');
-
-const observer = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                console.log('Intersected!');
-                loadMoreItems();
-            }
-        });
-    },
-    {
-        rootMargin: '0px 0px 150px 0px',
-    },
-);
-
 const landmark = ref(null);
 
-onMounted(() => {
-    observer.observe(landmark.value!);
-});
+const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
 </script>
 <template>
     <AuthenticatedLayout>
@@ -53,6 +30,10 @@ onMounted(() => {
                 </div>
             </div>
         </div>
+
+        <span v-if="!canLoadMoreItems" class="ml-4"
+            >All journals loaded :)</span
+        >
 
         <div ref="landmark">
             <!--            height added to make sure entry.isIntersecting is true at the bottom of the page-->

@@ -25,17 +25,19 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::get('/babies/{baby}/journals', \App\Http\Controllers\JournalIndexController::class)->name('babies.journals.index');
 
 Route::resource('babies', BabyController::class)
     ->only(['index', 'store', 'show', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
+
+Route::get('/babies/{baby}/journals/search', [JournalController::class, 'search'])->name('babies.journals.search');
 
 Route::resource('babies.journals', JournalController::class)
     ->only(['create','show','update','edit', 'destroy',  'store',])
     ->middleware(['auth', 'verified']);
 
 
-Route::get('/babies/{baby}/journals', \App\Http\Controllers\InfiniteScrolling::class)->name('babies.journals.index');
 
 require __DIR__.'/auth.php';
 

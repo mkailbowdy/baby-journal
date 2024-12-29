@@ -6,7 +6,7 @@ use App\Models\Baby;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class InfiniteScrolling extends Controller
+class JournalIndexController extends Controller
 {
 
     /**
@@ -15,10 +15,8 @@ class InfiniteScrolling extends Controller
     public function __invoke(Request $request, Baby $baby)
     {
         $journals = $baby->journals()->latest('date')->with('baby')->paginate(3);
-//        $journals = Journal::with('baby')->latest()->paginate(3);
-//        $baby = Baby::all()->first();
 
-        return Inertia::render('Journals/JournalIndexInfinite', [
+        return Inertia::render('Journals/JournalIndex', [
             'journals' => $journals,
             'baby' => $baby
         ]);

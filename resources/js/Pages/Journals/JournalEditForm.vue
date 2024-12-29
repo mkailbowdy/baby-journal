@@ -4,7 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import DeleteJournalConfirmation from '@/Pages/Journals/DeleteJournalConfirmation.vue';
 import { Journal } from '@/types/Journal';
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import BaseInput from '../../Pages/Journals/BaseInput.vue';
 
 const emit = defineEmits([
@@ -54,6 +54,10 @@ function deleteJournal(journal: Journal) {
 </script>
 <template>
     <AuthenticatedLayout>
+        <template #header>
+            <Head title="Edit Journal" />
+            <h1 class="text-2xl font-bold">Editing Mode</h1>
+        </template>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
             <div class="mt-2 divide-y rounded-lg bg-white p-4 shadow-md">
@@ -126,7 +130,8 @@ function deleteJournal(journal: Journal) {
                             class="inline-flex items-center rounded-md border border-transparent bg-gray-500 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-400"
                             >Cancel
                         </a>
-                        <PrimaryButton class="bg-emerald-500 hover:bg-emerald-400"
+                        <PrimaryButton
+                            class="bg-emerald-500 hover:bg-emerald-400"
                             >Save</PrimaryButton
                         >
                     </div>

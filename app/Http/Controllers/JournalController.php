@@ -109,4 +109,10 @@ class JournalController extends Controller
         $journal->delete();
         return redirect(route('babies.journals.index', $baby));
     }
+
+    public function search(Baby $baby)
+    {
+        $journals = $baby->journals()->with('baby')->latest()->get();
+        return Inertia::render('Journals/JournalLookup', ['baby' => $baby, 'journals' => $journals]);
+    }
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Dropdown from '@/Components/Dropdown.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
 import JournalEditForm from '@/Pages/Journals/JournalEditForm.vue';
 import { Journal } from '@/types/Journal';
 import { MessageType } from '@/types/MessageType';
@@ -59,17 +60,15 @@ function deleteJournal() {
                         </button>
                     </template>
                     <template #content>
-                        <a
-                            class="block w-full cursor-pointer py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                        <DropdownLink
                             :href="
                                 route('babies.journals.edit', {
                                     baby: baby,
                                     journal: journal,
                                 })
                             "
+                            >Edit</DropdownLink
                         >
-                            Edit
-                        </a>
                     </template>
                 </Dropdown>
             </div>

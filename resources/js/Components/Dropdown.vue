@@ -4,12 +4,12 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 const props = withDefaults(
     defineProps<{
         align?: 'left' | 'right';
-        width?: '16';
+        width?: '48';
         contentClasses?: string;
     }>(),
     {
         align: 'right',
-        width: '16',
+        width: '48',
         contentClasses: 'py-1 bg-white',
     },
 );
@@ -25,7 +25,7 @@ onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
 
 const widthClass = computed(() => {
     return {
-        16: 'w-16',
+        48: 'w-48',
     }[props.width.toString()];
 });
 

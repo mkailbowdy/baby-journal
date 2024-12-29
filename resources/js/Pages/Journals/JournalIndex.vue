@@ -25,7 +25,7 @@ const localJournals = computed(() => props.journals);
 const recentJournal = computed(() => {
     return localJournals.value[0] || null;
 });
-const activeJournal = ref<Journal | null>(recentJournal.value);
+const activeJournal = ref<Journal | null>();
 
 // The useFlashMessage() function returns an object, and the destructuring syntax
 // extracts the message, messageType, and showMessage properties into local variables with the same names
@@ -125,34 +125,20 @@ const setActiveJournal = (flashMessage: MessageType) => {
                     :baby-id="currentBaby"
                 />
             </div>
-            <div class="mt-6 divide-y rounded-lg bg-white shadow-md">
+            <div
+                v-if="activeJournal"
+                class="mt-6 divide-y rounded-lg bg-white shadow-md"
+            >
                 <JournalDetails
-                    v-if="activeJournal"
                     :journal="activeJournal"
                     :key="activeJournal.id"
                     @journal-updated="findActiveJournal"
                     @journal-deleted="setActiveJournal"
                 />
             </div>
-        </div>
-        <div v-if="journals.length">
-            <div v-for="journal in localJournals" :key="journal.id">
-                <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
-                    <div class="mt-6 divide-y rounded-lg bg-white shadow-md">
-                        <JournalDetails :journal="journal" />
-                    </div>
-                </div>
+            <div v-else>
+                Type a word related to the journal you want to see!
             </div>
-            <!--            <div v-if="props.journals.links" class="flex justify-center gap-4">-->
-            <!--                <button-->
-            <!--                    v-for="link in props.journals.links"-->
-            <!--                    :key="link.label"-->
-            <!--                    :disabled="!link.url"-->
-            <!--                    :class="{ active: link.active }"-->
-            <!--                    @click.prevent="router.visit(link.url)"-->
-            <!--                    v-html="link.label"-->
-            <!--                ></button>-->
-            <!--            </div>-->
         </div>
     </AuthenticatedLayout>
 </template>

@@ -2,7 +2,7 @@
 import { useInfiniteScroll } from '@/Composables/useInfiniteScroll';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalDetails from '@/Pages/Journals/JournalDetails.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from "@inertiajs/vue3";
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -87,7 +87,7 @@ const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
             <div v-for="journal in items" :key="journal.id">
                 <div class="mx-auto max-w-2xl p-4 sm:p-2 lg:p-8">
                     <div class="mt-2 divide-y rounded-lg bg-white shadow-md">
-                        <JournalDetails :journal="journal" />
+                        <JournalDetails :journal="journal" :baby="props.baby" />
                     </div>
                 </div>
             </div>

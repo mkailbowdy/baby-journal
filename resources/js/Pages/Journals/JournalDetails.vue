@@ -8,7 +8,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { ref } from 'vue';
 
 const editing = ref(false);
-const props = defineProps(['journal']);
+const props = defineProps(['journal', 'baby']);
 const emit = defineEmits(['journalUpdated', 'journalDeleted']);
 
 dayjs.extend(relativeTime);
@@ -59,12 +59,17 @@ function deleteJournal() {
                         </button>
                     </template>
                     <template #content>
-                        <button
-                            class="block w-full py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-                            @click="editing = true"
+                        <a
+                            class="block w-full cursor-pointer py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                            :href="
+                                route('babies.journals.edit', {
+                                    baby: baby,
+                                    journal: journal,
+                                })
+                            "
                         >
                             Edit
-                        </button>
+                        </a>
                     </template>
                 </Dropdown>
             </div>

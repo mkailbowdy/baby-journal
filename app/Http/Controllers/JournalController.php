@@ -77,9 +77,12 @@ class JournalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Journal $journal)
+    public function edit(Baby $baby, Journal $journal)
     {
-        //
+        return Inertia::render('Journals/JournalEditForm',[
+            'baby' => $baby,
+            'journal' => $journal,
+        ]);
     }
 
     /**

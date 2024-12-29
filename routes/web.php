@@ -31,7 +31,7 @@ Route::resource('babies', BabyController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('babies.journals', JournalController::class)
-    ->only(['update', 'destroy', 'show', 'store','create'])
+    ->only(['create','show','update','edit', 'destroy',  'store',])
     ->middleware(['auth', 'verified']);
 
 

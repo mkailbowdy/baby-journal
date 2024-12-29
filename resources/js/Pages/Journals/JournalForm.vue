@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { Journal } from '@/types/Journal';
 import { MessageType } from '@/types/MessageType';
-import { useForm } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { Link, useForm } from '@inertiajs/vue3';
+import { computed, onMounted, ref } from 'vue';
 import BaseInput from '../../Pages/Journals/BaseInput.vue';
 
 const emit = defineEmits(['formSubmitted', 'closeForm', 'formError']);
-const props = defineProps(['journal', 'babyId']);
+const props = defineProps(['journal', 'baby']);
 const imagePreview = ref<string | null>(null);
 const imageError = ref<string | null>(null);
 const localJournal = computed(() => {
@@ -43,8 +42,8 @@ const form = useForm<Journal>({
 
 function saveToDatabase() {
     // Inertia's form helpers refreshes the props
-    console.log(props.babyId);
-    form.post(route('babies.journals.store', props.babyId), {
+    console.log(props.baby);
+    form.post(route('babies.journals.store', props.baby), {
         onSuccess: () => {
             form.reset();
             emit('formSubmitted', MessageType.SUCCESS);
@@ -72,6 +71,10 @@ function handleFileInput($event: Event): void {
         reader.readAsDataURL(file);
     }
 }
+
+onMounted(() => {
+    console.log(props.journal);
+});
 </script>
 <template>
     <form
@@ -187,9 +190,11 @@ function handleFileInput($event: Event): void {
             </div>
         </div>
         <div class="text-right">
-            <SecondaryButton @click="emit('closeForm')" class="mb-4 ml-4 mt-4"
+            <Link
+                :href="route('babies.journals.index', baby)"
+                class="mb-4 ml-4 mt-4"
                 >Cancel
-            </SecondaryButton>
+            </Link>
             <PrimaryButton
                 class="mb-4 mt-4 bg-teal-500"
                 :disabled="form.processing"

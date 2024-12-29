@@ -28,9 +28,13 @@ class JournalController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Baby $baby): Response
     {
-        //
+        $journal = $baby->journals()->latest()->with('baby')->first();
+        return Inertia::render('Journals/JournalCreate', [
+            'baby' => $baby,
+            'journal' => $journal,
+        ]);
     }
 
     /**
@@ -49,7 +53,7 @@ class JournalController extends Controller
             Log::info('Image saved to path: ' . $imagePath); // Debugging
         }
         $journal = $baby->journals()->create($validated);
-        return redirect(route('babies.journals.index', $baby));
+        return redirect(route('babies.journals.index', $baby, $journal));
     }
 
     /**

@@ -2,9 +2,10 @@
 import { useInfiniteScroll } from '@/Composables/useInfiniteScroll';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalDetails from '@/Pages/Journals/JournalDetails.vue';
+import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-defineProps({
+const props = defineProps({
     journals: {
         type: Object,
         required: true,
@@ -21,6 +22,14 @@ const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
 </script>
 <template>
     <AuthenticatedLayout>
+        <Link
+            :href="
+                route('babies.journals.create', {
+                    baby: baby,
+                })
+            "
+            >Add new entry</Link
+        >
         <div v-if="journals.data.length">
             <div v-for="journal in items" :key="journal.id">
                 <div class="mx-auto max-w-2xl p-4 sm:p-2 lg:p-8">

@@ -10,9 +10,6 @@ import { Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { route } from '../../../../vendor/tightenco/ziggy';
 
-// const props = defineProps<{
-//     journals: Journal[];
-// }>();
 const props = defineProps(['journals', 'baby']);
 // console.log(props.journals);
 const currentBaby = route().params.baby;

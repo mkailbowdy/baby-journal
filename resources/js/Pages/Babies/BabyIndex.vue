@@ -2,7 +2,7 @@
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BaseInput from '@/Pages/Journals/BaseInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 
 defineProps(['babies']);
 function saveToDatabase() {
@@ -78,16 +78,16 @@ const form = useForm({
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     >
-                                        <a
+                                        <Link
                                             :href="route('babies.show', baby)"
                                             class="font-semibold text-emerald-500 hover:text-emerald-400"
                                             >View
-                                        </a>
+                                        </Link>
                                     </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     >
-                                        <a
+                                        <Link
                                             :href="
                                                 route(
                                                     'babies.journals.index',
@@ -121,7 +121,7 @@ const form = useForm({
                                                     ></path>
                                                 </g>
                                             </svg>
-                                        </a>
+                                        </Link>
                                     </td>
                                     <!--                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">-->
                                     <!--                                    <a href="#" class="text-indigo-600 hover:text-indigo-900"-->

@@ -2,7 +2,7 @@
 import { useInfiniteScroll } from '@/Composables/useInfiniteScroll';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalDetails from '@/Pages/Journals/JournalDetails.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -29,7 +29,10 @@ const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
                     {{ baby.first_name }}'s Timeline
                 </h1>
                 <div class="flex flex-row gap-4">
-                    <a :href="route('babies.journals.search', { baby: baby })">
+                    <a
+                        :href="route('babies.journals.search', { baby: baby })"
+                        replace
+                    >
                         <svg
                             class="fill-emerald-500"
                             height="32px"

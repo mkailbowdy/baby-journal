@@ -14,7 +14,8 @@ class JournalIndexController extends Controller
      */
     public function __invoke(Request $request, Baby $baby)
     {
-        $journals = $baby->journals()->latest('date')->with('baby')->paginate(3);
+        sleep(3);
+        $journals = $baby->journals()->latest('updated_at')->with('baby')->paginate(3);
 
         return Inertia::render('Journals/JournalIndex', [
             'journals' => $journals,

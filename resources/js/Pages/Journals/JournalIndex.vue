@@ -17,14 +17,7 @@ const props = defineProps({
 });
 
 const landmark = ref(null);
-
 const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
-// const handlePopState = (event: PopStateEvent) => {
-//     console.log('Popstate event triggered:', event.state);
-//     router.get(route('babies.journals.index', event.state.props.baby));
-// };
-//
-// window.addEventListener('popstate', handlePopState);
 </script>
 <template>
     <AuthenticatedLayout>
@@ -134,8 +127,6 @@ const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
             >All journals loaded :)</span
         >
 
-        <div ref="landmark">
-            <!--            height added to make sure entry.isIntersecting is true at the bottom of the page-->
-        </div>
+        <div ref="landmark"></div>
     </AuthenticatedLayout>
 </template>

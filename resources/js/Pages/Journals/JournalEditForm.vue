@@ -4,7 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import DeleteJournalConfirmation from '@/Pages/Journals/DeleteJournalConfirmation.vue';
 import { Journal } from '@/types/Journal';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, Link } from '@inertiajs/vue3';
 import BaseInput from '../../Pages/Journals/BaseInput.vue';
 
 const emit = defineEmits([
@@ -121,7 +121,7 @@ function deleteJournal(journal: Journal) {
                         <DeleteJournalConfirmation
                             @journal-deleted="deleteJournal(props.journal)"
                         />
-                        <a
+                        <Link
                             :href="
                                 route('babies.journals.index', {
                                     baby: currentBaby,
@@ -129,7 +129,7 @@ function deleteJournal(journal: Journal) {
                             "
                             class="inline-flex items-center rounded-md border border-transparent bg-gray-500 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-400"
                             >Cancel
-                        </a>
+                        </Link>
                         <PrimaryButton
                             class="bg-emerald-500 hover:bg-emerald-400"
                             >Save</PrimaryButton

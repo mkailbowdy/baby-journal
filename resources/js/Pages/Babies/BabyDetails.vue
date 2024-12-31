@@ -4,7 +4,7 @@ import { useFlashMessage } from '@/Composables/useFlashMessage';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
 import { MessageType } from '@/types/MessageType';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 const props = defineProps(['baby']);
 const editing = ref(false);
@@ -154,11 +154,11 @@ function deleteBaby(localBaby) {
             />
         </div>
         <div class="mt-4 flex justify-around">
-            <a
+            <Link
                 class="inline-block pb-1 text-xl font-bold text-emerald-500 hover:border-b hover:border-b-emerald-400"
                 :href="route('babies.journals.index', baby)"
                 >Go To Journal
-            </a>
+            </Link>
         </div>
     </AuthenticatedLayout>
 </template>

@@ -1,33 +1,18 @@
 import { useIntersect } from '@/Composables/useIntersect.js';
 import { router, usePage } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 export function useInfiniteScroll(propName, landmark) {
     const value = () => usePage().props[propName];
-
     const items = ref(value().data);
-
     const initialUrl = usePage().url;
-
-    // console.log(
-    //     'propName is ' +
-    //         propName +
-    //         '. Value is ' +
-    //         value(). +
-    //         '. initialUrl is ' +
-    //         initialUrl +
-    //         '.',
-    // );
-
     const canLoadMoreItems = computed(() => {
         return value().next_page_url !== null;
     });
-
     const loadMoreItems = () => {
         if (!canLoadMoreItems.value) {
             return;
         }
-
         router.get(
             value().next_page_url,
             {},
@@ -48,6 +33,14 @@ export function useInfiniteScroll(propName, landmark) {
             rootMargin: '0px 0px 150px 0px',
         });
     }
+
+    const handlePopState = (event) => {
+        router.get(route('babies.journals.index', event.state.props.baby));
+    };
+
+    onMounted(() => {
+        window.addEventListener('popstate', handlePopState);
+    });
 
     return {
         items,

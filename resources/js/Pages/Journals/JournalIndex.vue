@@ -2,8 +2,8 @@
 import { useInfiniteScroll } from '@/Composables/useInfiniteScroll';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalDetails from '@/Pages/Journals/JournalDetails.vue';
-import { Head, Link, router } from "@inertiajs/vue3";
-import { onMounted, ref } from 'vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps({
     journals: {
@@ -19,20 +19,12 @@ const props = defineProps({
 const landmark = ref(null);
 
 const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
-
-onMounted(() => {
-    const handlePopState = (event: PopStateEvent) => {
-        // console.log('Navigated back or forward:', event.state.props.baby);
-        router.get(route('babies.journals.index', event.state.props.baby));
-
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-        window.removeEventListener('popstate', handlePopState);
-    };
-});
+// const handlePopState = (event: PopStateEvent) => {
+//     console.log('Popstate event triggered:', event.state);
+//     router.get(route('babies.journals.index', event.state.props.baby));
+// };
+//
+// window.addEventListener('popstate', handlePopState);
 </script>
 <template>
     <AuthenticatedLayout>

@@ -4,7 +4,7 @@ import { useFlashMessage } from '@/Composables/useFlashMessage';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
 import { MessageType } from '@/types/MessageType';
-import { useForm, Link } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 const props = defineProps(['baby']);
 const editing = ref(false);

@@ -2,8 +2,8 @@
 import { useInfiniteScroll } from '@/Composables/useInfiniteScroll';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalDetails from '@/Pages/Journals/JournalDetails.vue';
-import { Head, Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, Link, router } from "@inertiajs/vue3";
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
     journals: {
@@ -19,6 +19,20 @@ const props = defineProps({
 const landmark = ref(null);
 
 const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
+
+onMounted(() => {
+    const handlePopState = (event: PopStateEvent) => {
+        // console.log('Navigated back or forward:', event.state.props.baby);
+        router.get(route('babies.journals.index', event.state.props.baby));
+
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+        window.removeEventListener('popstate', handlePopState);
+    };
+});
 </script>
 <template>
     <AuthenticatedLayout>
@@ -29,18 +43,15 @@ const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
                     {{ baby.first_name }}'s Timeline
                 </h1>
                 <div class="flex flex-row gap-4">
-                    <a
+                    <Link
                         :href="route('babies.journals.search', { baby: baby })"
-                        replace
                     >
                         <svg
                             class="fill-emerald-500"
                             height="32px"
                             width="32px"
-                            version="1.1"
                             id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 488.4 488.4"
                             xml:space="preserve"
                         >
@@ -60,8 +71,8 @@ const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
                                 </g>
                             </g>
                         </svg>
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                         :href="
                             route('babies.journals.create', {
                                 baby: baby,
@@ -112,7 +123,7 @@ const { items, canLoadMoreItems } = useInfiniteScroll('journals', landmark);
                                     <g></g>
                                 </g>
                             </g></svg
-                    ></a>
+                    ></Link>
                 </div>
             </div>
         </template>

@@ -1,26 +1,12 @@
 <script setup lang="ts">
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
-import JournalEditForm from '@/Pages/Journals/JournalEditForm.vue';
-import { Journal } from '@/types/Journal';
-import { MessageType } from '@/types/MessageType';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { ref } from 'vue';
 
-const editing = ref(false);
-const props = defineProps(['journal', 'baby']);
-const emit = defineEmits(['journalUpdated', 'journalDeleted']);
+defineProps(['journal', 'baby']);
 
 dayjs.extend(relativeTime);
-function updateJournal(journal: Journal) {
-    editing.value = false;
-    emit('journalUpdated', journal);
-}
-function deleteJournal() {
-    editing.value = false;
-    emit('journalDeleted', MessageType.DELETED);
-}
 </script>
 
 <template>
@@ -72,7 +58,7 @@ function deleteJournal() {
                     </template>
                 </Dropdown>
             </div>
-            <div v-if="!editing">
+            <div>
                 <img
                     v-if="journal.image"
                     :src="`../../storage/${journal.image}`"
@@ -83,14 +69,6 @@ function deleteJournal() {
                     <div>Weight: {{ journal.weight }}g</div>
                 </div>
                 <p class="mt-4 text-2xl text-gray-900">{{ journal.entry }}</p>
-            </div>
-            <div v-else class="mt-4">
-                <JournalEditForm
-                    :journal="props.journal"
-                    @journal-updated="updateJournal"
-                    @journal-deleted="deleteJournal"
-                    @journal-cancelled="editing = false"
-                />
             </div>
         </div>
     </div>

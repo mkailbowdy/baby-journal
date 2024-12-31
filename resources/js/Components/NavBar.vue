@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-
-import NavLink from '@/Components/NavLink.vue';
 import { ref } from 'vue';
 
 const open = ref<boolean>(false);
@@ -76,16 +74,16 @@ function toggleMenu(): void {
                 >
                     <div class="ml-4 mt-16">
                         <div class="mb-3 flex flex-col gap-1">
-                            <NavLink
+                            <Link
                                 :href="route('babies.index')"
                                 :active="route().current('babies.index')"
                             >
-                                Journals
-                            </NavLink>
-                            <NavLink
+                                My Kids
+                            </Link>
+                            <Link
                                 :href="route('profile.edit')"
                                 :active="route().current('profile.edit')"
-                                >Settings</NavLink
+                                >Settings</Link
                             >
                         </div>
                     </div>

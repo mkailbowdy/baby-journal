@@ -9,6 +9,16 @@ export function useInfiniteScroll(propName, landmark) {
 
     const initialUrl = usePage().url;
 
+    // console.log(
+    //     'propName is ' +
+    //         propName +
+    //         '. Value is ' +
+    //         value(). +
+    //         '. initialUrl is ' +
+    //         initialUrl +
+    //         '.',
+    // );
+
     const canLoadMoreItems = computed(() => {
         return value().next_page_url !== null;
     });

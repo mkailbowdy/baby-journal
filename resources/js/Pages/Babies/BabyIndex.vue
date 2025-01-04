@@ -20,7 +20,6 @@ function saveToDatabase() {
 }
 const form = useForm({
     first_name: '',
-    birthday: '',
 });
 </script>
 <template>

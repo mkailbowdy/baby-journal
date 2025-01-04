@@ -34,10 +34,9 @@ Route::resource('babies', BabyController::class)
 Route::get('/babies/{baby}/journals/search', [JournalController::class, 'search'])->name('babies.journals.search');
 
 Route::resource('babies.journals', JournalController::class)
-    ->only(['create','show','update','edit', 'destroy',  'store',])
+    ->only(['create', 'show', 'update', 'edit', 'destroy', 'store',])
     ->middleware(['auth', 'verified']);
 
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 

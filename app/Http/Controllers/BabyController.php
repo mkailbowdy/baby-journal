@@ -41,6 +41,7 @@ class BabyController extends Controller
             ),
         ]);
     }
+
     public function store(StoreBabyRequest $request): RedirectResponse
     {
         $validated = $request->validated();
@@ -53,10 +54,16 @@ class BabyController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request, Baby $baby)
-    {
+//    public function edit(Request $request, Baby $baby)
+//    {
+//        return response('hello world', 200)->withHeaders([
+//            'Content-Type' => 'text/html',
+//            'X-Header-One' => 'poop',
+//            'X-Header-Two' => 'brown',
+//        ])->cookie('ahoy', 'chocolate', );
+//    }
 
-    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -67,6 +74,7 @@ class BabyController extends Controller
         $baby->update($validated);
         return redirect(route('babies.show', $baby));
     }
+
     /**
      * Remove the specified resource from storage.
      */

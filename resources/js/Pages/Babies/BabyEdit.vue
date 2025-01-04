@@ -1,19 +1,18 @@
 <script setup lang="ts">
+import DangerButton from '@/Components/DangerButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
 import { MessageType } from '@/types/MessageType';
-import DeleteJournalConfirmation from "@/Pages/Journals/DeleteJournalConfirmation.vue";
-import DangerButton from "@/Components/DangerButton.vue";
 const props = defineProps(['baby', 'form']);
 const emit = defineEmits(['submitted', 'cancelled', 'deleted']);
 
 const localForm = props.form;
 
-const { message, messageType, showMessage, messageDescription, messageClass } =
-    useFlashMessage();
+const { message, showMessage, messageClass } = useFlashMessage();
 
 function editFormSubmitted() {
+    showMessage(MessageType.SUCCESS);
     localForm.patch(route('babies.update', props.baby));
     emit('submitted');
 }
@@ -22,9 +21,10 @@ function editFormSubmitted() {
 <template>
     <Transition>
         <div v-if="message" class="text-center" :class="messageClass">
-            {{ messageDescription(messageType as MessageType) }}
+            {{ message }}
         </div>
     </Transition>
+
     <div class="mx-auto mt-8 max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
         <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
         <div class="mx-auto max-w-3xl">
@@ -118,8 +118,7 @@ function editFormSubmitted() {
                     <SecondaryButton @click.prevent="emit('cancelled')"
                         >Cancel</SecondaryButton
                     >
-                    <DangerButton
-                        @click.prevent="emit('deleted')"
+                    <DangerButton @click.prevent="emit('deleted')"
                         >Delete</DangerButton
                     >
                 </div>

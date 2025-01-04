@@ -5,7 +5,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
 import { MessageType } from '@/types/MessageType';
 import { Link, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 const props = defineProps(['baby']);
 const editing = ref(false);
 const form = useForm({
@@ -17,8 +17,7 @@ const form = useForm({
     dislikes: props.baby.dislikes,
 });
 
-const { message, messageType, showMessage, messageDescription, messageClass } =
-    useFlashMessage();
+const { message, showMessage, messageClass } = useFlashMessage();
 
 const editFormSubmitted = () => {
     editing.value = !editing.value;
@@ -43,7 +42,7 @@ function deleteBaby(localBaby) {
     <AuthenticatedLayout>
         <Transition>
             <div v-if="message" class="text-center" :class="messageClass">
-                {{ messageDescription(messageType as MessageType) }}
+                {{ message }}
             </div>
         </Transition>
         <div v-if="!editing">
@@ -61,10 +60,6 @@ function deleteBaby(localBaby) {
                             <SecondaryButton @click="editing = !editing">
                                 Edit
                             </SecondaryButton>
-
-                            <!--                        <NavLink :href="route('babies.edit', baby)" class="hover:border-opacity-0"-->
-                            <!--                            ><div class="inline-block px-3 py-2 rounded text-white bg-gray-500 text-md">Edit</div></NavLink-->
-                            <!--                        >-->
                         </div>
                         <div class="border-t border-gray-100">
                             <dl class="divide-y divide-gray-100">

@@ -5,7 +5,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
 import { MessageType } from '@/types/MessageType';
 import { Link, useForm } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 const props = defineProps(['baby']);
 const editing = ref(false);
 const form = useForm({
@@ -86,7 +86,7 @@ function deleteBaby(localBaby) {
                                         Allergies
                                     </dt>
                                     <dd
-                                        class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"
+                                        class="mt-1 whitespace-pre-wrap text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"
                                     >
                                         {{ baby.allergies }}
                                     </dd>
@@ -100,7 +100,7 @@ function deleteBaby(localBaby) {
                                         Vaccinations
                                     </dt>
                                     <dd
-                                        class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"
+                                        class="mt-1 whitespace-pre-wrap text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"
                                     >
                                         {{ baby.vaccinations }}
                                     </dd>
@@ -114,7 +114,7 @@ function deleteBaby(localBaby) {
                                         Likes
                                     </dt>
                                     <dd
-                                        class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"
+                                        class="mt-1 whitespace-pre-wrap text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"
                                     >
                                         {{ baby.likes }}
                                     </dd>
@@ -128,7 +128,7 @@ function deleteBaby(localBaby) {
                                         Dislikes
                                     </dt>
                                     <dd
-                                        class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"
+                                        class="mt-1 whitespace-pre-wrap text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"
                                     >
                                         {{ baby.dislikes }}
                                     </dd>

@@ -10,7 +10,7 @@ dayjs.extend(relativeTime);
 </script>
 
 <template>
-    <div class="flex space-x-2 p-6">
+    <div class="flex space-x-2 p-6 border rounded-lg">
         <div class="flex-1">
             <div class="flex items-center justify-between">
                 <div>

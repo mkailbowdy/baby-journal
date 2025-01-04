@@ -131,8 +131,10 @@ const formSubmitted = () => {
             </div>
         </template>
 
-        <div v-if="createFormOpen">
-            <JournalForm :baby="baby" @form-submitted="formSubmitted" />
+        <div v-if="createFormOpen" class="mx-auto max-w-2xl p-4 sm:p-2 lg:p-8">
+            <div class="mt-2 divide-y rounded-lg bg-white shadow-md">
+                <JournalForm :baby="baby" @form-submitted="formSubmitted" />
+            </div>
         </div>
         <div v-else>
             <div v-if="journals.data.length">

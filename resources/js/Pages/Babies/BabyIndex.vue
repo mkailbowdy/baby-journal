@@ -3,6 +3,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BaseInput from '@/Pages/Journals/BaseInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 
 defineProps(['babies']);
 function saveToDatabase() {
@@ -20,6 +21,27 @@ function saveToDatabase() {
 }
 const form = useForm({
     first_name: '',
+});
+
+const url = 'https://korean-baby-name-ranking.p.rapidapi.com/girl';
+const options = {
+    method: 'GET',
+    headers: {
+        'x-rapidapi-key': '27dc383f8bmsh5e16e1b26a6721dp1a24e1jsn82115c15d2d1',
+        'x-rapidapi-host': 'korean-baby-name-ranking.p.rapidapi.com',
+    },
+};
+
+onMounted(async () => {
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        console.log(result);
+        const rankOne = result.find(item => item.rank === '1');
+        console.log(rankOne);
+    } catch (error) {
+        console.error(error);
+    }
 });
 </script>
 <template>

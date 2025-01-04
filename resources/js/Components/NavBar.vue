@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const open = ref<boolean>(false);
 function toggleMenu(): void {
     open.value = !open.value;
 }
+const page = usePage();
 </script>
 <template>
     <div class="relative z-50">
-        <div class="flex justify-end bg-emerald-400">
+        <div class="flex justify-end bg-emerald-500">
             <button @click.prevent="toggleMenu" class="static z-50">
                 <svg
                     width="48"
@@ -72,31 +73,38 @@ function toggleMenu(): void {
                     id="navbar"
                     class="fixed right-0 h-screen w-48 bg-emerald-400"
                 >
-                    <div class="ml-4 mt-16">
-                        <div class="mb-3 flex flex-col gap-1">
+                    <div class="flex min-h-screen flex-col text-center">
+                        <div class="mt-16 flex flex-col gap-2 text-xl">
                             <Link
                                 :href="route('babies.index')"
-                                :active="route().current('babies.index')"
+                                :class="{
+                                    'text-white':
+                                        page.url.startsWith('/babies'),
+                                }"
                             >
                                 My Kids
                             </Link>
                             <Link
                                 :href="route('profile.edit')"
-                                :active="route().current('profile.edit')"
+                                :class="{
+                                    'text-white':
+                                        page.url.startsWith('/profile'),
+                                }"
                                 >Settings</Link
                             >
                         </div>
-                    </div>
-                    <div class="mt-8 pr-4 text-center">
-                        <Link
-                            class="px-1 pt-1 text-lg leading-5 text-gray-800 transition duration-150 ease-in-out focus:border-gray-300 focus:text-gray-700 focus:outline-none"
-                            v-show="$page.props.auth.user.name"
-                            :href="route('logout')"
-                            method="post"
-                            as="button"
-                        >
-                            <small>Log Out</small>
-                        </Link>
+
+                        <div class="mb-8 mt-auto">
+                            <Link
+                                v-show="page.props.auth.user.name"
+                                class="mx-auto inline-block h-8 w-1/2 rounded bg-gray-800 text-gray-200"
+                                method="post"
+                                :href="route('logout')"
+                                as="Button"
+                            >
+                                Log Out
+                            </Link>
+                        </div>
                     </div>
                 </nav>
             </div>

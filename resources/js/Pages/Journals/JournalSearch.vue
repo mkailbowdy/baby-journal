@@ -29,8 +29,6 @@ const performSearch = debounce(() => {
                 id: journal.id!,
                 entry: extractWithContext(journal.entry, searchQuery.value),
                 date: journal.date,
-                height: journal.height,
-                weight: journal.weight,
                 image: journal.image,
             };
         },

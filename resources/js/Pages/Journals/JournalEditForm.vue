@@ -4,7 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import DeleteJournalConfirmation from '@/Pages/Journals/DeleteJournalConfirmation.vue';
 import { Journal } from '@/types/Journal';
-import { Head, useForm, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import BaseInput from '../../Pages/Journals/BaseInput.vue';
 
 const emit = defineEmits([
@@ -17,8 +17,6 @@ console.log(props.journal.id);
 const form = useForm({
     entry: props.journal.entry,
     date: props.journal.date,
-    height: props.journal.height,
-    weight: props.journal.weight,
 });
 const currentBaby = route().params.baby;
 
@@ -65,15 +63,15 @@ function deleteJournal(journal: Journal) {
                     <img
                         v-if="journal.image"
                         alt="profile picture"
-                        :src="`../../../../storage/${journal.image}`"
+                        :src="`/storage/${journal.image}`"
+                        class="rounded-lg"
                     />
                     <BaseInput
                         label="Date"
                         v-model="form.date"
                         type="date"
-                        name="height"
-                        id="height"
-                        min="1"
+                        name="date"
+                        id="date"
                         :class="
                             form.errors.date
                                 ? 'border-red-500'
@@ -82,38 +80,9 @@ function deleteJournal(journal: Journal) {
                     />
                     <InputError :message="form.errors.date" class="mt-2" />
 
-                    <BaseInput
-                        label="Height"
-                        v-model="form.height"
-                        type="number"
-                        name="height"
-                        id="height"
-                        min="1"
-                        :class="
-                            form.errors.height
-                                ? 'border-red-500'
-                                : 'border-gray-300'
-                        "
-                    />
-                    <InputError :message="form.errors.height" class="mt-2" />
-
-                    <BaseInput
-                        label="Weight"
-                        v-model="form.weight"
-                        type="number"
-                        name="weight"
-                        id="weight"
-                        min="1"
-                        :class="
-                            form.errors.weight
-                                ? 'border-red-500'
-                                : 'border-gray-300'
-                        "
-                    />
-                    <InputError :message="form.errors.weight" class="mt-2" />
-
                     <textarea
                         v-model="form.entry"
+                        rows="8"
                         class="mt-4 w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     ></textarea>
                     <InputError :message="form.errors.entry" class="mt-2" />

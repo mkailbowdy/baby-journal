@@ -16,8 +16,6 @@ return new class extends Migration
             $table->foreignId('baby_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->string('date');
-            $table->unsignedInteger('height');
-            $table->unsignedInteger('weight');
             $table->text('entry');
         });
     }

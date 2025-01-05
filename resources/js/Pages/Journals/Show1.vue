@@ -58,14 +58,6 @@ dayjs.extend(relativeTime);
                                 alt="journal image"
                             />
                         </div>
-                        <div>
-                            <small class="mt-4 text-lg text-gray-900"
-                                >Height: {{ journal.height }}cm</small
-                            ><br />
-                            <small class="mt-4 text-lg text-gray-900"
-                                >Weight: {{ journal.weight }}g</small
-                            >
-                        </div>
                         <p class="mt-4 text-lg text-gray-900">
                             {{ journal.entry }}
                         </p>

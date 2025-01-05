@@ -10,10 +10,10 @@ dayjs.extend(relativeTime);
 </script>
 
 <template>
-    <div class="flex space-x-2 p-6 border rounded-lg">
+    <div class="flex space-x-2 rounded-lg border p-6">
         <div class="flex-1">
             <div class="flex items-center justify-between">
-                <div>
+                <div class="mb-4">
                     <span class="text-2xl font-bold">
                         {{
                             new Date(journal.date).toLocaleString('en-US', {
@@ -61,14 +61,13 @@ dayjs.extend(relativeTime);
             <div>
                 <img
                     v-if="journal.image"
-                    :src="`../../storage/${journal.image}`"
+                    :src="`/storage/${journal.image}`"
                     alt="journal image"
+                    class="rounded-lg"
                 />
-                <div class="mt-4">
-                    <div>Height: {{ journal.height }}cm</div>
-                    <div>Weight: {{ journal.weight }}g</div>
-                </div>
-                <p class="mt-4 text-2xl text-gray-900">{{ journal.entry }}</p>
+                <p class="mt-4 whitespace-pre-wrap text-xl text-gray-900">
+                    {{ journal.entry }}
+                </p>
             </div>
         </div>
     </div>

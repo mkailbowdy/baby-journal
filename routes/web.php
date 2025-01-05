@@ -39,4 +39,3 @@ Route::resource('babies.journals', JournalController::class)
 
 
 require __DIR__ . '/auth.php';
-

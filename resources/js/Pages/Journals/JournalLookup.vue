@@ -17,7 +17,7 @@ const activeJournal = ref<Journal | null>();
 
 // The useFlashMessage() function returns an object, and the destructuring syntax
 // extracts the message, messageType, and showMessage properties into local variables with the same names
-const { message, messageType, showMessage, messageDescription, messageClass } =
+const { message, showMessage, messageClass } =
     useFlashMessage();
 //Without destructuring, you'd need to write:
 // const flashMessage = useFlashMessage();
@@ -43,10 +43,6 @@ const setActiveJournal = (flashMessage: MessageType) => {
             <Head title="Search Journals" />
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold">Search Mode</h1>
-                <!--                    <h3>-->
-                <!--                        Type a word related to the journal entry you're looking-->
-                <!--                        for!-->
-                <!--                    </h3>-->
                 <Link :href="route('babies.journals.index', { baby: baby })">
                     <svg
                         width="35px"
@@ -90,11 +86,6 @@ const setActiveJournal = (flashMessage: MessageType) => {
                 </Link>
             </div>
         </template>
-        <Transition>
-            <div v-if="message" class="text-center" :class="messageClass">
-                {{ messageDescription(messageType as MessageType) }}
-            </div>
-        </Transition>
         <div class="mx-auto max-w-2xl p-4 sm:p-6 lg:p-8">
             <div v-if="!open" class="flex flex-row items-center gap-4">
                 <JournalSearch

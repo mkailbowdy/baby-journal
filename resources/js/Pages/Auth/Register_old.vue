@@ -27,14 +27,6 @@ const submit = () => {
         <Head title="Register" />
 
         <form @submit.prevent="submit">
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    :href="route('login')"
-                    class="rounded-md text-2xl underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Already registered? Sign in here!
-                </Link>
-            </div>
             <div>
                 <InputLabel for="name" value="Name" />
 
@@ -103,6 +95,13 @@ const submit = () => {
             </div>
 
             <div class="mt-4 flex items-center justify-end">
+                <Link
+                    :href="route('login')"
+                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                    Already registered?
+                </Link>
+
                 <PrimaryButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"

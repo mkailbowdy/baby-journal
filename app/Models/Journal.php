@@ -10,8 +10,6 @@ class Journal extends Model
 {
     protected $fillable = [
         'date',
-        'height',
-        'weight',
         'entry',
         'image'
     ];

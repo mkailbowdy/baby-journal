@@ -65,8 +65,6 @@ class JournalController extends Controller
             'journal' => $journal->only(
                 'id',
                 'date',
-                'height',
-                'weight',
                 'entry',
                 'image',
             ),

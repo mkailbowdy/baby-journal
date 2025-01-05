@@ -17,8 +17,6 @@ const localJournal = computed(() => {
     } else {
         return {
             date: '',
-            height: 0,
-            weight: 0,
             entry: '',
         };
     }
@@ -26,8 +24,6 @@ const localJournal = computed(() => {
 
 const form = useForm<Journal>({
     date: new Date().toISOString().split('T')[0],
-    height: localJournal.value.height,
-    weight: localJournal.value.weight,
     entry: '',
     image: null,
 });
@@ -98,44 +94,13 @@ onMounted(() => {
                     />
                     <InputError :message="form.errors.date" class="mt-2" />
                 </div>
-                <div class="flex flex-col">
-                    <BaseInput
-                        v-model="form.height"
-                        label="Height"
-                        type="number"
-                        name="height"
-                        id="height"
-                        min="1"
-                        :class="
-                            form.errors.height
-                                ? 'border-red-500'
-                                : 'border-gray-300'
-                        "
-                    />
-                    <InputError :message="form.errors.height" class="mt-2" />
-                </div>
 
-                <div class="flex flex-col">
-                    <BaseInput
-                        v-model="form.weight"
-                        label="Weight"
-                        type="number"
-                        name="weight"
-                        id="weight"
-                        min="1"
-                        :class="
-                            form.errors.weight
-                                ? 'border-red-500'
-                                : 'border-gray-300'
-                        "
-                    />
-                </div>
                 <div>
                     <label for="entry">Entry</label>
                     <textarea
                         name="entry"
                         id="entry"
-                        rows="5"
+                        rows="8"
                         v-model="form.entry"
                         placeholder="What did your child do today?"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"

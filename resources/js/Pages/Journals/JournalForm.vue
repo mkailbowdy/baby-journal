@@ -4,23 +4,13 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Journal } from '@/types/Journal';
 import { MessageType } from '@/types/MessageType';
 import { Link, useForm } from '@inertiajs/vue3';
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import BaseInput from '../../Pages/Journals/BaseInput.vue';
 
 const emit = defineEmits(['formSubmitted', 'closeForm', 'formError']);
 const props = defineProps(['journal', 'baby']);
 const imagePreview = ref<string | null>(null);
 const imageError = ref<string | null>(null);
-const localJournal = computed(() => {
-    if (props.journal) {
-        return props.journal;
-    } else {
-        return {
-            date: '',
-            entry: '',
-        };
-    }
-});
 
 const form = useForm<Journal>({
     date: new Date().toISOString().split('T')[0],

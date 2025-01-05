@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import DangerButton from '@/Components/DangerButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
+import DeleteJournalConfirmation from '@/Pages/Journals/DeleteJournalConfirmation.vue';
 import { MessageType } from '@/types/MessageType';
+import { Link } from '@inertiajs/vue3';
 const props = defineProps(['baby', 'form']);
 const emit = defineEmits(['submitted', 'cancelled', 'deleted']);
 
@@ -28,7 +28,7 @@ function editFormSubmitted() {
     <div class="mx-auto mt-8 max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
         <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
         <div class="mx-auto max-w-3xl">
-            <form @submit.prevent="editFormSubmitted()" class="space-y-6">
+            <form @submit.prevent="editFormSubmitted()" class="space-y-6 p-4 bg-white shadow-lg">
                 <!-- First Name -->
                 <div class="space-y-2">
                     <label for="firstName" class="block text-sm font-medium">
@@ -38,7 +38,6 @@ function editFormSubmitted() {
                         type="text"
                         id="firstName"
                         class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
                         v-model="localForm.first_name"
                     />
                 </div>
@@ -52,7 +51,6 @@ function editFormSubmitted() {
                         type="date"
                         id="birthday"
                         class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
                         v-model="localForm.birthday"
                     />
                 </div>
@@ -108,18 +106,21 @@ function editFormSubmitted() {
                         v-model="localForm.dislikes"
                     ></textarea>
                 </div>
-                <div class="flex justify-center">
-                    <PrimaryButton
-                        type="submit"
-                        class="rounded-md bg-emerald-500 px-6 py-3 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    >
-                        <span class="text-lg">Submit</span>
-                    </PrimaryButton>
-                    <SecondaryButton @click.prevent="emit('cancelled')"
-                        >Cancel</SecondaryButton
-                    >
-                    <DangerButton @click.prevent="emit('deleted')"
-                        >Delete</DangerButton
+                <div class="mt-4 flex justify-around gap-2">
+                    <DeleteJournalConfirmation
+                        @journal-deleted="emit('cancelled')"
+                    />
+                    <Link
+                        :href="
+                            route('babies.show', {
+                                baby: props.baby,
+                            })
+                        "
+                        class="inline-flex items-center rounded-md border border-transparent bg-gray-500 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-400"
+                        >Cancel
+                    </Link>
+                    <PrimaryButton class="bg-emerald-500 hover:bg-emerald-400"
+                        >Save</PrimaryButton
                     >
                 </div>
             </form>

@@ -4,7 +4,7 @@ import { useFlashMessage } from '@/Composables/useFlashMessage';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
 import { MessageType } from '@/types/MessageType';
-import { Link, useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 const props = defineProps(['baby']);
 const editing = ref(false);
@@ -45,18 +45,19 @@ function deleteBaby(localBaby) {
                 {{ message }}
             </div>
         </Transition>
+        <template #header>
+            <Head title="Edit Journal" />
+            <h1 class="text-2xl font-bold">Child's Details</h1>
+        </template>
         <div v-if="!editing">
             <div class="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
                 <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
                 <div class="mx-auto max-w-3xl">
                     <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-                        <div class="px-4 py-6 sm:px-6">
-                            <h3 class="text-4xl font-semibold text-gray-900">
+                        <div class="flex justify-between px-4 py-6 sm:px-6">
+                            <h3 class="text-2xl font-semibold text-emerald-700">
                                 {{ baby.first_name }}
                             </h3>
-                            <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">
-                                Profile Section
-                            </p>
                             <SecondaryButton @click="editing = !editing">
                                 Edit
                             </SecondaryButton>
@@ -147,13 +148,6 @@ function deleteBaby(localBaby) {
                 @submitted="editFormSubmitted"
                 @deleted="deleteBaby(props.baby)"
             />
-        </div>
-        <div class="mt-4 flex justify-around">
-            <Link
-                class="inline-block pb-1 text-xl font-bold text-emerald-500 hover:border-b hover:border-b-emerald-400"
-                :href="route('babies.journals.index', baby)"
-                >Go To Journal
-            </Link>
         </div>
     </AuthenticatedLayout>
 </template>

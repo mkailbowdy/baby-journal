@@ -56,7 +56,7 @@ function deleteJournal(journal: Journal) {
             <Head title="Edit Journal" />
             <h1 class="text-2xl font-bold">Editing Mode</h1>
         </template>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl px-4 pb-48 sm:px-6 lg:px-8">
             <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
             <div class="mt-2 divide-y rounded-lg bg-white p-4 shadow-md">
                 <form @submit.prevent="updateJournal(props.journal)">

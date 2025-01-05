@@ -3,7 +3,6 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BaseInput from '@/Pages/Journals/BaseInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { onMounted } from 'vue';
 
 defineProps(['babies']);
 function saveToDatabase() {
@@ -22,34 +21,13 @@ function saveToDatabase() {
 const form = useForm({
     first_name: '',
 });
-
-const url = 'https://korean-baby-name-ranking.p.rapidapi.com/girl';
-const options = {
-    method: 'GET',
-    headers: {
-        'x-rapidapi-key': '27dc383f8bmsh5e16e1b26a6721dp1a24e1jsn82115c15d2d1',
-        'x-rapidapi-host': 'korean-baby-name-ranking.p.rapidapi.com',
-    },
-};
-
-onMounted(async () => {
-    try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        console.log(result);
-        const rankOne = result.find(item => item.rank === '1');
-        console.log(rankOne);
-    } catch (error) {
-        console.error(error);
-    }
-});
 </script>
 <template>
     <AuthenticatedLayout>
         <template #header>
             <Head title="Babies" />
             <h1 class="text-xl font-semibold leading-tight text-gray-800">
-                Baby Journals
+                My Kids
             </h1>
         </template>
         <div class="bg-white px-4 sm:px-6 lg:px-8">
@@ -88,6 +66,12 @@ onMounted(async () => {
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
+                                <tr v-if="!babies.length">
+                                    <td class="p-4">
+                                        Add a child in the form below to get
+                                        started :)
+                                    </td>
+                                </tr>
                                 <tr v-for="baby in babies" :key="baby.id">
                                     <td
                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"
@@ -174,15 +158,5 @@ onMounted(async () => {
                 </form>
             </div>
         </div>
-
-        <!--        <div v-if="babies" class="flex w-full flex-col">-->
-        <!--            <div v-for="baby in babies" :key="baby.id" class="bg-emerald-300">-->
-        <!--                <NavLink-->
-        <!--                    class="w-full"-->
-        <!--                    :href="route('babies.journals.index', { baby: baby })"-->
-        <!--                    ><p class="text-4xl">{{ baby.first_name }}</p></NavLink-->
-        <!--                >-->
-        <!--            </div>-->
-        <!--        </div>-->
     </AuthenticatedLayout>
 </template>

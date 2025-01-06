@@ -10,7 +10,9 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
     ],
-
+    safelist: [
+        'bg-green-500', // Add other classes here if needed
+    ],
     theme: {
         extend: {
             fontFamily: {

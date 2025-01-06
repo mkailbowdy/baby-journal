@@ -127,7 +127,7 @@ onMounted(() => {
                         <img
                             v-if="imagePreview"
                             :src="imagePreview"
-                            class="mt-4 max-w-xs rounded-lg shadow-md"
+                            class="mt-4 rounded-lg shadow-md"
                             alt="journal image"
                         />
                         <p v-if="imageError" class="text-red-500">

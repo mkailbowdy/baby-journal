@@ -17,7 +17,6 @@
             stroke-linejoin="round"
         ></g>
         <g id="SVGRepo_iconCarrier">
-
             <path
                 class="st0"
                 d="M15.7,6.2c0.6,0,1.2,0.4,1.6,1C17.7,8,17.4,9,16.7,9.5c-0.6,0.4-1.4,0.2-1.7-0.4"
@@ -53,5 +52,4 @@
     stroke-miterlimit: 10;
 }
 </style>
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>

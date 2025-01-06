@@ -17,8 +17,7 @@ const activeJournal = ref<Journal | null>();
 
 // The useFlashMessage() function returns an object, and the destructuring syntax
 // extracts the message, messageType, and showMessage properties into local variables with the same names
-const { message, showMessage, messageClass } =
-    useFlashMessage();
+const { message, showMessage, messageClass } = useFlashMessage();
 //Without destructuring, you'd need to write:
 // const flashMessage = useFlashMessage();
 // const message = flashMessage.message;

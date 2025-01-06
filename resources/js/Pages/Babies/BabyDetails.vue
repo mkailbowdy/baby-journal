@@ -6,6 +6,7 @@ import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
 import { MessageType } from '@/types/MessageType';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { Baby } from "@/types/Baby";
 const props = defineProps(['baby']);
 const editing = ref(false);
 const form = useForm({
@@ -23,7 +24,7 @@ const editFormSubmitted = () => {
     editing.value = !editing.value;
     showMessage(MessageType.SUCCESS);
 };
-function deleteBaby(localBaby) {
+function deleteBaby(localBaby: Baby) {
     // Inertia's form helpers refreshes the props
     form.delete(
         route('babies.destroy', {

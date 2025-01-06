@@ -4,8 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JournalForm from '@/Pages/Journals/JournalForm.vue';
 import { MessageType } from '@/types/MessageType';
 const props = defineProps(['baby', 'journal']);
-const { message, messageType, showMessage, messageDescription, messageClass } =
-    useFlashMessage();
+const { showMessage } = useFlashMessage();
 </script>
 <template>
     <AuthenticatedLayout>

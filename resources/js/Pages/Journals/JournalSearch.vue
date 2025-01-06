@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import BaseInput from '@/Pages/Journals/BaseInput.vue';
 import { Journal } from '@/types/Journal';
 import { debounce } from 'lodash';
 import { computed, ref } from 'vue';
-import BaseInput from "@/Pages/Journals/BaseInput.vue";
 
 const props = defineProps(['journals']);
 const emit = defineEmits(['activeJournal']);

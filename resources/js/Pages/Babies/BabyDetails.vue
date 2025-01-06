@@ -3,10 +3,10 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useFlashMessage } from '@/Composables/useFlashMessage';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
+import { Baby } from '@/types/Baby';
 import { MessageType } from '@/types/MessageType';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Baby } from "@/types/Baby";
 const props = defineProps(['baby']);
 const editing = ref(false);
 const form = useForm({

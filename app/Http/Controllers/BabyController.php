@@ -19,7 +19,7 @@ class BabyController extends Controller
     {
         // Here we've used Eloquent's with method to eager-load every Journal's associated user's ID and name. We've also used the latest scope to return the records in reverse-chronological order.
         return Inertia::render('Babies/BabyIndex', [
-            'babies' => Baby::with('user:id,name')->latest()->get(),
+            'babies' => Baby::with('user:id,name')->where('user_id', auth()->id())->latest()->get(),
         ]);
     }
 
@@ -28,6 +28,7 @@ class BabyController extends Controller
      */
     public function show(Baby $baby)
     {
+        Gate::authorize('view', $baby);
         return Inertia::render('Babies/BabyDetails', [
             'baby' => $baby->only(
                 'id',
@@ -44,6 +45,7 @@ class BabyController extends Controller
 
     public function store(StoreBabyRequest $request): RedirectResponse
     {
+        Gate::authorize('create', Baby::class);
         $validated = $request->validated();
         $baby = $request->user()->babies()->create($validated);
 

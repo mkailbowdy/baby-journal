@@ -4,6 +4,7 @@ import { useFlashMessage } from '@/Composables/useFlashMessage';
 import DeleteJournalConfirmation from '@/Pages/Journals/DeleteJournalConfirmation.vue';
 import { MessageType } from '@/types/MessageType';
 import { Link } from '@inertiajs/vue3';
+import { Journal } from "@/types/Journal";
 const props = defineProps(['baby', 'form']);
 const emit = defineEmits(['submitted', 'cancelled', 'deleted']);
 
@@ -16,6 +17,7 @@ function editFormSubmitted() {
     localForm.patch(route('babies.update', props.baby));
     emit('submitted');
 }
+
 </script>
 
 <template>
@@ -111,7 +113,7 @@ function editFormSubmitted() {
                 </div>
                 <div class="mt-4 flex justify-around gap-2">
                     <DeleteJournalConfirmation
-                        @journal-deleted="emit('cancelled')"
+                        @journal-deleted="emit('deleted')"
                     />
                     <Link
                         :href="

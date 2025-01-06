@@ -40,6 +40,7 @@ class JournalPolicy
         if ($journal->baby->user_id === $user->id) {
             return true;
         }
+        return false;
     }
 
     /**

@@ -21,6 +21,9 @@ class BabyPolicy
      */
     public function view(User $user, Baby $baby): bool
     {
+        if ($user->id === $baby->user_id){
+            return true;
+        }
         return false;
     }
 
@@ -29,6 +32,9 @@ class BabyPolicy
      */
     public function create(User $user): bool
     {
+        if($user->id === auth()->user()->id){
+            return true;
+        }
         return false;
     }
 
@@ -37,10 +43,8 @@ class BabyPolicy
      */
     public function update(User $user, Baby $baby): bool
     {
-        if ($baby->user_id === $user->id) {
-            return true;
-        }
-        return false;
+        return $this->view($user, $baby);
+
     }
 
     /**
@@ -48,7 +52,7 @@ class BabyPolicy
      */
     public function delete(User $user, Baby $baby): bool
     {
-        return $this->update($user, $baby);
+        return $this->view($user, $baby);
     }
 
     /**

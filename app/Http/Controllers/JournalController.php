@@ -77,6 +77,7 @@ class JournalController extends Controller
      */
     public function edit(Baby $baby, Journal $journal)
     {
+        Gate::authorize('update', $baby);
         return Inertia::render('Journals/JournalEditForm',[
             'baby' => $baby,
             'journal' => $journal,
@@ -88,6 +89,7 @@ class JournalController extends Controller
      */
     public function update(StoreJournalRequest $request, Baby $baby, Journal $journal): RedirectResponse
     {
+        Gate::authorize('update', $baby);
         // Ensure the journal belongs to the baby
         if ($journal->baby_id !== $baby->id) {
             abort(404); // Or throw a custom authorization/validation exception
@@ -110,6 +112,7 @@ class JournalController extends Controller
 
     public function search(Baby $baby)
     {
+        Gate::authorize('view', $baby);
         $journals = $baby->journals()->with('baby')->latest()->get();
         return Inertia::render('Journals/JournalLookup', ['baby' => $baby, 'journals' => $journals]);
     }

@@ -25,7 +25,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('/babies/{baby}/journals', \App\Http\Controllers\JournalIndexController::class)->name('babies.journals.index');
+
+
+Route::get('/babies/{baby}/journals', \App\Http\Controllers\JournalIndexController::class)->name('babies.journals.index')->can('view','baby'); // the can is a helper function. it applies middleware.
 
 Route::resource('babies', BabyController::class)
     ->only(['index', 'store', 'show', 'edit', 'update', 'destroy'])
@@ -36,6 +38,5 @@ Route::get('/babies/{baby}/journals/search', [JournalController::class, 'search'
 Route::resource('babies.journals', JournalController::class)
     ->only(['create', 'show', 'update', 'edit', 'destroy', 'store',])
     ->middleware(['auth', 'verified']);
-
 
 require __DIR__ . '/auth.php';

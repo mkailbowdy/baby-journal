@@ -17,7 +17,6 @@ class BabyController extends Controller
 {
     public function index(): Response
     {
-        sleep(5);
         // Here we've used Eloquent's with method to eager-load every Journal's associated user's ID and name. We've also used the latest scope to return the records in reverse-chronological order.
         return Inertia::render('Babies/BabyIndex', [
             'babies' => Baby::with('user:id,name')->where('user_id', auth()->id())->latest()->get(),

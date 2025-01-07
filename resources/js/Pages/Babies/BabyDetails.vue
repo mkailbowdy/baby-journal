@@ -5,7 +5,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BabyEdit from '@/Pages/Babies/BabyEdit.vue';
 import { Baby } from '@/types/Baby';
 import { MessageType } from '@/types/MessageType';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 const props = defineProps(['baby']);
 const editing = ref(false);
@@ -53,11 +53,15 @@ function deleteBaby(localBaby: Baby) {
         <div v-if="!editing">
             <div class="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
                 <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
-                <div class="mx-auto max-w-3xl">
+                <div class="mx-auto max-w-3xl pb-32">
                     <div class="overflow-hidden bg-white shadow sm:rounded-lg">
                         <div class="flex justify-between px-4 py-6 sm:px-6">
-                            <h3 class="text-2xl font-semibold text-emerald-700">
-                                {{ baby.first_name }}
+                            <h3
+                                class="rounded px-1 border-b-2 border-emerald-400 text-2xl font-semibold tracking-wider text-emerald-700"
+                            >
+                                <Link :href="route('babies.index')">{{
+                                    baby.first_name
+                                }}</Link>
                             </h3>
                             <SecondaryButton @click="editing = !editing">
                                 Edit

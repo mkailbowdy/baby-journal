@@ -20,9 +20,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return Inertia::render('Dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,7 +31,9 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/babies/{baby}/journals', \App\Http\Controllers\JournalIndexController::class)->name('babies.journals.index')->can('view','baby'); // the can is a helper function. it applies middleware.
+Route::get('/babies/{baby}/journals', \App\Http\Controllers\JournalIndexController::class)
+    ->name('babies.journals.index')
+    ->middleware('can:delete,baby');
 
 Route::resource('babies', BabyController::class)
     ->only(['index', 'store', 'show', 'edit', 'update', 'destroy'])

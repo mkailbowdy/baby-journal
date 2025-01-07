@@ -147,7 +147,7 @@ onMounted(() => {
         <div class="text-right">
             <Link
                 :href="route('babies.journals.index', baby)"
-                class="mb-4 ml-4 mt-4"
+                class="mb-4 ml-4 mr-4 mt-4"
                 >Cancel
             </Link>
             <PrimaryButton

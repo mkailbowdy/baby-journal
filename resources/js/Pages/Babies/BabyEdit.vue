@@ -29,7 +29,7 @@ function editFormSubmitted() {
 
     <div class="mx-auto mt-8 max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
         <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
-        <div class="mx-auto max-w-3xl">
+        <div class="mx-auto max-w-3xl pb-36">
             <form
                 @submit.prevent="editFormSubmitted()"
                 class="space-y-6 bg-white p-4 shadow-lg"

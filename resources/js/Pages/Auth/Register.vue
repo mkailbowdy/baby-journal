@@ -30,9 +30,13 @@ const submit = () => {
             <div class="mt-4 flex items-center justify-end">
                 <Link
                     :href="route('login')"
-                    class="rounded-md text-2xl underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    class="rounded hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Already registered? Sign in here!
+                    Already Registered?
+                    <span
+                        class="rounded border-b-2 border-emerald-500 px-1 pb-1 font-semibold text-emerald-500 hover:border-emerald-400"
+                        >Sign in here!</span
+                    >
                 </Link>
             </div>
             <div>

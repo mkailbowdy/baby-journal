@@ -94,7 +94,7 @@ const page = usePage();
                             >
                         </div>
 
-                        <div class="mb-8 mt-auto">
+                        <div class="mb-20 mt-auto">
                             <Link
                                 v-show="page.props.auth.user.name"
                                 class="mx-auto inline-block h-8 w-1/2 rounded bg-gray-800 text-gray-200"

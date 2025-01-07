@@ -51,11 +51,6 @@
                             class="rounded-md bg-emerald-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                             >Get started</a
                         >
-                        <a
-                            href="#"
-                            class="text-sm/6 font-semibold text-gray-900"
-                            >Learn more <span aria-hidden="true">→</span></a
-                        >
                     </div>
                 </div>
                 <div class="mt-16 sm:mt-24 lg:mt-0 lg:shrink-0 lg:grow">
